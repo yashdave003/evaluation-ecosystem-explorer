@@ -752,6 +752,7 @@ function hideSpotlight() {
   const ov = document.getElementById("spotlight-overlay");
   ov.classList.remove("active");
   ov.innerHTML = "";
+  sessionStorage.setItem("tour_done", "1");
   if (_spotlightFirstDismiss) { _spotlightFirstDismiss = false; startPlay(); }
 }
 
@@ -904,7 +905,8 @@ document.getElementById("guide-btn").addEventListener("click", showSpotlight);
     shareCtx = buildShareChart(document.getElementById("share-wrap"), incidentData);
     gapCtx   = buildGapChart(document.getElementById("gap-wrap"));
     render(0);
-    showSpotlight();
+    if (!sessionStorage.getItem("tour_done")) showSpotlight();
+    else startPlay();
   });
 }
 </script>

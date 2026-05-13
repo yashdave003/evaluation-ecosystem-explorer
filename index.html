@@ -14,6 +14,11 @@ body { font-family: "Inter", system-ui, sans-serif; background: #f0e6d3; color: 
   display: flex; align-items: center; gap: 16px; }
 #hdr-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 #hdr-count { font-size: 11px; color: #a08868; border-left: 1px solid #c8b498; padding-left: 14px; }
+#compare-toggle { margin-left: auto; background: #3d5a8a; border: none; border-radius: 4px;
+  color: #f0e6d3; padding: 5px 14px; font-size: 10px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; cursor: pointer; font-family: inherit; white-space: nowrap; }
+#compare-toggle:hover { background: #4d6a9a; }
+#compare-toggle.active { background: #2a1a0e; }
 
 /* ---- Filter bar ---- */
 #filter-bar { position: sticky; top: 52px; z-index: 19; background: #ede0ca;
@@ -66,6 +71,8 @@ body { font-family: "Inter", system-ui, sans-serif; background: #f0e6d3; color: 
 .card-leader { font-size: 11.5px; font-weight: 600; }
 .card-leader span { font-weight: 400; color: #5a4030; }
 .card-meta { font-size: 9.5px; color: #a08868; }
+.card-open-hint { font-size: 9px; color: #c8b498; margin-top: 5px; }
+.card-header:hover .card-open-hint { color: #3d5a8a; }
 
 /* ---- Seed chips area ---- */
 .card-seeds { border-top: 1px solid #d0c0a8; padding: 10px 0 11px 0;
@@ -124,6 +131,7 @@ body { font-family: "Inter", system-ui, sans-serif; background: #f0e6d3; color: 
 <div id="hdr">
   <span id="hdr-title">AI Evaluation Ecosystem Explorer</span>
   <span id="hdr-count"></span>
+  <button id="compare-toggle">Compare</button>
 </div>
 
 <div id="filter-bar">
@@ -145,9 +153,6 @@ body { font-family: "Inter", system-ui, sans-serif; background: #f0e6d3; color: 
   </div>
   <div class="fgroup fgroup-search">
     <input id="cond-search" type="text" placeholder="Search condition...">
-  </div>
-  <div class="fgroup">
-    <button class="fbtn" id="compare-toggle">&#9776; Compare</button>
   </div>
 </div>
 
@@ -209,7 +214,7 @@ const MODEL_LABELS = {
   "claude-opus-4-6":     "Opus 4.6",
   "gpt-5.5-2026-04-23": "GPT-5.5",
 };
-const MAX_HEURISTIC_CHIPS = 6;
+const MAX_CHIPS_PER_GROUP = 4;
 
 /* ---- Helpers ---- */
 function condColor(c)   { return CONDITION_COLORS[c] || "#8a8a8a"; }
@@ -282,13 +287,10 @@ function cardHTML(cond, runs, activeMode, activeModel) {
   });
   let badges = "";
   Object.entries(modelGroups2).forEach(([key, count]) => {
-    const isHeur = key === "__heuristic__";
-    const cls    = isHeur ? "badge-heuristic" : "badge-llm";
-    const lbl    = isHeur ? "Heuristic" : modelLabel(key);
-    const model  = isHeur ? "heuristic" : key;
-    const href   = `compare.html?mode=variance&condition=${encodeURIComponent(cond)}&model=${encodeURIComponent(model)}`;
-    badges += `<a class="badge ${cls} badge-link" href="${href}" title="View variance across seeds"
-      onclick="event.stopPropagation()">${lbl} &times;${count}</a>`;
+    if (key === "__heuristic__") return;
+    const href = `compare.html?mode=variance&condition=${encodeURIComponent(cond)}&model=${encodeURIComponent(key)}`;
+    badges += `<a class="badge badge-llm badge-link" href="${href}" title="View variance across seeds"
+      onclick="event.stopPropagation()">${modelLabel(key)} &times;${count}</a>`;
   });
 
   let chipRuns = runs;
@@ -315,8 +317,7 @@ function cardHTML(cond, runs, activeMode, activeModel) {
   modelOrder.forEach(key => {
     const grpRuns = modelGroups[key].sort((a,b) => a.seed.localeCompare(b.seed));
     const label   = key==="__heuristic__" ? "Heuristic" : modelLabel(key);
-    const isHeur  = key==="__heuristic__";
-    const maxShow = isHeur ? MAX_HEURISTIC_CHIPS : grpRuns.length;
+    const maxShow = MAX_CHIPS_PER_GROUP;
     const overflow= grpRuns.length - maxShow;
 
     let chips = "";
@@ -352,6 +353,7 @@ function cardHTML(cond, runs, activeMode, activeModel) {
             <div class="card-stats">
               ${leader ? `<div class="card-leader">${leader.name} <span>${leader.pct}%</span></div>` : ""}
               <div class="card-meta">peak gap ${rep.peak_gap.toFixed(2)} &nbsp;&middot;&nbsp; ${rep.n_rounds} rounds</div>
+              <div class="card-open-hint">&#8599; ${seedNum(rep.seed)} &nbsp;&middot;&nbsp; ${modelLabel(rep.model) || "Heuristic"}</div>
             </div>
           </div>
           ${pie}
@@ -390,7 +392,18 @@ function filtered() {
     .filter(Boolean);
 }
 
+function syncURL() {
+  const p = new URLSearchParams();
+  if (state.bucket !== "all") p.set("bucket", state.bucket);
+  if (state.mode   !== "all") p.set("mode",   state.mode);
+  if (state.model  !== "all") p.set("model",  state.model);
+  if (state.search)           p.set("q",      state.search);
+  const qs = p.toString();
+  history.replaceState(null, "", qs ? "?" + qs : location.pathname);
+}
+
 function render() {
+  syncURL();
   const groups = filtered();
   document.getElementById("showing").textContent =
     `Showing ${groups.length} conditions (${groups.reduce((n,[,r])=>n+r.length,0)} runs) of ${allRuns.length} total`;
@@ -502,7 +515,27 @@ fetch("runs.json")
     allRuns = data;
     document.getElementById("loading").classList.add("hidden");
     document.getElementById("hdr-count").textContent = `${data.length} runs · ${[...new Set(data.map(r=>r.condition))].length} conditions`;
-    buildFilters(data); render();
+    buildFilters(data);
+    const up = new URLSearchParams(location.search);
+    if (up.has("bucket")) {
+      state.bucket = up.get("bucket");
+      document.querySelectorAll("#bucket-pills .fpill").forEach(p =>
+        p.classList.toggle("active", p.dataset.bucket === state.bucket));
+    }
+    if (up.has("mode")) {
+      state.mode = up.get("mode");
+      document.querySelectorAll("#mode-btns .fbtn").forEach(b =>
+        b.classList.toggle("active", b.dataset.mode === state.mode));
+    }
+    if (up.has("model")) {
+      state.model = up.get("model");
+      document.getElementById("model-sel").value = state.model;
+    }
+    if (up.has("q")) {
+      state.search = up.get("q");
+      document.getElementById("cond-search").value = state.search;
+    }
+    render();
   })
   .catch(err => {
     document.getElementById("loading").classList.add("hidden");

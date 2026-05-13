@@ -19,25 +19,53 @@ body { font-family: "Inter", system-ui, sans-serif; background: #f0e6d3; color: 
 #hdr-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 #hdr-sub { font-size: 11px; color: #a08868; border-left: 1px solid #c8b498; padding-left: 14px; }
 
-#meta-bar { padding: 8px 24px; background: #ede0ca; border-bottom: 1px solid #c8b498;
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.meta-chip { font-size: 9px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
-  padding: 3px 9px; border-radius: 10px; border: 1px solid; }
-.meta-info { font-size: 10px; color: #7a6045; margin-left: auto; }
+/* ---- Picker ---- */
+#picker { background: #e8d9c2; border-bottom: 2px solid #c8b498;
+  display: flex; flex-direction: column; gap: 0; }
+#picker.hidden { display: none; }
+.picker-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 7px 24px; border-bottom: 1px solid #d0c0a8; }
+.picker-row:last-child { border-bottom: none; }
+.picker-lbl { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: #a08868; white-space: nowrap; min-width: 76px; }
+.picker-chip { display: flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px 3px 10px;
+  border-radius: 10px; border: 1px solid; }
+.picker-chip-x { background: none; border: none; cursor: pointer; font-size: 11px;
+  color: inherit; opacity: 0.5; padding: 0; font-family: inherit; line-height: 1; }
+.picker-chip-x:hover { opacity: 1; }
+.picker-sel { background: #f0e6d3; border: 1px solid #c8b498; border-radius: 4px;
+  padding: 4px 8px; font-size: 10px; color: #2a1a0e; font-family: inherit;
+  outline: none; cursor: pointer; }
+.picker-sel:focus { border-color: #3d5a8a; }
+.seed-chip { padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;
+  background: transparent; border: 1px solid #c8b498; color: #7a6045;
+  cursor: pointer; font-family: inherit; white-space: nowrap; }
+.seed-chip.active { background: #3d5a8a; border-color: #2d4a7a; color: #f0e6d3; }
+.seed-chip:hover:not(.active) { background: #d8c9b0; color: #2a1a0e; }
+.picker-warn  { font-size: 9px; color: #8a3a2a; font-style: italic; }
+.picker-empty { font-size: 10px; color: #a08868; font-style: italic; }
+.picker-info  { font-size: 10px; color: #7a6045; }
+.agg-toggle { padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;
+  background: transparent; border: 1px dashed #a08868; color: #7a6045;
+  cursor: pointer; font-family: inherit; white-space: nowrap; }
+.agg-toggle:hover:not(.active) { background: #d8c9b0; border-style: solid; color: #2a1a0e; }
+.agg-toggle.active { background: #2a1a0e; border: 1px solid #2a1a0e; color: #f0e6d3; }
 
+/* ---- Charts ---- */
 #charts-wrap { padding: 14px 24px 0; display: flex; flex-direction: column; gap: 2px; }
 .cpanel-lbl { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
   color: #a08868; margin-bottom: 3px; }
 .cpanel svg { width: 100%; display: block; overflow: visible; }
 
 .now-line { pointer-events: none; }
-.band { pointer-events: none; }
 .sline { pointer-events: none; }
 .axis text { fill: #a08868; font-size: 8px; font-family: inherit; }
 .axis .domain { stroke: #c8b498; }
 .axis .tick line { stroke: #d8c9b0; stroke-dasharray: 2,3; }
 .anno-lbl { font-size: 9px; font-family: inherit; pointer-events: none; }
 
+/* ---- Scrubber ---- */
 #scrubber-wrap { padding: 10px 24px 0; display: flex; align-items: center; gap: 10px; }
 .sbtn { background: #d8c9b0; border: 1px solid #c0ad94; color: #5a4030; width: 28px; height: 28px;
   border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 11px; }
@@ -45,9 +73,11 @@ body { font-family: "Inter", system-ui, sans-serif; background: #f0e6d3; color: 
 #round-lbl { font-size: 11px; font-weight: 700; color: #2a1a0e; min-width: 70px; }
 #scrubber { flex: 1; accent-color: #3d5a8a; height: 4px; }
 
-#anno-bar { padding: 12px 24px 20px; display: flex; flex-wrap: wrap; gap: 14px; border-top: 1px solid #d0c0a8; margin-top: 10px; }
+/* ---- Annotation bar ---- */
+#anno-bar { padding: 12px 24px 20px; display: flex; flex-wrap: wrap; gap: 14px;
+  border-top: 1px solid #d0c0a8; margin-top: 10px; }
 .anno-row { display: flex; align-items: center; gap: 7px; }
-.anno-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.anno-swatch { width: 24px; height: 10px; flex-shrink: 0; display: flex; align-items: center; }
 .anno-label { font-size: 10px; font-weight: 600; color: #2a1a0e; min-width: 80px; }
 .anno-vals { font-size: 10px; color: #5a4030; display: flex; gap: 14px; }
 .anno-val { display: flex; flex-direction: column; gap: 1px; }
@@ -65,11 +95,16 @@ body { font-family: "Inter", system-ui, sans-serif; background: #f0e6d3; color: 
   <div id="hdr-title">Compare</div>
   <div id="hdr-sub"></div>
 </div>
-<div id="meta-bar"></div>
+
+<div id="picker" class="hidden">
+  <div class="picker-row" id="row-conditions"></div>
+  <div class="picker-row" id="row-seeds"></div>
+</div>
+
 <div id="loading-msg">Loading data…</div>
 <div id="charts-wrap" class="hidden">
-  <div class="cpanel"><div class="cpanel-lbl">Market Leader Share</div><svg id="svg-shares" height="130"></svg></div>
-  <div class="cpanel"><div class="cpanel-lbl">Avg Score–Satisfaction Gap</div><svg id="svg-gap" height="130"></svg></div>
+  <div class="cpanel"><div class="cpanel-lbl">Market Leader Share</div><svg id="svg-shares"></svg></div>
+  <div class="cpanel"><div class="cpanel-lbl">Avg Score–Satisfaction Gap</div><svg id="svg-gap"></svg></div>
 </div>
 <div id="scrubber-wrap" class="hidden">
   <button class="sbtn" id="btn-prev">&#9664;</button>
@@ -96,376 +131,472 @@ const MODEL_LABELS = {
   "claude-sonnet-4-6":"Sonnet 4.6","claude-opus-4-6":"Opus 4.6",
   "gpt-5.5-2026-04-23":"GPT-5.5",
 };
-const PANEL_H   = 130;
-const MARGIN    = { top: 10, right: 140, bottom: 24, left: 44 };
-const GREY_LINE = "rgba(100,80,60,0.18)";
-const VAR_ANNO_KEYS = [{key:"p10",lbl:"p10"},{key:"median",lbl:"med"},{key:"p90",lbl:"p90"}];
-
-function condColor(c) { return CONDITION_COLORS[c] || "#8a8a8a"; }
-function modelLabel(m) { return m ? (MODEL_LABELS[m] || m) : "Heuristic"; }
-function fmtCond(c) { return c.replace(/__/g," · ").replace(/_/g," "); }
-function pct(v)  { return (v*100).toFixed(1)+"%"; }
-function dec3(v) { return v.toFixed(3); }
-
-/* ---- Metric functions (per frame) ---- */
+const DASH_PATTERNS = ["none","8 4","2 3","8 3 2 3","4 4","12 3 2 3 2 3"];
+const MARGIN = { top: 10, right: 140, bottom: 24, left: 44 };
 const METRICS = [
-  {
-    id:"shares", label:"Market Leader Share",
+  { id:"shares", label:"Market Leader Share",
     fn: (f) => Math.max(...Object.values(f.shares || {})),
-    fmt: pct, domain: [0, 1],
-  },
-  {
-    id:"gap", label:"Avg Score–Satisfaction Gap",
+    fmt: v => (v*100).toFixed(1)+"%", domain: [0,1] },
+  { id:"gap", label:"Avg Score–Satisfaction Gap",
     fn: (f, provs) => {
-      if (!provs || !provs.length) return 0;
-      const sum = provs.reduce((s,p) => s + Math.abs((f.scores[p]||0)-(f.sat[p]||0)), 0);
-      return sum / provs.length;
+      if (!provs?.length) return 0;
+      return provs.reduce((s,p) => s + Math.abs((f.scores[p]||0)-(f.sat[p]||0)), 0) / provs.length;
     },
-    fmt: dec3, domain: null, // computed from data
-  },
+    fmt: v => v.toFixed(3), domain: null },
 ];
+const PANEL_H = Math.max(160, Math.floor((window.innerHeight - 320) / METRICS.length));
 
-/* ---- URL params ---- */
-const params = new URLSearchParams(location.search);
-const mode   = params.get("mode") || "variance";
+/* ---- Helpers ---- */
+const condColor  = c => CONDITION_COLORS[c] || "#8a8a8a";
+const modelLabel = m => m ? (MODEL_LABELS[m] || m) : "Heuristic";
+const fmtCond    = c => c.replace(/__/g," · ").replace(/_/g," ");
+const seedNum    = s => s.replace("seed_","#");
 
-/* ---- Load index ---- */
-const runsIndex = await fetch("runs.json").then(r => r.json());
+/* ---- State ---- */
+const state = { conds: [], seeds: [], model: "claude-sonnet-4-6", aggregate: false };
 
-/* ---- Build series list ---- */
-// series: [{label, color, frames, providers, lineWidth, lineOpacity, isHighlight, isP10, isP90}]
-let series = [];
-let pageTitle = "", pageSub = "";
-let nRounds = 40;
-let varBands = null; // for mode=variance: [{p10,p25,median,p75,p90}] per round per metric
-
-if (mode === "variance") {
-  const cond    = params.get("condition") || "baseline";
-  const model   = params.get("model")     || "claude-sonnet-4-6";
-  const isHeur  = model === "heuristic";
-
-  const matchRuns = runsIndex.filter(r =>
-    r.condition === cond &&
-    (isHeur ? r.mode === "heuristic" : r.model === model)
-  );
-
-  if (!matchRuns.length) {
-    document.getElementById("loading-msg").textContent =
-      `No runs found for condition="${cond}" model="${model}"`;
-    throw new Error("no runs");
+/* ---- Parse initial URL ---- */
+{
+  const p = new URLSearchParams(location.search);
+  state.model = p.get("model") || "claude-sonnet-4-6";
+  state.aggregate = p.get("agg") === "1";
+  if (p.has("seeds")) {
+    state.conds = (p.get("conditions") || "baseline").split("|").filter(Boolean);
+    state.seeds = p.get("seeds").split("|").filter(Boolean);
+  } else if (p.get("mode") === "variance") {
+    state.conds = [p.get("condition") || "baseline"];
+    state.seeds = [p.get("seed") || "seed_42"];
+  } else {
+    state.conds = (p.get("conditions") || "baseline").split("|").filter(Boolean);
+    state.seeds = [p.get("seed") || "seed_42"];
   }
-
-  document.getElementById("loading-msg").textContent =
-    `Loading ${matchRuns.length} runs…`;
-
-  const sims = await Promise.all(
-    matchRuns.map(r => fetch("data/"+r.path+"/frames.json").then(res => res.json()))
-  );
-
-  nRounds = sims[0].frames.length;
-  const providers = sims[0].providers;
-
-  // Pick p10/p90 by final leader share
-  const finals = sims.map(s => Math.max(...Object.values(s.frames[nRounds-1].shares)));
-  const ranked = finals.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v);
-  const n = ranked.length;
-  const p10i = ranked[Math.max(0, Math.floor(n*0.1))].i;
-  const p90i = ranked[Math.min(n-1, Math.floor(n*0.9))].i;
-
-  series = sims.map((s, i) => ({
-    label:       matchRuns[i].seed.replace("seed_","#"),
-    color:       (i===p10i||i===p90i) ? condColor(cond) : GREY_LINE,
-    frames:      s.frames,
-    providers:   s.providers,
-    lineWidth:   (i===p10i||i===p90i) ? 1.8 : 0.9,
-    lineOpacity: (i===p10i||i===p90i) ? 0.85 : 1,
-    isP10: i===p10i,
-    isP90: i===p90i,
-  }));
-
-  // Compute variance bands
-  varBands = METRICS.map(m => {
-    return Array.from({length: nRounds}, (_,r) => {
-      const vals = sims.map(s => m.fn(s.frames[r], s.providers)).sort((a,b)=>a-b);
-      const pick = q => vals[Math.max(0,Math.min(n-1,Math.floor(n*q)))];
-      return { p10:pick(0.1), median:pick(0.5), p90:pick(0.9) };
-    });
-  });
-
-  pageTitle  = fmtCond(cond);
-  pageSub    = `${isHeur ? "Heuristic" : modelLabel(model)} · ${n} seeds · variance`;
-
-  // Meta bar chips
-  const metaBar = document.getElementById("meta-bar");
-  const chip = document.createElement("div");
-  chip.className = "meta-chip";
-  chip.style.cssText = `color:${condColor(cond)};border-color:${condColor(cond)};background:${condColor(cond)}18`;
-  chip.textContent = fmtCond(cond);
-  metaBar.appendChild(chip);
-  const info = document.createElement("div");
-  info.className = "meta-info";
-  info.textContent = `${isHeur ? "Heuristic" : modelLabel(model)} · ${n} seeds · p10/p90 highlighted`;
-  metaBar.appendChild(info);
-
-} else {
-  // mode = "across"
-  const condStr = params.get("conditions") || "baseline";
-  const conds   = condStr.split("|").filter(Boolean);
-  const seed    = params.get("seed")  || "seed_42";
-  const model   = params.get("model") || "claude-sonnet-4-6";
-
-  const matchRuns = conds.map(c =>
-    runsIndex.find(r => r.condition===c && r.seed===seed && r.model===model)
-  ).filter(Boolean);
-
-  if (!matchRuns.length) {
-    document.getElementById("loading-msg").textContent = "No matching runs found.";
-    throw new Error("no runs");
-  }
-
-  document.getElementById("loading-msg").textContent =
-    `Loading ${matchRuns.length} runs…`;
-
-  const sims = await Promise.all(
-    matchRuns.map(r => fetch("data/"+r.path+"/frames.json").then(res => res.json()))
-  );
-
-  nRounds = sims[0].frames.length;
-
-  series = sims.map((s, i) => ({
-    label:       fmtCond(matchRuns[i].condition),
-    color:       condColor(matchRuns[i].condition),
-    frames:      s.frames,
-    providers:   s.providers,
-    lineWidth:   2,
-    lineOpacity: 1,
-    isHighlight: true,
-  }));
-
-  pageTitle = "Condition Comparison";
-  pageSub   = `${modelLabel(model)} · ${seed.replace("seed_","seed ")} · ${matchRuns.length} conditions`;
-
-  // Meta bar chips
-  const metaBar = document.getElementById("meta-bar");
-  matchRuns.forEach(r => {
-    const chip = document.createElement("div");
-    chip.className = "meta-chip";
-    const col = condColor(r.condition);
-    chip.style.cssText = `color:${col};border-color:${col};background:${col}18`;
-    chip.textContent = fmtCond(r.condition);
-    metaBar.appendChild(chip);
-  });
-  const info = document.createElement("div");
-  info.className = "meta-info";
-  info.textContent = `${modelLabel(model)} · ${seed.replace("seed_","seed ")}`;
-  metaBar.appendChild(info);
 }
 
-/* ---- Update page heading ---- */
-document.getElementById("hdr-title").textContent = pageTitle;
-document.getElementById("hdr-sub").textContent   = pageSub;
-document.getElementById("loading-msg").classList.add("hidden");
-document.getElementById("charts-wrap").classList.remove("hidden");
-document.getElementById("scrubber-wrap").classList.remove("hidden");
-document.getElementById("anno-bar").classList.remove("hidden");
-document.getElementById("scrubber").max = nRounds - 1;
+/* ---- Data layer ---- */
+const frameCache = new Map();
+const runsIndex  = await fetch("runs.json").then(r => r.json());
 
-/* ---- Build charts ---- */
+function cacheKey(cond, seed) {
+  const run = runsIndex.find(r => r.condition===cond && r.seed===seed && r.model===state.model);
+  return run ? run.path : null;
+}
+
+async function ensureFrames(cond, seed) {
+  const key = cacheKey(cond, seed);
+  if (!key) return null;
+  if (!frameCache.has(key)) {
+    frameCache.set(key, await fetch("data/"+key+"/frames.json").then(r => r.json()));
+  }
+  return frameCache.get(key);
+}
+
+function availableSeeds() {
+  if (!state.conds.length) return [];
+  const sets = state.conds.map(c =>
+    new Set(runsIndex.filter(r => r.condition===c && r.model===state.model).map(r => r.seed))
+  );
+  return [...sets[0]].filter(s => sets.every(ss => ss.has(s))).sort();
+}
+
+function availableConds() {
+  return [...new Set(runsIndex.filter(r => r.model===state.model).map(r => r.condition))].sort();
+}
+
+/* ---- Series building ---- */
+function buildSeries(framesMap) {
+  const multi = state.conds.length === 1;
+  if (multi) {
+    const cond = state.conds[0];
+    return state.seeds.map((seed, si) => {
+      const data = framesMap.get(cond+"|"+seed);
+      return data ? {
+        label: seedNum(seed), color: condColor(cond),
+        dash: DASH_PATTERNS[si % DASH_PATTERNS.length],
+        frames: data.frames, providers: data.providers,
+        lineWidth: 1.8, lineOpacity: 0.85,
+      } : null;
+    }).filter(Boolean);
+  }
+  const seed = state.seeds[0];
+  return state.conds.map(cond => {
+    const data = framesMap.get(cond+"|"+seed);
+    return data ? {
+      label: fmtCond(cond), color: condColor(cond), dash: "none",
+      frames: data.frames, providers: data.providers,
+      lineWidth: 2, lineOpacity: 1,
+    } : null;
+  }).filter(Boolean);
+}
+
+/* ---- URL sync ---- */
+function syncURL() {
+  const p = new URLSearchParams();
+  p.set("conditions", state.conds.join("|"));
+  p.set("seeds",      state.seeds.join("|"));
+  p.set("model",      state.model);
+  if (state.aggregate) p.set("agg", "1");
+  history.replaceState(null, "", "?"+p.toString());
+}
+
+/* ---- Chart state ---- */
 let currentRound = 0;
-const chartContexts = []; // {svg, x, y, nowEl, annoEls}
+let nRounds      = 40;
+let chartContexts = [];
+let annoRows      = [];
+let bandData      = null;
 
-METRICS.forEach((metric, mi) => {
-  const svgEl = document.getElementById("svg-" + metric.id);
-  const W     = svgEl.parentElement.clientWidth || 900;
-  svgEl.setAttribute("width", W);
+function rebuildCharts(series) {
+  chartContexts = [];
+  METRICS.forEach((metric, mi) => {
+    const svgEl = document.getElementById("svg-"+metric.id);
+    svgEl.innerHTML = "";
+    const W  = svgEl.parentElement.clientWidth || 900;
+    svgEl.setAttribute("width",  W);
+    svgEl.setAttribute("height", PANEL_H);
+    const cx = W - MARGIN.left - MARGIN.right;
+    const cy = PANEL_H - MARGIN.top - MARGIN.bottom;
 
-  const cx   = W - MARGIN.left - MARGIN.right;
-  const cy   = PANEL_H - MARGIN.top - MARGIN.bottom;
-  const showX = mi === METRICS.length - 1;
-
-  // Compute y domain
-  let yMin = Infinity, yMax = -Infinity;
-  series.forEach(s => {
-    s.frames.forEach(f => {
+    let yMin = Infinity, yMax = -Infinity;
+    series.forEach(s => s.frames.forEach(f => {
       const v = metric.fn(f, s.providers);
-      if (v < yMin) yMin = v;
-      if (v > yMax) yMax = v;
+      if (v < yMin) yMin = v; if (v > yMax) yMax = v;
+    }));
+    if (!isFinite(yMin)) { yMin = 0; yMax = 1; }
+    const pad = (yMax - yMin) * 0.08 || 0.02;
+    const dom = metric.domain || [Math.max(0, yMin-pad), yMax+pad];
+
+    const x = d3.scaleLinear().domain([0, nRounds-1]).range([MARGIN.left, MARGIN.left+cx]);
+    const y = d3.scaleLinear().domain(dom).range([MARGIN.top+cy, MARGIN.top]).clamp(true);
+    const svg = d3.select(svgEl);
+
+    if (bandData) {
+      const color = condColor(state.conds[0]);
+      svg.append("path").attr("class","band")
+        .datum(bandData[mi])
+        .attr("fill", color + "22")
+        .attr("d", d3.area().x((_,i)=>x(i)).y0(d=>y(d.p10)).y1(d=>y(d.p90)));
+    }
+
+    series.forEach(s => {
+      const path = svg.append("path").attr("class","sline")
+        .datum(s.frames.map(f => metric.fn(f, s.providers)))
+        .attr("fill","none").attr("stroke", s.color)
+        .attr("stroke-width", s.lineWidth).attr("opacity", s.lineOpacity)
+        .attr("d", d3.line().x((_,i)=>x(i)).y(v=>y(v)).curve(d3.curveCatmullRom.alpha(0.5)));
+      if (s.dash !== "none") path.attr("stroke-dasharray", s.dash);
     });
+
+    const showX = mi === METRICS.length - 1;
+    svg.append("g").attr("class","axis")
+      .attr("transform",`translate(0,${MARGIN.top+cy})`)
+      .call(showX
+        ? d3.axisBottom(x).ticks(Math.min(nRounds,8)).tickSize(0).tickPadding(4)
+        : d3.axisBottom(x).ticks(0).tickSize(0))
+      .call(a => a.select(".domain").attr("stroke","#c8b498"));
+    svg.append("g").attr("class","axis")
+      .attr("transform",`translate(${MARGIN.left},0)`)
+      .call(d3.axisLeft(y).ticks(4).tickSize(-cx).tickPadding(4).tickFormat(metric.fmt))
+      .call(a => a.select(".domain").remove())
+      .call(a => a.selectAll(".tick line").attr("stroke","#d8c9b0").attr("stroke-dasharray","2,3"));
+
+    const nowEl = svg.append("line").attr("class","now-line")
+      .attr("y1",MARGIN.top).attr("y2",MARGIN.top+cy)
+      .attr("stroke","#2a1a0e").attr("stroke-width",1).attr("stroke-dasharray","3,2")
+      .attr("x1",x(0)).attr("x2",x(0));
+
+    const annoEls = series.map(s => ({
+      el:  svg.append("text").attr("class","anno-lbl")
+             .attr("fill",s.color).attr("font-size",9).attr("dominant-baseline","middle"),
+      s,
+    }));
+
+    svg.on("click", function(event) {
+      const [mx] = d3.pointer(event);
+      const r = Math.round(x.invert(mx));
+      if (r >= 0 && r < nRounds) update(r);
+    }).style("cursor","crosshair");
+
+    chartContexts.push({ svg, x, y, nowEl, annoEls, metric });
   });
-  if (varBands) {
-    varBands[mi].forEach(b => { if (b.p10 < yMin) yMin = b.p10; if (b.p90 > yMax) yMax = b.p90; });
-  }
-  const pad  = (yMax - yMin) * 0.08 || 0.02;
-  const dom  = metric.domain || [Math.max(0, yMin - pad), yMax + pad];
+}
 
-  const x = d3.scaleLinear().domain([0, nRounds-1]).range([MARGIN.left, MARGIN.left+cx]);
-  const y = d3.scaleLinear().domain(dom).range([MARGIN.top+cy, MARGIN.top]).clamp(true);
+function rebuildAnnoBar(series) {
+  const bar = document.getElementById("anno-bar");
+  bar.innerHTML = "";
+  annoRows = series.map(s => {
+    const row = document.createElement("div"); row.className = "anno-row";
 
-  const svg = d3.select(svgEl);
+    const sw = document.createElement("div"); sw.className = "anno-swatch";
+    sw.innerHTML = `<svg width="24" height="10" viewBox="0 0 24 10">
+      <line x1="0" y1="5" x2="24" y2="5" stroke="${s.color}" stroke-width="2"
+        ${s.dash !== "none" ? `stroke-dasharray="${s.dash}"` : ""}/>
+    </svg>`;
+    row.appendChild(sw);
 
-  // P10-P90 band (variance mode)
-  if (varBands) {
-    const color = condColor(params.get("condition") || "baseline");
-    svg.append("path").attr("class","band")
-      .datum(varBands[mi])
-      .attr("fill", color + "22")
-      .attr("d", d3.area()
-        .x((_,i) => x(i))
-        .y0(d => y(d.p10))
-        .y1(d => y(d.p90))
-      );
-  }
+    const lbl = document.createElement("div"); lbl.className = "anno-label";
+    lbl.textContent = s.label; row.appendChild(lbl);
 
-  // Series lines
-  series.forEach(s => {
-    const vals = s.frames.map(f => metric.fn(f, s.providers));
-    svg.append("path").attr("class","sline")
-      .datum(vals)
-      .attr("fill","none")
-      .attr("stroke", s.color)
-      .attr("stroke-width", s.lineWidth)
-      .attr("opacity", s.lineOpacity)
-      .attr("d", d3.line().x((_,i) => x(i)).y(v => y(v)).curve(d3.curveCatmullRom.alpha(0.5)));
-  });
-
-  // Axes
-  const xAxis = d3.axisBottom(x).ticks(Math.min(nRounds, 8)).tickSize(0).tickPadding(4);
-  const yAxis = d3.axisLeft(y).ticks(4).tickSize(-(cx)).tickPadding(4).tickFormat(metric.fmt);
-  svg.append("g").attr("class","axis")
-    .attr("transform",`translate(0,${MARGIN.top+cy})`)
-    .call(showX ? xAxis : d3.axisBottom(x).ticks(0).tickSize(0))
-    .call(a => a.select(".domain").attr("stroke","#c8b498"));
-  svg.append("g").attr("class","axis")
-    .attr("transform",`translate(${MARGIN.left},0)`)
-    .call(yAxis)
-    .call(a => a.select(".domain").remove())
-    .call(a => a.selectAll(".tick line").attr("stroke","#d8c9b0").attr("stroke-dasharray","2,3"));
-
-  // Now-line
-  const nowEl = svg.append("line").attr("class","now-line")
-    .attr("y1", MARGIN.top).attr("y2", MARGIN.top+cy)
-    .attr("stroke","#2a1a0e").attr("stroke-width",1).attr("stroke-dasharray","3,2")
-    .attr("x1", x(0)).attr("x2", x(0));
-
-  // Annotation text labels (right of now-line)
-  const annoEls = [];
-  if (mode === "across") {
-    series.forEach((s) => {
-      if (mode === "variance" && !s.isP10 && !s.isP90) return;
-      const el = svg.append("text").attr("class","anno-lbl")
-        .attr("fill", mode==="variance" ? condColor(params.get("condition")||"baseline") : s.color)
-        .attr("font-size", 9).attr("dominant-baseline","middle");
-      const tag = mode==="variance" ? (s.isP10 ? "p10" : "p90") : s.label;
-      annoEls.push({ el, s, tag });
+    const vals = document.createElement("div"); vals.className = "anno-vals";
+    const valEls = METRICS.map(m => {
+      const cell = document.createElement("div"); cell.className = "anno-val";
+      const key  = document.createElement("div"); key.className = "anno-val-key";
+      key.textContent = m.label.split(" ")[0];
+      const num = document.createElement("div"); num.className = "anno-val-num";
+      cell.appendChild(key); cell.appendChild(num);
+      vals.appendChild(cell);
+      return num;
     });
-  }
-
-  // Variance summary labels (p10/median/p90 values)
-  const varAnnoEls = [];
-  if (varBands) {
-    ["p10","median","p90"].forEach(key => {
-      const el = svg.append("text").attr("class","anno-lbl")
-        .attr("fill", condColor(params.get("condition")||"baseline"))
-        .attr("font-size",8.5).attr("dominant-baseline","middle").attr("opacity",0.75);
-      varAnnoEls.push({el, key});
-    });
-  }
-
-  chartContexts.push({ svg, x, y, nowEl, annoEls, varAnnoEls, metric, mi, cx, cy });
-});
-
-/* ---- Annotation bar items ---- */
-const annoBar = document.getElementById("anno-bar");
-const annoRows = series.map(s => {
-  const row = document.createElement("div"); row.className = "anno-row";
-  const sw  = document.createElement("div"); sw.className = "anno-swatch";
-  sw.style.background = s.color; row.appendChild(sw);
-  const lbl = document.createElement("div"); lbl.className = "anno-label";
-  lbl.textContent = s.label; row.appendChild(lbl);
-  const vals = document.createElement("div"); vals.className = "anno-vals";
-  const valEls = METRICS.map(m => {
-    const cell = document.createElement("div"); cell.className = "anno-val";
-    const key  = document.createElement("div"); key.className = "anno-val-key"; key.textContent = m.label.split(" ")[0];
-    const num  = document.createElement("div"); num.className = "anno-val-num";
-    cell.appendChild(key); cell.appendChild(num);
-    vals.appendChild(cell);
-    return num;
+    row.appendChild(vals);
+    bar.appendChild(row);
+    return { valEls, s };
   });
-  row.appendChild(vals);
-  annoBar.appendChild(row);
-  return { valEls, s };
-});
+}
 
-/* ---- Update function ---- */
+function updateHeader() {
+  const multi = state.conds.length === 1;
+  document.getElementById("hdr-title").textContent =
+    multi ? fmtCond(state.conds[0]) : "Condition Comparison";
+  document.getElementById("hdr-sub").textContent = multi
+    ? `${modelLabel(state.model)} · ${state.seeds.length} seed${state.seeds.length!==1?"s":""} · 1 condition`
+    : `${modelLabel(state.model)} · seed ${(state.seeds[0]||"seed_42").replace("seed_","")} · ${state.conds.length} conditions`;
+}
+
+function buildPickerRows(avail) {
+  document.getElementById("picker").classList.remove("hidden");
+  const multi = state.conds.length === 1;
+
+  /* Row 1 — Conditions */
+  const rowC = document.getElementById("row-conditions");
+  rowC.innerHTML = "";
+  rowC.appendChild(Object.assign(document.createElement("span"),
+    { className:"picker-lbl", textContent:"Conditions:" }));
+
+  state.conds.forEach(cond => {
+    const col  = condColor(cond);
+    const chip = document.createElement("div"); chip.className = "picker-chip";
+    chip.style.cssText = `color:${col};border-color:${col};background:${col}18`;
+    const lbl = document.createElement("span"); lbl.textContent = fmtCond(cond);
+    const x   = document.createElement("button");
+    x.className = "picker-chip-x"; x.textContent = "×";
+    x.addEventListener("click", () => removeCond(cond));
+    chip.appendChild(lbl); chip.appendChild(x); rowC.appendChild(chip);
+  });
+
+  const addableConds = availableConds().filter(c => !state.conds.includes(c));
+  if (addableConds.length) {
+    const sel = document.createElement("select"); sel.className = "picker-sel";
+    sel.innerHTML = `<option value="">＋ Add condition…</option>` +
+      addableConds.map(c => `<option value="${c}">${fmtCond(c)}</option>`).join("");
+    sel.addEventListener("change", e => { if (e.target.value) addCond(e.target.value); });
+    rowC.appendChild(sel);
+  }
+
+  /* Row 2 — Seeds */
+  const rowS = document.getElementById("row-seeds");
+  rowS.innerHTML = "";
+
+  if (!state.conds.length) {
+    rowS.appendChild(Object.assign(document.createElement("span"),
+      { className:"picker-empty", textContent:"Select a condition to begin." }));
+    return;
+  }
+
+  rowS.appendChild(Object.assign(document.createElement("span"),
+    { className:"picker-lbl", textContent:"Seeds:" }));
+
+  if (!avail.length) {
+    rowS.appendChild(Object.assign(document.createElement("span"),
+      { className:"picker-warn",
+        textContent:"No seeds shared across selected conditions — remove a condition to compare." }));
+    return;
+  }
+
+  if (multi && state.aggregate) {
+    rowS.appendChild(Object.assign(document.createElement("span"),
+      { className:"picker-info", textContent:`all ${avail.length} seeds` }));
+  } else {
+    avail.forEach(seed => {
+      const btn = document.createElement("button");
+      btn.className = "seed-chip" + (state.seeds.includes(seed) ? " active" : "");
+      btn.textContent = seedNum(seed);
+      btn.addEventListener("click", () => toggleSeed(seed));
+      rowS.appendChild(btn);
+    });
+    if (multi && state.seeds.length > 6) {
+      rowS.appendChild(Object.assign(document.createElement("span"),
+        { className:"picker-warn", textContent:"Many seeds active — line patterns may repeat" }));
+    }
+  }
+
+  if (multi) {
+    const sep = Object.assign(document.createElement("span"),
+      { textContent:"·", style:"color:#c8b498;margin:0 3px" });
+    const agg = document.createElement("button");
+    agg.className = "agg-toggle" + (state.aggregate ? " active" : "");
+    agg.textContent = state.aggregate ? "Aggregate ✓" : "Aggregate";
+    agg.addEventListener("click", toggleAggregate);
+    rowS.appendChild(sep); rowS.appendChild(agg);
+  }
+}
+
+/* ---- State mutations ---- */
+function addCond(cond) {
+  if (state.conds.includes(cond)) return;
+  state.conds.push(cond);
+  refresh();
+}
+
+function removeCond(cond) {
+  state.conds = state.conds.filter(c => c !== cond);
+  if (!state.conds.length) {
+    buildPickerRows([]);
+    document.getElementById("charts-wrap").classList.add("hidden");
+    document.getElementById("scrubber-wrap").classList.add("hidden");
+    document.getElementById("anno-bar").classList.add("hidden");
+    syncURL();
+    return;
+  }
+  refresh();
+}
+
+function toggleSeed(seed) {
+  const multi = state.conds.length === 1;
+  if (!multi) {
+    state.seeds = [seed];
+  } else if (state.seeds.includes(seed)) {
+    if (state.seeds.length === 1) return;
+    state.seeds = state.seeds.filter(s => s !== seed);
+  } else {
+    state.seeds = [...state.seeds, seed];
+  }
+  refresh();
+}
+
+function toggleAggregate() {
+  state.aggregate = !state.aggregate;
+  refresh();
+}
+
+/* ---- Main refresh ---- */
+async function refresh() {
+  const avail = availableSeeds();
+  const multi = state.conds.length === 1;
+
+  // Enforce seed constraints
+  if (!multi && state.seeds.length > 1) state.seeds = [state.seeds.sort()[0]];
+  state.seeds = state.seeds.filter(s => avail.includes(s));
+  if (!state.seeds.length && avail.length) state.seeds = [avail[0]];
+
+  buildPickerRows(avail);
+
+  if (!state.conds.length || !avail.length) { syncURL(); return; }
+
+  document.getElementById("loading-msg").classList.remove("hidden");
+
+  let series;
+  bandData = null;
+
+  if (multi && state.aggregate) {
+    const cond = state.conds[0];
+    await Promise.all(avail.map(s => ensureFrames(cond, s)));
+    const allSims = avail.map(s => frameCache.get(cacheKey(cond, s))).filter(Boolean);
+    if (!allSims.length) { document.getElementById("loading-msg").classList.add("hidden"); return; }
+
+    nRounds = allSims[0].frames.length;
+    const n  = allSims.length;
+    bandData = METRICS.map(metric =>
+      Array.from({length: nRounds}, (_, r) => {
+        const vals = allSims.map(sim => metric.fn(sim.frames[r], sim.providers)).sort((a,b)=>a-b);
+        const pick = q => vals[Math.max(0, Math.min(n-1, Math.floor(n*q)))];
+        return { p10: pick(0.1), median: pick(0.5), p90: pick(0.9) };
+      })
+    );
+
+    const finals = avail.map(s => {
+      const d = frameCache.get(cacheKey(cond, s));
+      return d ? Math.max(...Object.values(d.frames[nRounds-1].shares)) : -1;
+    });
+    const ranked = finals.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v);
+    const p10i = ranked[Math.max(0, Math.floor(n*0.1))].i;
+    const medi = ranked[Math.floor(n*0.5)].i;
+    const p90i = ranked[Math.min(n-1, Math.floor(n*0.9))].i;
+    const color = condColor(cond);
+    const mk = (seed, label, dash, lw, lo) => {
+      const d = frameCache.get(cacheKey(cond, seed));
+      return d ? { label, color, dash, lineWidth:lw, lineOpacity:lo, frames:d.frames, providers:d.providers } : null;
+    };
+    series = [
+      mk(avail[p10i], `p10 (${seedNum(avail[p10i])})`, "none", 1.8, 0.85),
+      mk(avail[medi],  `med (${seedNum(avail[medi])})`,  "2 3", 1.2, 0.50),
+      mk(avail[p90i], `p90 (${seedNum(avail[p90i])})`, "8 4",  1.8, 0.85),
+    ].filter(Boolean);
+
+  } else {
+    state.seeds = state.seeds.filter(s => avail.includes(s));
+    if (!state.seeds.length) state.seeds = [avail[0]];
+    const pairs = state.conds.flatMap(c => state.seeds.map(s => ({c, s})));
+    await Promise.all(pairs.map(({c, s}) => ensureFrames(c, s)));
+    const framesMap = new Map();
+    pairs.forEach(({c, s}) => {
+      const data = frameCache.get(cacheKey(c, s));
+      if (data) framesMap.set(c+"|"+s, data);
+    });
+    series = buildSeries(framesMap);
+    if (series.length) nRounds = series[0].frames.length;
+  }
+
+  if (!series?.length) { document.getElementById("loading-msg").classList.add("hidden"); return; }
+
+  syncURL();
+  updateHeader();
+  rebuildCharts(series);
+  rebuildAnnoBar(series);
+
+  document.getElementById("loading-msg").classList.add("hidden");
+  document.getElementById("charts-wrap").classList.remove("hidden");
+  document.getElementById("scrubber-wrap").classList.remove("hidden");
+  document.getElementById("anno-bar").classList.remove("hidden");
+  document.getElementById("scrubber").max = nRounds - 1;
+
+  update(Math.min(currentRound, nRounds-1));
+}
+
+/* ---- Scrubber update ---- */
 function update(r) {
   currentRound = r;
   document.getElementById("round-lbl").textContent = `Round ${r}`;
   document.getElementById("scrubber").value = r;
 
-  chartContexts.forEach(({x, y, nowEl, annoEls, varAnnoEls, metric, mi}) => {
+  chartContexts.forEach(({x, y, nowEl, annoEls, metric}) => {
     const nx = x(r);
     nowEl.attr("x1", nx).attr("x2", nx);
 
-    if (annoEls.length) {
-      const pts = annoEls.map(({el, s, tag}) => {
-        const v = metric.fn(s.frames[r], s.providers);
-        return { el, tag, v, y: y(v) };
-      });
-      pts.sort((a,b) => a.y - b.y);
-      let lastY = -999;
-      pts.forEach(pt => {
-        let ry = pt.y;
-        if (ry - lastY < 11) ry = lastY + 11;
-        lastY = ry;
-        pt.el.attr("x", nx + 6).attr("y", ry)
-          .text(`${pt.tag}  ${metric.fmt(pt.v)}`);
-      });
-    }
-
-    if (varAnnoEls.length && varBands) {
-      const b = varBands[mi][r];
-      const pts = varAnnoEls.map(({el,key},i) => ({ el, lbl: VAR_ANNO_KEYS[i].lbl, v: b[key] }));
-      pts.sort((a,b)=>y(a.v)-y(b.v));
-      let lastY = -999;
-      pts.forEach(pt => {
-        let ry = y(pt.v);
-        if (ry - lastY < 10) ry = lastY + 10;
-        lastY = ry;
-        pt.el.attr("x", nx+6).attr("y", ry)
-          .text(`${pt.lbl} ${metric.fmt(pt.v)}`);
-      });
-    }
+    const pts = annoEls.map(({el, s}) => ({
+      el, tag: s.label, v: metric.fn(s.frames[r], s.providers), y: y(metric.fn(s.frames[r], s.providers)),
+    }));
+    pts.sort((a,b) => a.y - b.y);
+    let lastY = -999;
+    pts.forEach(pt => {
+      let ry = pt.y; if (ry - lastY < 11) ry = lastY + 11; lastY = ry;
+      pt.el.attr("x", nx+6).attr("y", ry).text(`${pt.tag}  ${metric.fmt(pt.v)}`);
+    });
   });
 
-  // Update annotation bar
   annoRows.forEach(({valEls, s}) => {
-    METRICS.forEach((m, mi) => {
-      valEls[mi].textContent = m.fmt(m.fn(s.frames[r], s.providers));
-    });
+    METRICS.forEach((m, mi) => { valEls[mi].textContent = m.fmt(m.fn(s.frames[r], s.providers)); });
   });
 }
 
-/* ---- Scrubber controls ---- */
+/* ---- Controls ---- */
 document.getElementById("scrubber").addEventListener("input", e => update(+e.target.value));
 document.getElementById("btn-prev").addEventListener("click", () => update(Math.max(0, currentRound-1)));
 document.getElementById("btn-next").addEventListener("click", () => update(Math.min(nRounds-1, currentRound+1)));
-
-// Keyboard
 document.addEventListener("keydown", e => {
   if (e.key==="ArrowLeft")  update(Math.max(0, currentRound-1));
   if (e.key==="ArrowRight") update(Math.min(nRounds-1, currentRound+1));
 });
 
-// Click-on-chart to jump
-chartContexts.forEach(({svg, x}) => {
-  svg.on("click", function(event) {
-    const [mx] = d3.pointer(event);
-    const r = Math.round(x.invert(mx));
-    if (r >= 0 && r < nRounds) update(r);
-  }).style("cursor","crosshair");
-});
-
-update(0);
+await refresh();
 </script>
 </body>
 </html>
