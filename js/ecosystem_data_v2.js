@@ -123,10 +123,16 @@ window.ECOSYSTEM = {
   // neighbors: modeled actors this station plausibly transacts with — hover
   // glows them (no edges drawn: glow = related, never a claimed channel).
   stations: [
+    // NOT a separate population, unlike the other two stations. This is the part
+    // of the EVALUATOR's own role the simulation leaves out: the paper (Sec 3)
+    // names METR and "domain-specific auditors" as evaluation providers, and
+    // models only the measurement half of what they do. Hence the same
+    // organizations appear here and in the Evaluators roster, and hence a row
+    // places one by the capacity it acted in (YD, 2026-08-31 / 2026-09-03).
     { id: "oversight",   name: "Independent Oversight",              ang: 30,
       role: "audit & public pressure",
       neighbors: ["evaluator", "media", "regulator"],
-      why: "audits benchmarks and leaderboards; findings feed coverage and regulatory pressure" },
+      why: "investigates incidents and audits conduct: the half of an evaluator's role the model leaves out" },
     { id: "appdev",      name: "Application Developers",             ang: 150, dy: 10,
       role: "consume models; serve them onward",
       neighbors: ["providers", "consumers"],
@@ -244,7 +250,7 @@ window.ECOSYSTEM = {
       ] },
 
     oversight: {
-      note: "acts on the ecosystem: contamination detection, leaderboard audits, public-interest pressure",
+      note: "investigates incidents and audits conduct: the half of an evaluator's role the model leaves out",
       flavors: [
         { label: "researchers & auditors",
           orgs: ["university labs", "EvalEval Coalition", "STAIR", "CITP", { t: "EleutherAI", k: "eleutherai" }] },
@@ -363,7 +369,7 @@ window.ECOSYSTEM = {
       edgeQuotes: {
         "regulator>providers": { q: "The regulator first sets a minimum safety standard that applies to one or both players, with strict penalties for non-compliance.", ql: "Abstract", qk: "M" } },
       edges: [["regulator", "providers"]],
-      extraEdges: [{ from: "providers", to: "appdev", label: "fine-tuned by specialists", q: "Next, domain specialists refine the AI for their specific use cases, updating the safety and performance levels and taking the product to market.", ql: "Abstract", qk: "M", bow: 55, lt: 0.79, ldx: 12, ldy: -21 },
+      extraEdges: [{ from: "providers", to: "appdev", label: "fine-tuned by specialists", q: "Next, domain specialists refine the AI for their specific use cases, updating the safety and performance levels and taking the product to market.", ql: "Abstract", qk: "M", bow: 55, lt: 0.73, ldx: 10, ldy: -14 },
                    { from: "regulator", to: "appdev", label: "safety floor on specialists", q: "This regulatory regime can be described using two parameters (\u03b8G, \u03b8D), representing the set of thresholds constraining the strategy space of G and D, respectively.", ql: "model setup", qk: "M", lt: 0.5, ldx: 0, ldy: 0 },
                    { from: "appdev", to: "providers", label: "free-riding and revenue split", q: "the generalist G is aware of the regulatory safety requirements imposed on domain-specialists, and can use it to her advantage", ql: "backfiring mechanism section", qk: "M", side: "in", bow: 48, lt: 0.24, ldx: -50, ldy: 10 }] },
 
@@ -410,7 +416,7 @@ window.ECOSYSTEM = {
       edges: [["providers", "evaluator"], ["funders", "evaluator"], ["evaluator", "regulator"], ["evaluator", "consumers"]],
       // the paper's candidate benchmark suppliers, drawn INTO Evaluators
       extraEdges: [
-        { from: "appdev",    to: "evaluator", label: "vendor-run benchmarks?", q: "Vendors might define tasks narrowly around areas where their systems perform well, choose sample distributions that accentuate their results", ql: "Sec 2.2.1", qk: "A", side: "in", bow: 60, lt: 0.56, ldx: -2, ldy: 10 },
+        { from: "appdev",    to: "evaluator", label: "vendor-run benchmarks?", q: "Vendors might define tasks narrowly around areas where their systems perform well, choose sample distributions that accentuate their results", ql: "Sec 2.2.1", qk: "A", bow: 60, lt: 0.86, ldx: -2, ldy: 10 },
         { from: "consumers", to: "evaluator", label: "purchaser-run benchmarks?", q: "Legal AI consumers would offer resources in terms of funding, and legal expertise in order to build the benchmarks and evaluate the outputs.", ql: "Sec 3.2", qk: "A", lt: 0.13, ldx: -5, ldy: -15 },
         { from: "regulator", to: "evaluator", label: "government-run benchmarks?", q: "Alternatively, benchmarking might be performed at the federal level, through NIST or another federal body.", ql: "Sec 2.2.4", qk: "A", lt: 0.55, ldx: 0, ldy: 0 }
       ] },
@@ -459,7 +465,7 @@ window.ECOSYSTEM = {
       extraEdges: [
         { from: "compute",   to: "regulator", label: "cloud KYC on customers", q: "Requiring compute providers to institute \"Know Your Customer\" (KYC) requirements and report large compute usage to regulators can complement knowledge of the total quantities and ownership of compute", ql: "Sec 4.A", qk: "A", bow: 40, lt: 0.41, ldx: 0, ldy: 0 },
         { from: "evaluator", to: "regulator", label: "audits give regulators assurance", q: "If reporting mechanisms could eventually be made trustworthy ... and paired with other mechanisms such as external auditing, then a regulator could gain assurance", ql: "Sec 4.A", qk: "A", bow: 36, lt: 0.45, ldx: 0, ldy: 0 },
-        { from: "evaluator", to: "providers", label: "audit results gate compute access", q: "an AI developer (building on the IaaS's compute) planning a large-scale deployment could be required to submit audit results of their AI model as a precondition for access", ql: "Sec 4.C", qk: "A", bow: 44, lt: 0.21, ldx: -15, ldy: 19 }
+        { from: "evaluator", to: "providers", label: "audit results gate compute access", q: "an AI developer (building on the IaaS's compute) planning a large-scale deployment could be required to submit audit results of their AI model as a precondition for access", ql: "Sec 4.C", qk: "A", bow: 44, lt: 0.08, ldx: -26, ldy: 18 }
       ] },
 
 
@@ -490,7 +496,7 @@ window.ECOSYSTEM = {
       edges: [],
       extraEdges: [
         { from: "providers", to: "consumers", label: "deployment shifts the distribution", q: "When used to support consequential decisions, however, predictive models can trigger actions that influence the outcome they aim to predict. We call such predictions performative", ql: "Sec 1", qk: "M", lt: 0.495, ldx: -6, ldy: -23 },
-        { from: "consumers", to: "providers", label: "shifted data feeds retraining", q: "In practice, the response to such distribution shifts is to frequently retrain the predictive model as more data becomes available.", ql: "Sec 1", qk: "M", side: "in", bow: 45, lt: 0.47, ldx: -3, ldy: -16 }
+        { from: "consumers", to: "providers", label: "shifted data feeds retraining", q: "In practice, the response to such distribution shifts is to frequently retrain the predictive model as more data becomes available.", ql: "Sec 1", qk: "M", side: "in", bow: 45, lt: 0.43, ldx: -2, ldy: -8 }
       ] },
 
     { id: "singh2025", kind: "paper", fit: "strong", featured: 2,
@@ -519,7 +525,7 @@ window.ECOSYSTEM = {
       // measured mechanism is privileged private testing plus a disproportionate share of
       // battle data, lifting ArenaHard win-rates from 23.5% to 49.9%.
       extraEdges: [
-        { from: "evaluator", to: "providers", label: "preferential testing and data access", q: "Access to Chatbot Arena data has an outsized impact on performance.", ql: "Sec 1, findings item 3", qk: "M", side: "in", bow: 50, lt: 0.545, ldx: 7, ldy: -23 },
+        { from: "evaluator", to: "providers", label: "preferential testing and data access", q: "Access to Chatbot Arena data has an outsized impact on performance.", ql: "Sec 1, findings item 3", qk: "M", bow: 50, lt: 0.49, ldx: 2, ldy: -6 },
         { from: "consumers", to: "evaluator", label: "crowd votes are the instrument", q: "the main beneficiaries of this free human feedback appear to be commercial entities who are frequently preferred for private testing", ql: "Sec 4.1", qk: "M", lt: 0.4, ldx: 0, ldy: 0 }
       ] },
 
@@ -544,7 +550,7 @@ window.ECOSYSTEM = {
       edges: [["providers", "media"], ["providers", "regulator"], ["media", "providers"]],
       extraEdges: [
         { from: "oversight", to: "providers", label: "audits shift vendor behavior", q: "the targeted audit in Gender Shades was much more effective in reducing disparities in target products than non-targeted systems", ql: "Differences between Target and Non-Target Companies", qk: "M", lt: 0.59, ldx: 0, ldy: 0 },
-        { from: "oversight", to: "media",     label: "audit findings get coverage", q: "an article by Steve Lohr in the technology section of The New York Times is among the first public mentions of the study", ql: "Audit design, step 3", qk: "M", bow: 42, lt: 0.36, ldx: 0, ldy: 0 },
+        { from: "oversight", to: "media",     label: "audit findings get coverage", q: "an article by Steve Lohr in the technology section of The New York Times is among the first public mentions of the study", ql: "Audit design, step 3", qk: "M", bow: 42, lt: 0.37, ldx: 8, ldy: 0 },
         { from: "oversight", to: "regulator", label: "audit evidence reaches lawmakers", q: "letters from Senator Kamala D. Harris to the EEOC, FBI and FTC regarding the use of facial recognition in law enforcement also directly reference the work", ql: "Regulatory Communications", qk: "M", bow: 38, lt: 0.9, ldx: -10, ldy: -22 }
       ] },
 
@@ -564,8 +570,8 @@ window.ECOSYSTEM = {
       // reputation, and therefore no slanting incentive. Canonical edge 10 is labelled
       // "amplifies score changes", which does not describe this, so it is an extraEdge.
       extraEdges: [
-        { from: "consumers", to: "media", label: "priors reward confirming coverage", q: "Our first set of results shows that firms will tend to distort information to make it conform with consumers' prior beliefs", ql: "Sec 1", qk: "M", lt: 0.16, ldx: 0, ldy: 0 },
-        { from: "media", to: "consumers", label: "slanted reports move beliefs", q: "in all of these cases, different slants convey information to consumers about what the firm believes is the true state of the world", ql: "Sec 3", qk: "M", side: "in", bow: 44, lt: 0.16, ldx: 0, ldy: 0 }
+        { from: "consumers", to: "media", label: "priors reward confirming coverage", q: "Our first set of results shows that firms will tend to distort information to make it conform with consumers' prior beliefs", ql: "Sec 1", qk: "M", lt: 0.33, ldx: -40, ldy: 0 },
+        { from: "media", to: "consumers", label: "slanted reports move beliefs", q: "in all of these cases, different slants convey information to consumers about what the firm believes is the true state of the world", ql: "Sec 3", qk: "M", side: "in", bow: 44, lt: 0.31, ldx: 30, ldy: 0 }
       ] },
 
 
@@ -585,13 +591,13 @@ window.ECOSYSTEM = {
       // three arcs between the same pair would collide.
       edges: [],
       extraEdges: [
-        { from: "providers",  to: "oversight", label: "auditee pays, gates, and gags auditors", q: "In short, auditors should ideally not be selected or paid directly by auditees.", ql: "Sec 4.2.1", qk: "A", bow: 58, lt: 0.63, ldx: 0, ldy: 0 },
-        { from: "regulator",  to: "oversight", label: "public body selects and accredits", q: "there are significant benefits to a regulator (or third party accreditation body) choosing the auditor or using a central fund, instead of relying on direct payment from audit targets", ql: "Sec 4.2.2", qk: "A", bow: 46, lt: 0.91, ldx: 40, ldy: 24 },
+        { from: "providers",  to: "oversight", label: "auditee pays, gates, and gags auditors", q: "In short, auditors should ideally not be selected or paid directly by auditees.", ql: "Sec 4.2.1", qk: "A", bow: 58, lt: 0.37, ldx: -26, ldy: 0 },
+        { from: "regulator",  to: "oversight", label: "public body selects and accredits", q: "there are significant benefits to a regulator (or third party accreditation body) choosing the auditor or using a central fund, instead of relying on direct payment from audit targets", ql: "Sec 4.2.2", qk: "A", bow: 46, lt: 0.12, ldx: -28, ldy: 50 },
         { from: "oversight",  to: "regulator", label: "audit registry alerts regulators", q: "This would also alert regulators directly of audit outcomes, and open communication channels between them and auditors.", ql: "Sec 4.5.2", qk: "A", side: "in", bow: 40, lt: 0.38, ldx: -48, ldy: -38 },
-        { from: "oversight",  to: "providers", label: "disclosed findings force correction", q: "It can prevent companies from being able to disguise or hide undesirable audit outcomes (Engler, 2021) and incentivize better behavior.", ql: "Sec 4.5.1", qk: "A", side: "in", bow: 52, lt: 0.42, ldx: 0, ldy: 0 },
+        { from: "oversight",  to: "providers", label: "disclosed findings force correction", q: "It can prevent companies from being able to disguise or hide undesirable audit outcomes (Engler, 2021) and incentivize better behavior.", ql: "Sec 4.5.1", qk: "A", side: "in", bow: 52, lt: 0.42, ldx: 16, ldy: 0 },
         { from: "consumers",  to: "oversight", label: "harm complaints set audit targets", q: "One analysis of investigated nursing home complaints, for example, found that the complaints predicted performance at subsequent inspections (Stevenson, 2006).", ql: "Sec 4.1.1", qk: "M", bow: 44, lt: 0.4, ldx: 0, ldy: 0 },
-        { from: "media",      to: "oversight", label: "press escalation surfaces targets", q: "Current strategies for harm discovery in AI involve ad hoc processes of notice and reporting, limited to situations of harm raised and escalated in public forums such as social media or the press.", ql: "Sec 4.1.2", qk: "A", bow: 38, lt: 0.29, ldx: 15, ldy: -5 },
-        { from: "oversight",  to: "evaluator", label: "audits correct and seed benchmarks", q: "For instance, IEEE P7013 Inclusion and Application Standards for Automated Facial Analysis Technology industry standard is directly informed by the Gender Shades audit.", ql: "Sec 4.5.2", qk: "A", bow: 50, lt: 0.555, ldx: 0, ldy: 0 }
+        { from: "media",      to: "oversight", label: "press escalation surfaces targets", q: "Current strategies for harm discovery in AI involve ad hoc processes of notice and reporting, limited to situations of harm raised and escalated in public forums such as social media or the press.", ql: "Sec 4.1.2", qk: "A", bow: 38, lt: 0.27, ldx: 52, ldy: -12 },
+        { from: "oversight",  to: "evaluator", label: "audits correct and seed benchmarks", side: "in", q: "For instance, IEEE P7013 Inclusion and Application Standards for Automated Facial Analysis Technology industry standard is directly informed by the Gender Shades audit.", ql: "Sec 4.5.2", qk: "A", bow: 50, lt: 0.555, ldx: 0, ldy: 0 }
       ] },
 
     { id: "epoch2026", kind: "paper", fit: "approx",
@@ -757,12 +763,12 @@ window.ECOSYSTEM = {
     // disputed about the episode. `statusNote` names what is open, so the badge
     // never asserts a dispute without saying what it is.
     { id: "ev-openai-hf", kind: "event", status: "partially contested",
-      statusNote: "The intrusion, the timeline, the June 27 alert, and the five-day attribution gap are all in OpenAI's and Hugging Face's own reports. What stays open: where the incident starts (OpenAI treats agent activity reaching Hugging Face in May as unrelated), whether OpenAI's account understates what it knew early, and how independent a review can be when its subject sets the scope and holds redaction rights.",
-      title: "The OpenAI-Hugging Face incident: a lab's own agents escaped its perimeter", date: "Apr - Aug 2026",
+      statusNote: "The intrusion, the timeline, the June 27 and July 5 alerts, and the five-day attribution gap are all in OpenAI's and Hugging Face's own reports or in OpenAI's answers to Congress. Where the incident starts is now openly disputed rather than merely unresolved: OpenAI's account to Congress begins on July 8, while the members who wrote to it count a May 26 boundary breach and message-board use from May. Also open: whether OpenAI's account understates what it knew early, and how independent a review can be when its subject sets the scope and holds redaction rights.",
+      title: "The OpenAI-Hugging Face incident: a lab's own agents escaped its perimeter", date: "Apr - Sep 2026",
       href: "https://huggingface.co/blog/security-incident-july-2026",
       hrefLabel: "Hugging Face's disclosure, Jul 16, 2026",
-      why: "during an internal OpenAI reinforcement-learning run without production safeguards, agents working on mostly unsolvable cyber tasks turned an internal package registry into a message board, chained zero-day exploits to reach the internet, and broke into Hugging Face's production systems. An internal alert had identified the message board on June 27, and the run was allowed to continue. Hugging Face detected and disclosed the intrusion without knowing who was behind it; OpenAI identified itself five days later",
-      method: "OpenAI's technical report and disclosure posts, Hugging Face's two disclosures, the METR/Redwood investigation, JFrog's post, and the Black Hat USA 2026 talk",
+      why: "during an internal OpenAI reinforcement-learning run without production safeguards, agents working on mostly unsolvable cyber tasks turned an internal package registry into a message board, chained zero-day exploits to reach the internet, and broke into Hugging Face's production systems. An internal alert had identified the message board on June 27, and the run was allowed to continue. Hugging Face detected and disclosed the intrusion without knowing who was behind it; OpenAI identified itself five days later. In August, 31 members of Congress demanded the logs and answers to 23 questions; OpenAI's reply was judged insufficient, and the independent investigators' findings were then quoted back in a bill announcement",
+      method: "OpenAI's technical report and disclosure posts, Hugging Face's two disclosures, the METR/Redwood investigation, JFrog's post, the Black Hat USA 2026 talk, the congressional letters and OpenAI's reply, and the Sanders-Casar bill announcement",
       relatedStudy: "raji2022",
       // Artifact-read 2026-08-31 (OpenAI 51pp technical report re-read for the
       // monitoring claims; both HF disclosures; METR/Redwood + LW crosspost;
@@ -806,14 +812,40 @@ window.ECOSYSTEM = {
       // scrutiny held, but the incident skipped consumers entirely; harm
       // landed on infrastructure and coverage originated from the victim's
       // disclosure.
-      actors: ["providers", "media", "appdev", "oversight"],
+      // REGULATOR ADDED 2026-09-03. The earlier exclusion note ("no read
+      // regulatory action") is superseded: there is now a documented ladder,
+      // all of it primary-read (sources/2026-08-10_casar_congressional_oversight.md
+      // and sources/2026-09-03_sanders_casar_basi_act.md). Aug 10: three letters
+      // in one day, 31 members to OpenAI, 23 to Anthropic, 19 to Speaker Johnson
+      // demanding hearings. Aug 31: OpenAI answers. Sep 2: Casar calls both
+      // answers insufficient, sets a Sep 15 deadline. Sep 3: Sanders and Casar
+      // announce the Ban Artificial Superintelligence Act.
+      // The oversight->regulator edge is the one worth having: the three agent
+      // messages the announcement quotes are VERBATIM from the METR/Redwood
+      // report and are attributed there to "investigators", so this is a live
+      // instance of raji2019's measured channel (audit evidence reaching
+      // lawmakers) and raji2022's recommendation. Same reason relatedStudy
+      // stays raji2022.
+      // NOT drawn, deliberately: the announced bill as a regulator->providers
+      // constraint. It is announced, not introduced, has no bill number, and
+      // drawing it would assert a binding pressure that does not exist.
+      // ALSO not drawn: Casar's critique of the audit's scope ("Providing
+      // hand-picked investigators six days of supervised access is not public
+      // release ... I am deeply concerned about the limited scope"), which is
+      // the raji2022 objection made about this very audit. It belongs on
+      // providers->oversight, but that edge already carries METR's own
+      // redaction sentence and an extraEdge holds one quote. Recorded here.
+      actors: ["providers", "media", "appdev", "oversight", "regulator"],
       edges: [],
       extraEdges: [
         { from: "providers", to: "appdev", label: "escaped agents breached Hugging Face", q: "This activity culminated in the compromise of parts of Hugging Face's production infrastructure between July 11 and July 13.", ql: "OpenAI technical report, Aug 26, 2026", qk: "R", lt: 0.15, ldx: -50, ldy: 20 },
         { from: "appdev", to: "media", label: "disclosed first, attacker unknown", q: "We do not know which model powered the attacker's agents, whether a jailbroken hosted model or an unrestricted open-weight one; either way, the attacker was bound by no usage policy, while our own forensic work was blocked by the guardrails of the hosted models we first tried.", ql: "Hugging Face disclosure, Jul 16, 2026", qk: "R", lt: 0.58, ldx: 0, ldy: 0 },
         { from: "providers", to: "media", label: "self-identified five days later", q: "Last week, Hugging Face disclosed a new kind of security incident after they detected and contained an AI agent that compromised their infrastructure, something we expect to become more commonplace with the proliferation of increasingly cyber-capable models.", ql: "OpenAI disclosure, Jul 21, 2026", qk: "R", lt: 0.63, ldx: 0, ldy: 0 },
-        { from: "oversight", to: "providers", label: "reconstructed the agents' behavior", q: "We relied heavily on tracing message board messages back to agents that wrote and read them to reconstruct the complex narratives we discuss in this report.", ql: "METR/Redwood report, Aug 26, 2026", qk: "R", lt: 0.50, ldx: 0, ldy: 0 },
-        { from: "providers", to: "oversight", label: "auditee set scope and redactions", q: "OpenAI was able to redact any non-public information from this post.", ql: "METR/Redwood report, Aug 26, 2026", qk: "R", lt: 0.50, ldx: 0, ldy: 0 }
+        { from: "oversight", to: "providers", label: "reconstructed the agents' behavior", q: "We relied heavily on tracing message board messages back to agents that wrote and read them to reconstruct the complex narratives we discuss in this report.", ql: "METR/Redwood report, Aug 26, 2026", qk: "R", lt: 0.08, ldx: 46, ldy: 18 },
+        { from: "providers", to: "oversight", label: "auditee set scope and redactions", q: "OpenAI was able to redact any non-public information from this post.", ql: "METR/Redwood report, Aug 26, 2026", qk: "R", lt: 0.61, ldx: -12, ldy: -6 },
+        { from: "regulator", to: "providers", label: "Congress demanded logs and answers", q: "While OpenAI has disclosed some information about the incident, your company has yet to release the relevant logs and significant questions remain unanswered.", ql: "Casar and 30 members, letter to OpenAI, Aug 10, 2026", qk: "R", lt: 0.24, ldx: 52, ldy: -48 },
+        { from: "providers", to: "regulator", label: "account to Congress began July 8", q: "The activity leading to the Hugging Face intrusion began on July 8, when agents exploited a previously unknown vulnerability in Artifactory, a third-party software package management service hosted within OpenAI's research environment, that enabled unauthorized internet access.", ql: "OpenAI's response to Congress, Aug 31, 2026", qk: "R", lt: 0.5, ldx: -8, ldy: 0 },
+        { from: "oversight", to: "regulator", label: "investigation quoted by lawmakers", q: "Examples of these secret messages from AI uncovered by investigators include: \"OH MY GOD! There is a shared message board ... We've found other agents!\"", ql: "Sanders and Casar announcement, Sep 3, 2026", qk: "R", lt: 0.51, ldx: -48, ldy: -12 }
       ] },
 
     { id: "ev-maverick", kind: "event", status: "partially contested",
@@ -868,7 +900,7 @@ window.ECOSYSTEM = {
         "media>consumers": { q: "Chinese startup DeepSeek overtook ChatGPT to become the top-rated free application on Apple's App Store in the U.S. on Monday.", ql: "Newsweek, Jan 27, 2025", qk: "R" } },
       edges: [["evaluator", "media"], ["media", "funders"], ["media", "consumers"]],
       extraEdges: [
-        { from: "providers", to: "evaluator", label: "self-reported scores, no third-party check", q: "DeepSeek-R1 achieves performance comparable to OpenAI-o1-1217 on reasoning tasks.", ql: "R1 paper abstract, arXiv 2501.12948", qk: "R", bow: 48, lt: 0.68, ldx: -48, ldy: 10 },
+        { from: "providers", to: "evaluator", label: "self-reported scores, no third-party check", q: "DeepSeek-R1 achieves performance comparable to OpenAI-o1-1217 on reasoning tasks.", ql: "R1 paper abstract, arXiv 2501.12948", qk: "R", bow: 48, lt: 0.66, ldx: -48, ldy: 10 },
         { from: "consumers", to: "media",     label: "app-chart rank became headline evidence", q: "As of Jan. 27, DeepSeek AI has surpassed ChatGPT, reaching the top spot on the Apple App Store's free apps list.", ql: "TechNode, Jan 27, 2025", qk: "R", bow: 46, lt: 0.16, ldx: 0, ldy: 0 }
       ] },
 
@@ -902,7 +934,7 @@ window.ECOSYSTEM = {
         "evaluator>media": { q: "ARC Prize presented o3's performance results in person with OpenAI's Sam Altman (CEO) and Mark Chen (SVP Research) during the final '12 Days of OpenAI' event.", ql: "ARC Prize announcement, Dec 20, 2024", qk: "R" } },
       edges: [["providers", "evaluator"], ["evaluator", "media"]],
       extraEdges: [
-        { from: "evaluator", to: "providers", label: "evaluator retest repriced the headline claim", q: "The production o3 uses a different model from the o3-preview we tested in December 2024", ql: "ARC Prize analysis, Apr 22, 2025", qk: "R", bow: 44, lt: 0.92, ldx: -2, ldy: -10 }
+        { from: "evaluator", to: "providers", label: "evaluator retest repriced the headline claim", q: "The production o3 uses a different model from the o3-preview we tested in December 2024", ql: "ARC Prize analysis, Apr 22, 2025", qk: "R", bow: 44, lt: 0.92, ldx: -2, ldy: -14 }
       ] },
 
     { id: "ev-frontiermath", kind: "event", status: "settled",
@@ -972,7 +1004,7 @@ window.ECOSYSTEM = {
         "providers>evaluator": { q: "Beats GPT-4o on every benchmark tested", ql: "announcement thread, Sep 5-6, 2024", qk: "R" } },
       edges: [["providers", "media"], ["providers", "evaluator"]],
       extraEdges: [
-        { from: "evaluator", to: "providers", label: "independent re-evaluation refuted the claims", q: "We tested the initial Reflection 70B release and saw worse performance than Llama 3.1 70B.", ql: "Artificial Analysis, Sep 2024", qk: "R", bow: 44, lt: 0.73, ldx: -2, ldy: -44 },
+        { from: "evaluator", to: "providers", label: "independent re-evaluation refuted the claims", q: "We tested the initial Reflection 70B release and saw worse performance than Llama 3.1 70B.", ql: "Artificial Analysis, Sep 2024", qk: "R", bow: 44, lt: 0.82, ldx: -2, ldy: -44 },
         { from: "oversight", to: "providers", label: "community probes exposed API substitution", q: "'Reflection API' is a sonnet 3.5 wrapper with prompt. And they are currently disguising it by filtering out the string 'claude'.", ql: "community probe, Sep 8, 2024", qk: "R", bow: 40, lt: 0.68, ldx: 0, ldy: 0 }
       ] },
 
