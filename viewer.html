@@ -3,24 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Evaluation Ecosystem Explorer</title>
+<meta name="robots" content="noindex, nofollow">
+<title>Run Viewer · AI Evaluation Ecosystem Explorer</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="js/vendor/d3.v7.min.js"></script>
+<script src="js/loader.js?v=1"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
      height:100vh;display:flex;flex-direction:column;overflow:hidden;user-select:none}
+#trace-panel, #tp-text { user-select: text; }
+:is(a, button, select, input, [tabindex]):focus-visible { outline: 2px solid #3d5a8a; outline-offset: 2px; }
+@media (max-height: 560px) { body { min-height: 100vh; height: auto; overflow: auto; } }
+@media (max-width: 720px) { .chip { min-height: 24px; padding-top: 5px; padding-bottom: 5px; } }
 
 /* HEADER */
 #hdr{height:54px;background:#e8d9c2;border-bottom:1px solid #c8b498;
      display:flex;align-items:center;padding:0 20px;gap:16px;flex-shrink:0}
-#hdr-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#7a6045}
-#hdr-run{font-size:11px;color:#a08868;border-left:1px solid #c8b498;padding-left:14px;
+#hdr-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#7a6045;text-decoration:none}
+#hdr-title:hover{color:#2a1a0e}
+#hdr-run{font-size:11px;color:#7a6045;border-left:1px solid #c8b498;padding-left:14px;
          max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #hdr-round{margin-left:auto;font-size:24px;font-weight:700;color:#2a1a0e;
            font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-#hdr-round span{font-size:13px;font-weight:400;color:#a08868;margin-left:4px}
+#hdr-round span{font-size:13px;font-weight:400;color:#7a6045;margin-left:4px}
 #controls{display:flex;align-items:center;gap:6px;margin-left:8px}
 .cbtn{background:#d8c9b0;border:1px solid #c0ad94;color:#5a4030;width:30px;height:30px;
       border-radius:6px;cursor:pointer;font-size:12px;display:flex;align-items:center;
@@ -37,10 +45,10 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
 #orb-panel{width:55%;display:flex;flex-direction:column;border-right:1px solid #c8b498;min-width:0}
 #orb-top{display:flex;align-items:center;justify-content:space-between;
          padding:8px 18px 3px;flex-shrink:0}
-#orb-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#a08868}
+#orb-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#7a6045}
 #orb-legend{display:flex;gap:8px;align-items:center}
-.leg-prefix{font-size:9px;color:#a08868;font-weight:600;letter-spacing:.05em;white-space:nowrap;margin-right:2px}
-.leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:#a08868}
+.leg-prefix{font-size:9px;color:#7a6045;font-weight:600;letter-spacing:.05em;white-space:nowrap;margin-right:2px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:#7a6045}
 .leg-dot{width:8px;height:8px;border-radius:50%}
 #orb-svg-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:0 6px 2px;position:relative;overflow:hidden}
 #orb-svg{width:100%;height:100%}
@@ -100,7 +108,7 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
       border-bottom:1px solid #c8b498;min-height:0}
 .csec:last-child{border-bottom:none}
 .clbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-      color:#a08868;margin-bottom:4px;flex-shrink:0}
+      color:#7a6045;margin-bottom:4px;flex-shrink:0}
 .cwrap{flex:1;min-height:0;position:relative}
 .cwrap svg{width:100%;height:100%;display:block;overflow:visible}
 
@@ -110,7 +118,7 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
 #evt-log{display:flex;gap:6px;align-items:center;overflow-x:auto;
          scrollbar-width:none;font-size:10px;min-height:22px}
 #evt-log::-webkit-scrollbar{display:none}
-#evt-intro{color:#a08868;flex-shrink:0;font-size:10px}
+#evt-intro{color:#7a6045;flex-shrink:0;font-size:10px}
 .chip{display:flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;
       white-space:nowrap;flex-shrink:0;animation:fadeSlide .35s ease;font-size:10px}
 @keyframes fadeSlide{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
@@ -127,12 +135,12 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
 }
 #scrub-row{display:flex;align-items:center;gap:10px}
 #scrubber{flex:1;-webkit-appearance:none;appearance:none;height:3px;
-          background:#c8b498;border-radius:2px;outline:none;cursor:pointer}
+          background:#c8b498;border-radius:2px;cursor:pointer}
 #scrubber::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;
   border-radius:50%;background:#3d5a8a;cursor:pointer;box-shadow:0 0 0 3px rgba(61,90,138,.2)}
 #scrubber::-moz-range-thumb{width:12px;height:12px;border-radius:50%;
   background:#3d5a8a;border:none;cursor:pointer}
-#scrub-lbl{font-size:10px;color:#a08868;font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+#scrub-lbl{font-size:10px;color:#7a6045;font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
 /* SPOTLIGHT TOUR */
 #spotlight-overlay{position:fixed;inset:0;z-index:100;display:none}
 #spotlight-overlay.active{display:block}
@@ -142,7 +150,7 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
   box-shadow:0 4px 18px rgba(42,26,14,.22);pointer-events:none}
 .spot-label b{color:#2a1a0e}
 .spot-label .slbl-head{font-size:8.5px;font-weight:700;letter-spacing:.09em;
-  text-transform:uppercase;color:#a08868;margin-bottom:4px}
+  text-transform:uppercase;color:#7a6045;margin-bottom:4px}
 #spot-dismiss{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
   background:#3d5a8a;color:#f0e6d3;border:none;border-radius:4px;padding:8px 30px;
   font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
@@ -150,10 +158,10 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
   box-shadow:0 4px 16px rgba(42,26,14,.3)}
 #spot-dismiss:hover{background:#2a3d5a}
 #guide-btn{background:none;border:1px solid #c8b498;border-radius:50%;width:22px;height:22px;
-  font-size:10px;cursor:pointer;color:#a08868;font-family:inherit;line-height:1;
+  font-size:10px;cursor:pointer;color:#7a6045;font-family:inherit;line-height:1;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:6px}
 #guide-btn:hover{background:#e2d5b8;color:#5a4030}
-#hdr-back{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#a08868;text-decoration:none;border:1px solid #c8b498;border-radius:4px;padding:3px 10px;margin-right:4px;white-space:nowrap}#hdr-back:hover{color:#2a1a0e;border-color:#a08868}#viewer-loading{position:fixed;inset:0;background:#f0e6d3;display:flex;align-items:center;justify-content:center;z-index:200;font-size:12px;color:#a08868;font-family:inherit;letter-spacing:.04em}</style>
+#hdr-back{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#7a6045;text-decoration:none;border:1px solid #c8b498;border-radius:4px;padding:3px 10px;margin-right:4px;white-space:nowrap}#hdr-back:hover{color:#2a1a0e;border-color:#a08868}.hdr-context{font-size:11px;color:#3d5a8a;text-decoration:none;font-weight:600;letter-spacing:.04em;white-space:nowrap}.hdr-context:hover{color:#2a1a0e}#viewer-loading{position:fixed;inset:0;background:#f0e6d3;display:flex;align-items:center;justify-content:center;z-index:200;font-size:12px;color:#7a6045;font-family:inherit;letter-spacing:.04em}</style>
 </head>
 <body>
 
@@ -161,28 +169,30 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
 <div id="spotlight-overlay"></div>
 
 <div id="hdr">
-  <div id="hdr-title">AI Evaluation Ecosystem</div>
-  <a id="hdr-back" href="index.html">← Explorer</a><div id="hdr-run"></div>
+  <a id="hdr-title" href="index.html">The AI Evaluation Ecosystem</a>
+  <a id="hdr-back" href="explorer.html">← Explorer</a><div id="hdr-run"></div>
+  <a class="hdr-context" href="index.html">Ecosystem</a>
+  <a class="hdr-context" href="simulation.html">Simulation</a>
   <div id="hdr-round">Round <span id="rnum">0</span><span id="rtot"></span></div>
   <div id="controls">
-    <button class="cbtn" id="btn-restart" title="Restart">&#10226;</button>
-    <button class="cbtn" id="btn-prev" title="Previous">&#9664;</button>
-    <button class="cbtn on" id="btn-play" title="Play / Pause">&#9654;</button>
-    <button class="cbtn" id="btn-next" title="Next">&#9654;&#9474;</button>
-    <select id="speed">
+    <button class="cbtn" id="btn-restart" title="Restart" aria-label="Restart from round 0">&#10226;</button>
+    <button class="cbtn" id="btn-prev" title="Previous" aria-label="Previous round">&#9664;</button>
+    <button class="cbtn" id="btn-play" title="Play / Pause" aria-label="Play">&#9654;</button>
+    <button class="cbtn" id="btn-next" title="Next" aria-label="Next round">&#9654;&#9474;</button>
+    <select id="speed" aria-label="Playback speed">
       <option value="1800">0.5&times;</option>
       <option value="1200" selected>1&times;</option>
       <option value="600">2&times;</option>
       <option value="250">4&times;</option>
     </select>
-    <button id="guide-btn" title="How to read this">?</button>
+    <button id="guide-btn" title="How to read this" aria-label="How to read this page">?</button>
   </div>
 </div>
 
 <div id="main">
   <div id="orb-panel">
     <div id="orb-top">
-      <div id="orb-lbl">Providers &mdash; size = market share</div>
+      <div id="orb-lbl">Providers &middot; size = market share</div>
       <div id="orb-legend">
         <span class="leg-prefix">Portfolio split:</span>
         <svg viewBox="-14 -14 28 28" width="24" height="24" style="vertical-align:middle;flex-shrink:0">
@@ -200,7 +210,7 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
       <div id="trace-panel">
         <div id="tp-hdr">
           <div id="tp-name"></div>
-          <button id="tp-close">&#215;</button>
+          <button id="tp-close" aria-label="Close reasoning panel">&#215;</button>
         </div>
         <div id="tp-text"></div>
       </div>
@@ -238,9 +248,9 @@ body{background:#f0e6d3;color:#2a1a0e;font-family:'Inter',system-ui,sans-serif;
 </div>
 
 <div id="ftr">
-  <div id="evt-log"><span id="evt-intro">Events &mdash;</span></div>
+  <div id="evt-log"><span id="evt-intro">Events &middot;</span></div>
   <div id="scrub-row">
-    <input type="range" id="scrubber" min="0" value="0">
+    <input type="range" id="scrubber" min="0" value="0" aria-label="Round">
     <div id="scrub-lbl">0 / 0</div>
   </div>
 </div>
@@ -250,18 +260,36 @@ const _p   = new URLSearchParams(location.search);
 const _run = _p.get('run') || '';
 if (!_run) {
   document.getElementById('viewer-loading').innerHTML =
-    'No run specified. <a href="index.html">← Back to explorer</a>';
+    'No run was selected. <a href="explorer.html">Choose one in the explorer</a>.';
   throw new Error('no run param');
 }
+/* Path is <bucket>/llm/<model>/<cond>/seed_N or <bucket>/heuristic/<cond>/seed_N */
+const _parts       = _run.split('/').filter(Boolean);
+const _isHeuristic = _parts[1] !== 'llm';
+const _runModel    = _isHeuristic ? null : _parts[2];
+const _runCond     = _parts[_parts.length - 2] || '';
+const _runSeed     = (_parts[_parts.length - 1] || '').replace('seed_', '');
+const _MODEL_LABELS = {
+  'claude-sonnet-4-6': 'Sonnet 4.6', 'claude-opus-4-6': 'Opus 4.6',
+  'gpt-5.5-2026-04-23': 'GPT-5.5',
+};
+const _modelLabel = _isHeuristic ? 'Heuristic' : (_MODEL_LABELS[_runModel] || _runModel);
+const _condLabel  = _runCond.replace(/__/g, ' · ').replace(/_/g, ' ');
+// the header used to print raw path segments ("s5_aligned_private_only /
+// seed_42"); show the same words without the file-path shape
 document.getElementById('hdr-run').textContent =
-  _run.split('/').slice(-2).join(' / ');
-const _resp = await fetch('data/' + _run + '/frames.json');
-if (!_resp.ok) {
+  _condLabel + ' · seed ' + _runSeed + ' · ' + _modelLabel;
+document.title = _condLabel + ' seed ' + _runSeed + ' · Run Viewer';
+let SIM;
+try {
+  SIM = await Evaluarium.loadRun(_run);
+} catch (e) {
+  // visitor copy only; the run path and status code stay in the console
   document.getElementById('viewer-loading').innerHTML =
-    'Could not load <b>' + _run + '</b> (HTTP ' + _resp.status + '). <a href="index.html">← Back</a>';
-  throw new Error('fetch ' + _resp.status);
+    'This run could not be loaded. Please try again, or <a href="explorer.html">go back to the explorer</a>.';
+  console.error('run load failed:', _run, e);
+  throw e;
 }
-const SIM = await _resp.json();
 document.getElementById('viewer-loading').style.display = 'none';
 const providers = SIM.providers;
 const colors    = SIM.colors;
@@ -292,14 +320,19 @@ let playing = false;
 let timer   = null;
 let delay   = 1200;
 
+const REDUCED_MOTION = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 let activeTrace  = null;
 let traceWasPlay = false;
 
 function updateTraceContent(prov, pIdx) {
   const raw  = ((frames[cur].traces || {})[prov] || "").trim();
+  const fallback = _isHeuristic
+    ? "Heuristic run: this provider follows fixed decision rules, so there is no reasoning text."
+    : "No reasoning recorded this round.";
   document.getElementById("tp-name").textContent = prov;
   document.getElementById("tp-name").style.color = colors[pIdx];
-  document.getElementById("tp-text").textContent = raw || "No reasoning recorded this round.";
+  document.getElementById("tp-text").textContent = raw || fallback;
 }
 
 function showTrace(prov, pIdx) {
@@ -322,7 +355,7 @@ function toggleTrace(prov, pIdx) {
 }
 
 function showRegTrace(text, round) {
-  document.getElementById("tp-name").textContent = "Regulator — Round " + round;
+  document.getElementById("tp-name").textContent = "Regulator · Round " + round;
   document.getElementById("tp-name").style.color = "#5a4030";
   document.getElementById("tp-text").textContent = text || "No reasoning recorded.";
   document.getElementById("trace-panel").classList.add("open");
@@ -406,26 +439,33 @@ orbs.each(function(prov, i) {
    .attr("font-size","9.5").attr("font-weight","500").attr("fill","#7a6045").attr("letter-spacing",".05em")
    .text(shortName);
   g.append("text").attr("class","o-score-lbl").attr("text-anchor","middle").attr("dy","-3")
-   .attr("font-size","6.5").attr("font-weight","600").attr("fill","#a08868")
+   .attr("font-size","6.5").attr("font-weight","600").attr("fill","#7a6045")
    .attr("letter-spacing",".06em").attr("text-transform","uppercase").text("score");
   g.append("text").attr("class","o-score").attr("text-anchor","middle").attr("dy","9")
    .attr("font-size","14").attr("font-weight","700").attr("fill","#2a1a0e");
   g.append("text").attr("class","o-share").attr("text-anchor","middle").attr("dy","23")
-   .attr("font-size","9").attr("fill","#a08868");
+   .attr("font-size","9").attr("fill","#7a6045");
 
   g.append("rect").attr("class","o-rank-bg")
    .attr("x",bx-10).attr("y",by-8).attr("width",36).attr("height",14).attr("rx",3)
    .attr("fill","rgba(232,217,194,.88)").attr("stroke","#c8b498").attr("stroke-width",".6");
   g.append("text").attr("class","o-rank-num").attr("x",bx).attr("y",by+2)
-   .attr("text-anchor","start").attr("font-size","9").attr("font-weight","700").attr("fill","#a08868");
+   .attr("text-anchor","start").attr("font-size","9").attr("font-weight","700").attr("fill","#7a6045");
   g.append("text").attr("class","o-delta").attr("x",bx+18).attr("y",by+2)
-   .attr("text-anchor","start").attr("font-size","8.5").attr("font-weight","700").attr("fill","#a08868");
+   .attr("text-anchor","start").attr("font-size","8.5").attr("font-weight","700").attr("fill","#7a6045");
 
   g.append("circle").attr("class","inc-ring").attr("r", MAX_R + 10).attr("opacity", 0);
 
   g.append("circle").attr("class","orb-hit").attr("r", MAX_R * 1.35)
    .attr("fill","transparent")
-   .on("click", function(event) { event.stopPropagation(); toggleTrace(prov, i); });
+   .attr("tabindex", 0).attr("role", "button")
+   .attr("aria-label", prov + ": open reasoning")
+   .on("click", function(event) { event.stopPropagation(); toggleTrace(prov, i); })
+   .on("keydown", function(event) {
+     if (event.key === "Enter" || event.key === " ") {
+       event.preventDefault(); event.stopPropagation(); toggleTrace(prov, i);
+     }
+   });
 });
 
 const arcGen = d3.arc();
@@ -464,16 +504,22 @@ function updateOrbs(frame, r) {
     g.select(".o-share").text(((frame.shares[prov]||0)*100).toFixed(1)+"%");
     const rank  = currRanks[prov];
     const delta = prevRanks[prov] - rank;
-    g.select(".o-rank-num").text("#"+rank).attr("fill", rank===1 ? "#8a5a2a" : "#a08868");
+    g.select(".o-rank-num").text("#"+rank).attr("fill", rank===1 ? "#8a5a2a" : "#7a6045");
     if (delta > 0)      g.select(".o-delta").text("▲"+delta).attr("fill","#3d7a5a");
     else if (delta < 0) g.select(".o-delta").text("▼"+Math.abs(delta)).attr("fill","#8a3a3a");
-    else                g.select(".o-delta").text("").attr("fill","#a08868");
+    else                g.select(".o-delta").text("").attr("fill","#7a6045");
 
     if ((frame.incidents || {})[prov]) {
-      const ring = g.select(".inc-ring").node();
-      ring.classList.remove("flash");
-      void ring.offsetWidth;
-      ring.classList.add("flash");
+      if (REDUCED_MOTION) {
+        g.select(".inc-ring").style("opacity", .85);
+      } else {
+        const ring = g.select(".inc-ring").node();
+        ring.classList.remove("flash");
+        void ring.offsetWidth;
+        ring.classList.add("flash");
+      }
+    } else if (REDUCED_MOTION) {
+      g.select(".inc-ring").style("opacity", 0);
     }
   });
 }
@@ -539,12 +585,12 @@ function buildShareChart(el, incidentData) {
   g.append("g").attr("transform",`translate(0,${h})`)
    .call(d3.axisBottom(x).ticks(Math.min(N,8)).tickSize(0).tickPadding(5))
    .call(a=>a.select(".domain").attr("stroke","#c8b498"))
-   .call(a=>a.selectAll("text").attr("fill","#a08868").attr("font-size","8"));
+   .call(a=>a.selectAll("text").attr("fill","#7a6045").attr("font-size","8"));
   g.append("g")
    .call(d3.axisLeft(y).ticks(3).tickFormat(d3.format(".0%")).tickSize(-w))
    .call(a=>a.select(".domain").remove())
    .call(a=>a.selectAll(".tick line").attr("stroke","#d8c9b0").attr("stroke-dasharray","2,3"))
-   .call(a=>a.selectAll("text").attr("fill","#a08868").attr("font-size","8").attr("dx","-2"));
+   .call(a=>a.selectAll("text").attr("fill","#7a6045").attr("font-size","8").attr("dx","-2"));
 
   const byRound = d3.group(incidentData, d => d.r);
   const midy = h / 2;
@@ -559,7 +605,7 @@ function buildShareChart(el, incidentData) {
        .attr("fill", colors[inc.pIdx])
        .attr("opacity", .72)
        .attr("stroke", "rgba(240,230,211,.5)").attr("stroke-width", .6)
-       .append("title").text(`${providers[inc.pIdx]} — incident R${r}`);
+       .append("title").text(`${providers[inc.pIdx]} · incident R${r}`);
     });
   });
 
@@ -590,12 +636,12 @@ function buildGapChart(el) {
   g.append("g").attr("transform",`translate(0,${h})`)
    .call(d3.axisBottom(x).ticks(Math.min(N,8)).tickSize(0).tickPadding(5))
    .call(a=>a.select(".domain").attr("stroke","#c8b498"))
-   .call(a=>a.selectAll("text").attr("fill","#a08868").attr("font-size","8"));
+   .call(a=>a.selectAll("text").attr("fill","#7a6045").attr("font-size","8"));
   g.append("g")
    .call(d3.axisLeft(y).ticks(4).tickSize(-w))
    .call(a=>a.select(".domain").remove())
    .call(a=>a.selectAll(".tick line").attr("stroke","#d8c9b0").attr("stroke-dasharray","2,3"))
-   .call(a=>a.selectAll("text").attr("fill","#a08868").attr("font-size","8").attr("dx","-2"));
+   .call(a=>a.selectAll("text").attr("fill","#7a6045").attr("font-size","8").attr("dx","-2"));
   const nl = g.append("line").attr("y1",0).attr("y2",h)
    .attr("stroke","#5a4030").attr("stroke-width",1.2).attr("opacity",.4).attr("stroke-dasharray","3,3");
   return {x,nl};
@@ -611,8 +657,12 @@ function moveNow(r) {
 
 /* ---- Newspaper ---- */
 
+function escapeHTML(t) {
+  return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 function colorizeProviders(text) {
-  let out = text;
+  let out = escapeHTML(text);
   providers.forEach((p, i) => {
     const escaped = p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     out = out.replace(new RegExp(`\\b${escaped}\\b`, "g"),
@@ -641,7 +691,7 @@ function updateNewspaper(frame, r) {
                 : cf >= 1e6 ? `$${Math.round(cf/1e6)}M`
                 : cf > 0   ? `$${Math.round(cf/1e3)}K`
                 : "$0";
-    const arrow = cf > prev ? "&#9650;" : "&mdash;";
+    const arrow = cf > prev ? "&#9650;" : "&ndash;";
     const short = p.replace(" Labs","").replace(" AI","").replace(" Systems","");
     return `<span class="tick-item" style="color:${colors[i]}">${short}&nbsp;${cfStr}&nbsp;${arrow}</span>`;
   }).join('<span class="tick-sep">&middot;</span>');
@@ -664,15 +714,35 @@ function updateNewspaper(frame, r) {
 /* ---- Event log chips ---- */
 
 const MAX_CHIPS = 14;
+const renderedChipRounds = new Set();
 
 function pushEvents(frame, r) {
   const log = document.getElementById("evt-log");
+  // Scrubbed backwards: drop chips from rounds after r so they re-render on replay.
+  [...log.querySelectorAll(".chip")].forEach(ch => {
+    if (+ch.dataset.round > r) ch.remove();
+  });
+  renderedChipRounds.forEach(rr => { if (rr > r) renderedChipRounds.delete(rr); });
+  // Ask the DOM, not the Set: MAX_CHIPS pruning removes old chips while their
+  // rounds stay marked rendered, so scrubbing back past the prune point used to
+  // wipe the log and leave it empty until you stepped forward again.
+  if (log.querySelector('.chip[data-round="' + r + '"]')) return;
+  renderedChipRounds.add(r);
   frame.events.forEach(ev => {
     const chip = document.createElement("div");
     chip.className = "chip " + ev.kind;
+    chip.dataset.round = r;
     chip.innerHTML = `<span class="chip-rnd">R${r}</span> ${ev.text}`;
     if (ev.kind === "reg" && ev.trace) {
+      chip.setAttribute("tabindex", "0");
+      chip.setAttribute("role", "button");
+      chip.setAttribute("aria-label", "Regulator, round " + (ev.round ?? r) + ": open reasoning");
       chip.addEventListener("click", () => showRegTrace(ev.trace, ev.round ?? r));
+      chip.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault(); showRegTrace(ev.trace, ev.round ?? r);
+        }
+      });
     }
     log.appendChild(chip);
     while (log.children.length > MAX_CHIPS + 1) log.removeChild(log.children[1]);
@@ -708,6 +778,7 @@ function advance() {
 function startPlay() {
   playing = true;
   document.getElementById("btn-play").innerHTML = "&#9646;&#9646;";
+  document.getElementById("btn-play").setAttribute("aria-label", "Pause");
   document.getElementById("btn-play").classList.add("on");
   timer = setInterval(advance, delay);
 }
@@ -716,6 +787,7 @@ function stopPlay() {
   playing = false;
   clearInterval(timer); timer = null;
   document.getElementById("btn-play").innerHTML = "&#9654;";
+  document.getElementById("btn-play").setAttribute("aria-label", "Play");
   document.getElementById("btn-play").classList.remove("on");
 }
 
@@ -753,7 +825,10 @@ function hideSpotlight() {
   ov.classList.remove("active");
   ov.innerHTML = "";
   sessionStorage.setItem("tour_done", "1");
-  if (_spotlightFirstDismiss) { _spotlightFirstDismiss = false; startPlay(); }
+  if (_spotlightFirstDismiss) {
+    _spotlightFirstDismiss = false;
+    if (!REDUCED_MOTION) startPlay();
+  }
 }
 
 function showSpotlight() {
@@ -858,7 +933,7 @@ function showSpotlight() {
      <span style="color:#5a9a72">&#9632;</span> Safety &nbsp;
      <span style="color:#c47a3c">&#9632;</span> Product<br>
      <b>Number</b> = benchmark score (0&ndash;1)<br>
-     <span style="color:#a08868;font-size:9px">Click orb to read reasoning</span>`);
+     <span style="color:#7a6045;font-size:9px">Click orb to read reasoning</span>`);
 
   label(segR.left, segR.bottom + 8,
     `<div class="slbl-head">Consumer dots</div>
@@ -869,17 +944,17 @@ function showSpotlight() {
   label(shrWrapR.left + 8, shrWrapR.top + 8,
     `<div class="slbl-head">Market share over time</div>
      Stacked area per provider.<br>
-     <span style="color:#a08868;font-size:9px">&#9650; = incident onset round</span>`);
+     <span style="color:#7a6045;font-size:9px">&#9650; = incident onset round</span>`);
 
   label(gapWrapR.left + 8, gapWrapR.top + 8,
     `<div class="slbl-head">Score &minus; satisfaction gap</div>
      Positive = benchmarks overstate<br>real user outcomes.<br>
-     <span style="color:#a08868;font-size:9px">Zero = perfectly calibrated</span>`);
+     <span style="color:#7a6045;font-size:9px">Zero = perfectly calibrated</span>`);
 
   label(evtR.left + 8, evtR.top - 90,
     `<div class="slbl-head">Event chips</div>
-     <span style="color:#1a3a6a;font-weight:700">Blue chips</span> = regulator interventions<br>
-     &mdash; click to read the regulator&rsquo;s<br>full reasoning for that action.<br>
+     <span style="color:#1a3a6a;font-weight:700">Blue chips</span> = regulator interventions;<br>
+     click one to read the regulator&rsquo;s<br>full reasoning for that action.<br>
      <span style="color:#6a2a0a;font-weight:700">Amber chips</span> = incident onsets`);
 
   const btn = document.createElement("button");
@@ -906,7 +981,7 @@ document.getElementById("guide-btn").addEventListener("click", showSpotlight);
     gapCtx   = buildGapChart(document.getElementById("gap-wrap"));
     render(0);
     if (!sessionStorage.getItem("tour_done")) showSpotlight();
-    else startPlay();
+    else if (!REDUCED_MOTION) startPlay();
   });
 }
 </script>
