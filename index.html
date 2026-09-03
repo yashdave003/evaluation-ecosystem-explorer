@@ -960,7 +960,7 @@ section a { color: #3d5a8a; }
       // it; the text moves with it, keeping the tip-to-text gap at 7.
       el("line", { x1: ix, y1: legY, x2: ix + 26, y2: legY, stroke: c, "stroke-width": 2.4 }, g);
       el("polygon", { points: `${ix + 32},${legY} ${ix + 24},${legY - 4} ${ix + 24},${legY + 4}`, fill: c }, g);
-      txt(g, ix + 39, legY, F.FAM_LABEL[k], { fill: c, "font-size": 12.5, "font-weight": 600 });
+      txt(g, ix + 39, legY, F.FAM_LABEL[k], { fill: c, "font-size": 10, "font-weight": 600 });
       g.addEventListener("click", e2 => {
         e2.stopPropagation();
         const sid = "fam-" + k;
@@ -989,7 +989,7 @@ section a { color: #3d5a8a; }
         transform: `translate(${geo.chevx.toFixed(1)},${geo.chevy.toFixed(1)}) rotate(${geo.chev.toFixed(1)})` }, top);
       // label at the baked (solved) position
       const lines = e.label.split("\n");
-      const fs = 10, lh = 12.5;
+      const fs = 8, lh = 10.5;
       const maxLen = Math.max(...lines.map(l => l.length));
       // 8, not 12: the 0.52 char-width estimate already overshoots real glyph
       // widths, so 6 units per side read as slack inside the box (YD, screenshot
@@ -1017,11 +1017,11 @@ section a { color: #3d5a8a; }
         "stroke-width": 1.5, class: "box-main" }, g);
       el("path", { d: `M${x},${y + 8} Q${x},${y} ${x + 8},${y} L${x + G.NW - 8},${y} Q${x + G.NW},${y} ${x + G.NW},${y + 8} L${x + G.NW},${y + G.NHt} L${x},${y + G.NHt} Z`, fill: c }, g);
       txt(g, p.x, y + G.NHt / 2 + 1, a.name,
-        { "text-anchor": "middle", fill: "#f0e6d3", "font-size": 13.5, "font-weight": 700 });
+        { "text-anchor": "middle", fill: "#f0e6d3", "font-size": 11, "font-weight": 700 });
       const sub = txt(g, p.x, y + G.NHt + 9, a.sub,
-        { "text-anchor": "middle", fill: c, "font-size": 10.5, "font-weight": 600 });
+        { "text-anchor": "middle", fill: c, "font-size": 8.5, "font-weight": 600 });
       const role = txt(g, p.x, y + G.NHt + 21, a.role,
-        { "text-anchor": "middle", fill: c, "fill-opacity": .75, "font-size": 10, "font-style": "italic" });
+        { "text-anchor": "middle", fill: c, "fill-opacity": .75, "font-size": 8, "font-style": "italic" });
       fitQueue.push([sub, G.NW - 14], [role, G.NW - 14]);
       g.addEventListener("mouseenter", () => {
         state.hoverActor = id;
@@ -1063,11 +1063,11 @@ section a { color: #3d5a8a; }
         fill: "#6e685c" }, g);
       lines.forEach((ln, i) => {
         txt(g, sx, y + 8 + i * 12, ln,
-          { "text-anchor": "middle", fill: "#f0e6d3", "font-size": 10, "font-weight": 700 });
+          { "text-anchor": "middle", fill: "#f0e6d3", "font-size": 8, "font-weight": 700 });
       });
       roleLines.forEach((ln, i) => {
         const roleT = txt(g, sx, y + bandH + 9 + i * 11, ln,
-          { "text-anchor": "middle", fill: P.station.text, "font-size": 8.5, "font-style": "italic" });
+          { "text-anchor": "middle", fill: P.station.text, "font-size": 8, "font-style": "italic" });
         fitQueue.push([roleT, SW - 10]);
       });
       g.addEventListener("mouseenter", () => {
@@ -1098,9 +1098,9 @@ section a { color: #3d5a8a; }
           const a = el("a", { href: ch.href, target: "_blank" }, g);
           a.addEventListener("click", e2 => e2.stopPropagation());
           el("rect", { x: cx2, y, width: cw, height: 18, rx: 4, fill: "#e0d0b8", stroke: "#c8b498" }, a);
-          txt(a, cx2 + cw / 2, y + 9, ch.t, { "text-anchor": "middle", fill: P.accent, "font-size": 9.5, "font-weight": 600 });
+          txt(a, cx2 + cw / 2, y + 9, ch.t, { "text-anchor": "middle", fill: P.accent, "font-size": 8, "font-weight": 600 });
         } else {
-          txt(g, cx2 + 2, y + 9, ch.t, { fill: P.muted, "font-size": 9.5, "font-style": "italic" });
+          txt(g, cx2 + 2, y + 9, ch.t, { fill: P.muted, "font-size": 8, "font-style": "italic" });
         }
         cx2 += cw + 8;
       });
@@ -1148,9 +1148,9 @@ section a { color: #3d5a8a; }
       const g = zoneGroup(rr);
       el("rect", { x, y: 578, width: w, height: 108, rx: 10, fill,
         stroke: "#c9bda6", "stroke-width": 1, "stroke-dasharray": "6 4", class: "box-main" }, g);
-      txt(g, x + 20, 600, rr.title, { fill: P.station.text, "font-size": 15.5, "font-weight": 700 });
-      txt(g, x + 20, 622, rr.flow, { fill: "#7a6045", "font-size": 10.5, "font-style": "italic" });
-      txt(g, x + 20, 640, rr.tag, { fill: P.muted, "font-size": 9.5, "font-style": "italic" });
+      txt(g, x + 20, 600, rr.title, { fill: P.station.text, "font-size": 12.5, "font-weight": 700 });
+      txt(g, x + 20, 622, rr.flow, { fill: "#7a6045", "font-size": 8.5, "font-style": "italic" });
+      txt(g, x + 20, 640, rr.tag, { fill: P.muted, "font-size": 8, "font-style": "italic" });
       zoneChips(g, E.panes[rr.id].chips, x + 20, 650);
       centerOf[rr.id] = { x: x + w / 2, y: 632 }; halfOf[rr.id] = { hw: w / 2, hh: 54 };
       return g;
@@ -1223,11 +1223,11 @@ section a { color: #3d5a8a; }
           // keep provenance labels clear of boxes and each other
           const lp = bez(a1.x, a1.y, cpx, cpy, a2.x, a2.y, ee.lt || 0.5);
           const lxx = lp.x + (ee.ldx || 0), lyy = lp.y + (ee.ldy || 0);
-          const w = ee.label.length * 9 * 0.52 + 7;   // matched to the canonical trim
+          const w = ee.label.length * 8 * 0.52 + 7;   // matched to the canonical trim
           el("rect", { x: lxx - w / 2, y: lyy - 8, width: w, height: 16, rx: 3,
             fill: "rgba(240,230,211,.95)", stroke: "#a08868", "stroke-width": 0.7 }, gl);
           txt(gl, lxx, lyy, ee.label,
-            { "text-anchor": "middle", fill: ink, "font-size": 9, "font-style": "italic" });
+            { "text-anchor": "middle", fill: ink, "font-size": 8, "font-style": "italic" });
         }
         if (ee.q) {
           el("title", {}, g).textContent = quoteTip(ee.q, ee.ql, ee.qk);
