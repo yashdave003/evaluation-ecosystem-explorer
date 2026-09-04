@@ -1,0 +1,396 @@
+/* ============================================================================
+   aims.css - shared foundation for all five pages.
+
+   Targets the LIVE aimslab.stanford.edu theme (the `.rd-*` system), not
+   benchmark-caliper. Values are lifted from the AIMS bundles as measured
+   2026-09-03; see docs/aims_theme_audit.md for provenance on every number.
+
+   Load order in each page is: font links, then this file, then the page's own
+   <style>. Page rules therefore win at equal specificity, which is what lets
+   the retheme land page by page instead of all at once.
+
+   Phase A only. Component classes (.rd-btn, .rd-paper-card, .rd-chip) arrive
+   in Phase B; the figure keeps its own palette object until Phase C.
+   ========================================================================== */
+
+:root {
+  /* ---- Stanford palette (identical across both AIMS themes) -------------- */
+  --white: #fff;
+  --fog-light: #f4f4f4;
+  --fog: #dad7cb;
+  --black: #2e2d29;
+  --cool-grey: #53565a;
+  --cardinal: #8c1515;
+  --digital-red: #b1040e;
+  --digital-blue: #006cb8;
+  --digital-green: #008566;
+  --stone: #7f7776;
+
+  --palo-alto: #175e54;
+  --palo-alto-light: #2d716f;
+  --palo-alto-dark: #014240;
+  --lagunita: #007c92;
+  --lagunita-light: #009ab4;
+  --lagunita-dark: #006b81;
+  --sky: #4298b5;
+  --sky-light: #67afd2;
+  --poppy: #e98300;
+  --plum: #620059;
+
+  --black-90: #43423e;
+  --black-80: #585754;
+  --black-60: #767674;
+  --black-30: #c0c0bf;
+  --black-20: #d5d5d4;
+  --black-10: #eaeaea;
+
+  /* ---- AIMS live-theme layer -------------------------------------------- */
+  --rd-warm: #f3efec;
+  --rd-warm-2: #f6f2ee;
+  --rd-beige: #f0e7de;
+  --rd-sage: #eaf1ed;
+  --rd-sage-dark: #d8e4dd;
+  --rd-cardinal: #8c1515;
+  --rd-accent: #e98300;
+  --rd-darkred: #401415;
+  --rd-dark: #0d0f0f;
+
+  --rd-grotesk: "Google Sans Flex", "Helvetica Neue", Arial, sans-serif;
+  --rd-serif: "Times New Roman", Times, serif;
+  --rd-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --duration-normal: .2s;
+  --duration-slow: .4s;
+
+  /* ---- Semantic aliases -------------------------------------------------
+     Page CSS should reference THESE, not the raw palette above, so that a
+     later palette change is one edit here rather than a sweep of five files.
+
+     AIMS builds depth out of black alphas over the warm ground rather than
+     out of solid tint steps, which is why the line and hover tokens are
+     translucent. Our old warm system used opaque tints for the same job. --- */
+  --ground: var(--rd-warm);          /* page ground                          */
+  --ground-2: var(--rd-warm-2);      /* hover ground, insets, dropdowns      */
+  --surface: var(--white);           /* cards and panels sitting on ground   */
+  --surface-soft: #ffffffad;         /* AIMS card fill: white at 68%         */
+
+  --ink: #000;                       /* AIMS runs pure black, not --black    */
+  --ink-2: #000000cc;                /* 80% - body copy on busy grounds      */
+  --ink-3: #00000099;                /* 60% - secondary                      */
+  --ink-4: #0000007a;                /* 48% - faint, captions, separators    */
+
+  --line: #0000001f;                 /* standard hairline                    */
+  --line-soft: #00000014;            /* quieter divider                      */
+  --line-strong: #00000047;          /* card hover border                    */
+
+  --accent: var(--rd-cardinal);
+  --accent-dark: var(--rd-darkred);
+  --accent-warm: var(--rd-accent);   /* poppy, for hover arrows              */
+}
+
+/* ---- Reset (was duplicated inline in all five pages) --------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--rd-grotesk);
+  font-weight: 300;
+  line-height: 1.375;
+  color: var(--ink);
+  background: var(--ground);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* AIMS uses digital blue for focus and cardinal-at-18% for selection, and
+   keeps both even where the rest of the theme drops digital blue. */
+:focus-visible { outline: 2px solid var(--digital-blue); outline-offset: 2px; }
+::selection { background: #8c15152e; }
+
+img { max-width: 100%; }
+
+/* ---- Type scale ---------------------------------------------------------
+   Fluid, weight 300, negative tracking. This is the AIMS signature and the
+   single largest departure from what we had (small, 600-700, normal
+   tracking). Sizes are the measured values, not approximations.
+
+   Prose does NOT get this scale. Per the density decision, heroes, headings
+   and lede copy take AIMS sizing; tables, chrome and dense UI keep a tighter
+   scale, exactly as AIMS itself does in its component layer. ------------- */
+
+.rd-display {
+  font-size: clamp(2.5rem, 7vw, 6.75rem);
+  font-weight: 300; line-height: .98; letter-spacing: -.045em;
+}
+.rd-page-title {
+  font-size: clamp(2.35rem, 5.6vw, 4.5rem);
+  font-weight: 300; line-height: 1; letter-spacing: -.035em;
+}
+.rd-h2 {
+  font-size: clamp(1.9rem, 3.8vw, 3.125rem);
+  font-weight: 300; line-height: 1.04; letter-spacing: -.02em;
+}
+.rd-h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.875rem);
+  font-weight: 300; line-height: 1.15; letter-spacing: -.01em;
+}
+.rd-lead {
+  font-size: clamp(1.05rem, 1.45vw, 1.25rem);
+  font-weight: 300; line-height: 1.45;
+}
+
+/* Serif is reserved for citation and paper titles, which is the one job AIMS
+   gives it. Do not use it for section headings. */
+.rd-serif-title {
+  font-family: var(--rd-serif);
+  font-size: 1.5rem; font-weight: 400; line-height: 1.17; letter-spacing: 0;
+}
+
+/* Mono, uppercase, wide-tracked: eyebrows, meta rows, stat values. The live
+   site sets eyebrows in cool grey; caliper sets them in cardinal. Following
+   the live site. */
+.eyebrow {
+  font-family: var(--rd-mono);
+  font-size: .75rem; font-weight: 400;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--cool-grey);
+}
+.rd-mono {
+  font-family: var(--rd-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Layout -------------------------------------------------------------
+   AIMS containers run wide (1334px) and constrain prose separately rather
+   than narrowing the container. Measure caps live on the text, not the box. */
+.rd-container {
+  max-width: 1334px; margin-inline: auto;
+  padding-inline: clamp(20px, 3.5vw, 50px);
+}
+.rd-band { padding-block: clamp(56px, 8vw, 112px); }
+.rd-measure { max-width: 58ch; }
+.rd-rule { border: 0; border-top: 1px solid var(--line-soft); }
+
+/* ---- Links --------------------------------------------------------------
+   The live site inherits color and underlines in cardinal-at-35%, going full
+   cardinal on hover. This DEPARTS from Stanford's own rule that links are
+   digital blue, which benchmark-caliper follows. Matching aimslab was the
+   explicit instruction, so the divergence is deliberate and recorded here
+   rather than split down the middle. */
+.rd-prose a {
+  color: inherit;
+  text-decoration: underline #8c151559;
+  text-underline-offset: 3px;
+  transition: color var(--duration-normal);
+}
+.rd-prose a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+/* ---- Grid textures ------------------------------------------------------
+   The measurement-flavoured backgrounds that give AIMS pages their signature.
+   Carried now because Phase B components sit on them. */
+.bg-dot-grid-fine {
+  background-image: radial-gradient(circle, var(--black-20) .5px, transparent .5px);
+  background-size: 12px 12px;
+}
+.bg-grid-dots {
+  background-image: radial-gradient(circle, var(--black-20) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.bg-ruled-lines {
+  background-image: repeating-linear-gradient(to bottom,
+    transparent, transparent 31px, var(--black-10) 31px, var(--black-10) 32px);
+}
+
+/* ==========================================================================
+   Phase B - components
+
+   Two rules of thumb held throughout:
+
+   - Corners are pill (30px / 9999px) or square. AIMS has no mid-radius
+     anywhere, so the old 4px and 8px radii go.
+   - Anything small and label-like is Roboto Mono, uppercase, tracked .08em.
+     That is how AIMS carries hierarchy at small sizes instead of bolding.
+   ========================================================================== */
+
+/* ---- Site header --------------------------------------------------------
+   Was duplicated inline across five pages. AIMS runs its header transparent
+   and fades to --rd-warm on scroll; our pages scroll straight away, so the
+   scrolled state is used unconditionally.
+
+   The lockup is a link back to the lab plus our own wordmark. Deliberately
+   NOT a copy of the AIMS nav: benchmark-caliper copied it and its nav is now
+   visibly stale (still advertising Competition and Workshop). Nothing here
+   can drift, because nothing here mirrors anything. */
+.site-hdr {
+  position: sticky; top: 0; z-index: 30;
+  background: var(--ground); border-bottom: 1px solid var(--line);
+  padding: 0 clamp(16px, 3vw, 32px); min-height: 60px;
+  display: flex; align-items: center; gap: 14px;
+}
+.site-lab {
+  font-family: var(--rd-mono); font-size: .66rem; font-weight: 400;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); text-decoration: none; white-space: nowrap;
+  transition: color var(--duration-normal);
+}
+.site-lab:hover { color: var(--accent); }
+.site-div { width: 1px; height: 20px; background: var(--line); flex-shrink: 0; }
+.site-wordmark {
+  font-size: 1.02rem; font-weight: 500; letter-spacing: -.02em;
+  color: var(--ink); text-decoration: none; white-space: nowrap;
+  transition: color var(--duration-normal);
+}
+.site-wordmark:hover { color: var(--accent); }
+
+.site-nav { display: flex; align-items: center; gap: .25rem; margin-left: auto; }
+.site-nav a {
+  display: inline-flex; align-items: center;
+  border-radius: 9999px; padding: .45rem .9rem;
+  font-size: .9rem; font-weight: 500; color: var(--ink);
+  text-decoration: none; white-space: nowrap;
+  transition: color var(--duration-normal), background-color var(--duration-normal);
+}
+.site-nav a:hover { background: var(--accent); color: var(--white); }
+.site-nav a.here { background: var(--accent); color: var(--white); font-weight: 600; }
+
+/* Narrow widths. The lab attribution stays: it is the reason the header exists
+   in this form, so it shrinks rather than disappearing. The wordmark is what
+   wraps, since it is the longest and the most redundant with the page title. */
+@media (max-width: 720px) {
+  .site-hdr { flex-wrap: wrap; min-height: 0; padding: 8px 14px; gap: 6px 10px; }
+  .site-lab { font-size: .58rem; letter-spacing: .1em; }
+  .site-wordmark { font-size: .92rem; }
+  .site-nav { gap: 2px; flex-wrap: wrap; justify-content: flex-end; }
+  .site-nav a { font-size: .82rem; padding: .35rem .7rem; }
+}
+@media (max-width: 460px) {
+  /* Below this the three-part lockup cannot hold one line at any size worth
+     reading, so the rule goes and the wordmark takes its own row. */
+  .site-div { display: none; }
+  .site-wordmark { flex-basis: 100%; }
+}
+
+/* ---- Buttons ------------------------------------------------------------
+   AIMS's primary button is a BLACK pill that turns cardinal on hover, not a
+   cardinal button. Cardinal is the hover state, which is why the rest of the
+   page can carry cardinal accents without competing with it. */
+.rd-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--rd-mono); font-size: .75rem; font-weight: 400;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--white); background: var(--rd-dark);
+  border: 1px solid var(--rd-dark); border-radius: 30px;
+  padding: .55rem 1.35rem; cursor: pointer; text-decoration: none;
+  transition: background-color .25s, color .25s, border-color .25s;
+}
+.rd-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--white); }
+.rd-btn-ghost { color: inherit; background: none; border-color: currentColor; }
+.rd-btn-ghost:hover { color: var(--white); background: var(--rd-dark); border-color: var(--rd-dark); }
+
+/* ---- Chips --------------------------------------------------------------
+   Same pill, one size down, sitting on the warm ground rather than on black. */
+.rd-chip {
+  display: inline-flex; align-items: center;
+  font-family: var(--rd-mono); font-size: .66rem; font-weight: 400;
+  letter-spacing: .08em; text-transform: uppercase;
+  background: var(--ground); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 30px;
+  padding: .3rem .8rem; cursor: pointer;
+  transition: background-color var(--duration-normal), color var(--duration-normal),
+              border-color var(--duration-normal);
+}
+.rd-chip:hover { border-color: var(--line-strong); }
+.rd-chip.on, .rd-chip[aria-pressed="true"] {
+  background: var(--rd-dark); border-color: var(--rd-dark); color: var(--white);
+}
+
+/* ---- Cards and rows ----------------------------------------------------- */
+.rd-card {
+  display: flex; flex-direction: column;
+  background: var(--surface-soft); border: 1px solid var(--line);
+  padding: clamp(22px, 2.4vw, 34px);
+  transition: background-color .3s, border-color .3s;
+}
+.rd-card:hover { background: var(--surface); border-color: var(--line-strong); }
+.rd-card-compact { padding: clamp(18px, 1.6vw, 24px); }
+
+/* Entry card: hover fills to white and the arrow lights poppy. */
+.rd-entry {
+  display: flex; flex-direction: column; min-height: 100%;
+  border: 1px solid var(--line); text-decoration: none; color: inherit;
+  padding: clamp(22px, 2.6vw, 32px) clamp(20px, 2.4vw, 28px) clamp(18px, 2vw, 24px);
+  transition: background-color .3s;
+}
+.rd-entry:hover { background: var(--surface); }
+.rd-entry-arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: none; width: 30px; height: 30px; font-size: .9rem;
+  border: 1px solid; border-radius: 50%;
+  transition: background-color .3s, color .3s;
+}
+.rd-entry:hover .rd-entry-arrow { background: var(--accent-warm); color: var(--ink); }
+
+/* Dense list row. Squared off, hairline-separated, hover to warm. */
+.rd-row {
+  display: block; border-bottom: 1px solid var(--line);
+  transition: background-color .25s;
+}
+.rd-row:hover { background: var(--ground-2); }
+.rd-row-list > .rd-row:first-child { border-top: 1px solid var(--line); }
+
+/* ---- Stats -------------------------------------------------------------- */
+.rd-stat {
+  background: var(--surface-soft); border: 1px solid var(--line);
+  padding: clamp(20px, 2.2vw, 30px);
+}
+.rd-stat-value {
+  font-family: var(--rd-mono); color: var(--accent);
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem); font-weight: 300; line-height: 1;
+}
+.rd-stat-label { margin-top: .6rem; font-size: .9rem; font-weight: 300; line-height: 1.4; opacity: .75; }
+
+/* ---- Small link forms --------------------------------------------------- */
+.rd-arrow-link {
+  display: inline-flex; align-items: baseline; gap: .45rem;
+  color: var(--accent); text-decoration: none; font-weight: 500;
+  transition: color var(--duration-normal);
+}
+.rd-arrow-link:hover { color: var(--accent-warm); }
+.rd-footer-link { opacity: .85; transition: opacity var(--duration-normal); }
+.rd-footer-link:hover { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Meta line: mono, uppercase, quiet, above a hairline. AIMS uses this under
+   every paper card, and it is the pattern our citation rows already wanted. */
+.rd-meta {
+  font-family: var(--rd-mono); font-size: .65rem; letter-spacing: .08em;
+  text-transform: uppercase; line-height: 1.35; opacity: .6;
+}
+
+/* ---- Motion -------------------------------------------------------------
+   Scroll reveal with an 80ms stagger. Part of the AIMS identity; without it
+   the pages read flatter than the ones linking to them. Opt-in per element
+   via .reveal, activated by adding .is-visible. */
+.reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: .16s; }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: .24s; }
+.reveal-stagger > .reveal:nth-child(5) { transition-delay: .32s; }
+.reveal-stagger > .reveal:nth-child(6) { transition-delay: .4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .reveal.is-visible { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -102,18 +102,47 @@ window.ECOSYSTEM = {
             CURVE_K: 0.17, CURVE_MIN: 28, CURVE_MAX: 100, CURVE_SIGN: 1 }
   },
 
-  // ---- Warm site theme (overrides fig colors at render time) ---------------
+  // ---- AIMS site theme (overrides fig colors at render time) ----------------
+  // Retheme 2026-09-03. Every value below is a Stanford palette colour, so the
+  // figure now speaks the same colour language as the page around it.
+  //
+  // The scheme is deliberately two-register: each edge FAMILY takes the bright
+  // Stanford hue and the actor most associated with it takes the dark variant.
+  // Families are thin strokes and actors are filled headers carrying light
+  // text, so the two need different weights of the same idea.
+  //
+  // Actor colours have a hard constraint the families do not: each is used
+  // three ways, as a header fill behind #f3efec text, as a 1.5px box stroke,
+  // and as body text on white. So each must be dark enough to carry light text
+  // AND to read as text on white. That is why poppy cannot be used at full
+  // strength for Funders.
   palette: {
-    ink: "#2a1a0e", muted: "#a08868", cream: "#f0e6d3", panel: "#e8d9c2",
-    accent: "#3d5a8a",
+    ink: "#000000", muted: "#767674", cream: "#f3efec", panel: "#ffffff",
+    accent: "#8c1515",                                  // cardinal
     actors: {
-      providers: "#35507e", evaluator: "#8a2f2b", consumers: "#3f6b45",
-      regulator: "#5c3a78", funders: "#9a5b1f", media: "#2f6b7e"
+      providers: "#00548f",   // digital blue, dark
+      evaluator: "#8c1515",   // cardinal
+      consumers: "#175e54",   // palo alto
+      regulator: "#620059",   // plum
+      // DERIVED, not an official Stanford value: poppy (#e98300) darkened.
+      // At full strength poppy fails WCAG AA against both #f3efec header text
+      // and white, which Stanford's own web guidance requires. Darkening to
+      // meet the 4.5 threshold follows that guidance rather than departing
+      // from it, but the hex is ours and should be flagged if AIMS ever
+      // publishes an official dark poppy.
+      funders:   "#8f5100",
+      media:     "#007c92"    // lagunita
     },
-    families: { scores: "#2f6b9e", events: "#3f7a47", capital: "#b05f14" },
+    // The three families are peer channels and must carry equal visual weight.
+    // Poppy at full strength (#e98300) does not: its chroma is far above
+    // digital blue and digital green, so the capital arcs read as the loudest
+    // thing on the map and imply a salience the model does not claim. Darkened
+    // to sit at a comparable luminance. Second derived value; see funders.
+    families: { scores: "#006cb8", events: "#008566", capital: "#bf6a00" },
     // Grey = the mark of "no modeled channel touches me". Stations never take
-    // a family color; opacity is reserved for spotlight state.
-    station: { border: "#8a8274", fill: "#eae2d2", text: "#57544a" }
+    // a family color; opacity is reserved for spotlight state. Now Stanford's
+    // own neutrals (stone / black-10 / cool grey) rather than warm greys.
+    station: { border: "#7f7776", fill: "#eaeaea", text: "#53565a" }
   },
 
   // ---- Grey stations: on-ring, unmodeled actors ----------------------------
