@@ -184,32 +184,43 @@ svg .leg-item { cursor: pointer; }
 #lit { margin-top: 26px; }
 /* Solid hairlines rather than dashes, and the citation title in serif: the two
    things that make an AIMS paper listing read as one. */
-.lit-row { display: flex; align-items: center; gap: 12px; padding: 9px 10px;
+/* flex-start, not center: with a two-line entry, centring floats the dots and
+   the chips down beside the subtitle and detaches them from the name they
+   belong to. Everything now sits on the first line and the subtitle hangs
+   under it, which is how a bibliography entry reads. */
+.lit-row { display: flex; align-items: flex-start; gap: 12px; padding: 11px 10px;
   border-bottom: 1px solid var(--line-soft); cursor: pointer;
   transition: background-color .25s; }
+/* Optical alignment against the serif cap height of the name. */
+.lit-row > .lit-dots { margin-top: 6px; }
+.lit-row > :is(.lit-meta, .lit-state, .ev-status, .ev-study, .lit-approx) { margin-top: 2px; }
 .lit-row:hover { background: var(--ground-2); }
 .lit-row.active { background: var(--ground-2); box-shadow: inset 3px 0 0 var(--accent); }
 .lit-dots { display: flex; gap: 3px; flex-shrink: 0; }
 .lit-dot { width: 9px; height: 9px; }
-/* The name holds its width; only the trailing clause after the colon gives way.
-   min-width: 0 on the shrinking half is what lets ellipsis work inside flex. */
-.lit-title { flex: 1; min-width: 0; display: flex; align-items: baseline;
+/* Two lines per entry: the name on its own line, the rest of the title beneath
+   it. Squeezing both onto one line meant the name competed with the date and
+   the chips for about 240px, so either the name truncated or, once the shrink
+   factors were tuned to protect it, all 15 subtitles did. Stacking them costs
+   about 220px of strip height and truncates nothing at all. */
+.lit-title { flex: 1; min-width: 0; display: flex; flex-direction: column;
+  align-items: flex-start; gap: 2px;
   font-family: var(--rd-serif); font-size: 1.05rem;
-  font-weight: 400; line-height: 1.18; color: var(--ink); }
-.lit-title > a { display: flex; align-items: baseline; min-width: 0; }
-/* The shrink factors are the whole trick. Flexbox distributes a shortfall in
-   proportion to shrink x basis, so equal factors truncate both halves at once,
-   which is what was eating the names. Giving the subtitle a factor of 1000
-   makes it absorb essentially the entire deficit before the name loses a
-   character. The name only starts truncating once the subtitle is gone. */
-.lit-name { white-space: nowrap; flex: 0 1 auto; min-width: 0;
-  overflow: hidden; text-overflow: ellipsis; }
-.lit-sub { white-space: nowrap; flex: 0 1000 auto; min-width: 0;
-  overflow: hidden; text-overflow: ellipsis; opacity: .6; }
-/* Once the column starts shrinking there is no room for a subtitle that would
-   be two words and an ellipsis. Browser zoom narrows the viewport the same way
-   a smaller screen does, so this covers zoomed reading as well. */
-@media (max-width: 900px) { .lit-sub { display: none; } }
+  font-weight: 400; line-height: 1.2; color: var(--ink); }
+.lit-title > a { display: flex; flex-direction: column; align-items: flex-start;
+  gap: 2px; min-width: 0; max-width: 100%; }
+/* Wrap to a second line before giving up, rather than ellipsing on the first.
+   The chips make the title column vary from 261px to 442px across rows, so a
+   handful of entries are 50 to 200px short of fitting on one line; a clamp at
+   two lines absorbs all of them and only the rows that need it grow. */
+.lit-name { max-width: 100%; overflow: hidden; white-space: normal;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+/* Sans and smaller, so the serif name stays the thing you scan. This echoes the
+   AIMS paper card, which pairs a serif title with sans supporting text. */
+.lit-sub { max-width: 100%; overflow: hidden; white-space: normal;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  font-family: var(--rd-grotesk); font-size: .8rem;
+  font-weight: 300; line-height: 1.35; color: var(--ink-3); }
 /* Undecorated at rest: AIMS leaves paper titles clean and lets the row carry
    the affordance. Underline appears on hover only. */
 .lit-title a { color: inherit; text-decoration: none;
@@ -296,6 +307,10 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
      pushed the page into horizontal scroll while nowrap held it on one line. */
   .lit-meta { white-space: normal; letter-spacing: .05em;
     flex-shrink: 1; min-width: 0; }
+  /* A phone has no hover, so the tooltip that carries the full title on desktop
+     is not reachable here. Give both halves a third line rather than clip text
+     the reader has no other way to see. */
+  .lit-name, .lit-sub { -webkit-line-clamp: 3; }
   /* The "highlight" affordance chips push rows past the viewport at phone
      widths; the row itself is tappable and the active state restyles it. */
   .lit-state { display: none; }
@@ -1429,7 +1444,9 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     // question is the name. The punctuation stays with the name in both cases.
     const m = /^(.*?[:?])\s(.+)$/.exec(s.title);
     const name = m ? m[1].replace(/:$/, "") : s.title;
-    const rest = m ? (m[1].endsWith(":") ? ": " : " ") + m[2] : "";
+    // No leading colon: the subtitle sits on its own line, where the line
+    // break does the separating and a leading ": " would read as a typo.
+    const rest = m ? m[2] : "";
     const fill = el2 => {
       const n = document.createElement("span");
       n.className = "lit-name";
