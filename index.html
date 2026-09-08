@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:slnt,wght@-10,300..700;0,300..700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aims.css?v=1">
+<link rel="stylesheet" href="css/aims.css?v=2">
 <script src="js/ecosystem_data_v2.js?v=52"></script>
 <style>
 /* Reset and body base now live in css/aims.css. */
@@ -52,10 +52,22 @@ main { max-width: 752px; margin: 0 auto; padding: 36px 24px 64px; }
 .hero h1 { font-size: clamp(2.25rem, 4.8vw, 4.15rem); font-weight: 300;
   line-height: .98; letter-spacing: -.04em; text-wrap: balance;
   max-width: 18ch; margin-bottom: 18px; }
-.hero p { font-size: clamp(1.05rem, 1.45vw, 1.25rem); font-weight: 300;
-  line-height: 1.45; color: var(--ink-2); max-width: 58ch; margin-bottom: 10px; }
+/* Same size and measure as body copy: the motivation runs long, and a lede
+   size that drops to body size one paragraph later reads as a mistake. */
+.hero p { font-size: 1rem; font-weight: 300; line-height: 1.7;
+  color: var(--ink-2); max-width: 68ch; margin-bottom: 12px; }
 .hero .fine { font-size: .9rem; font-weight: 300; line-height: 1.5;
   color: var(--ink-3); max-width: 64ch; }
+/* Motivation first, then the finding as a question and its answer with the
+   boundary in the same breath. The question uses the same heading scale as
+   every other section; one type scale, and the cards carry the links. */
+section.question { margin-top: 36px; }
+section.question h2 { max-width: 34ch; }
+/* The bridge paragraph precedes the question; give the heading room to land. */
+section.question p + h2 { margin-top: 26px; }
+/* The grey-box note sits right above the figure it describes. */
+p.figure-note { font-size: .9rem; font-weight: 300; line-height: 1.5; color: var(--ink-3);
+  max-width: 64ch; margin: 28px 0 14px; }
 
 /* ---- Figure card ---- */
 /* Square corners: AIMS has no mid-radius, only pills and right angles. */
@@ -316,6 +328,17 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
   .lit-state { display: none; }
   .lit-row { flex-wrap: wrap; }
 }
+/* ---- Wide screens ----
+   Prose readability is set by characters per line, so the column and the
+   type scale together: 752px at 16px and 860px at 18px both hold ~68
+   characters. The entry cards are read in pieces, not as lines, so they
+   break out to the figure's width instead. */
+@media (min-width: 1200px) {
+  main { max-width: 860px; }
+  .hero p, section p { font-size: 1.125rem; }
+  p.figure-note, .pathline { font-size: 1rem; }
+  #entry { width: 1000px; margin-left: calc((100% - 1000px) / 2); }
+}
 </style>
 </head>
 <body>
@@ -333,24 +356,49 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
 <main>
   <div class="hero">
-    <h1>The frame</h1>
+    <h1>Benchmarks do more than measure.</h1>
     <p>
-      Benchmarks do more than measure. Once one gains traction, its influence runs in both
-      directions: the same scores that signal progress also reshape how providers allocate
-      research effort, where funders direct capital, and which failure modes regulators attend
-      to. Yet a benchmark is usually judged as a one-shot instrument: calibration, validity,
-      contamination resistance, with the world around it held fixed. This work reframes the
-      question from “is this metric well-calibrated?” to “what does the ecosystem do with this
-      benchmark once it exists?” Our simulation models that ecosystem as six stylized
-      actors (providers, evaluators, consumers, regulators, funders, and media) linked by
-      feedback loops through development, the market, and regulation.
-    </p>
-    <p class="fine">
-      The six actors are a simplification. The grey boxes on the ring are real actor types the
-      model leaves out: colored means modeled, grey means outside the modeled core. Click any box
-      to see who's inside.
+      Once one gains traction, its influence runs in both directions: the same scores that
+      signal progress also reshape how providers allocate research effort, where funders direct
+      capital, and which failure modes regulators attend to. Yet a benchmark is usually judged
+      as a one-shot instrument: calibration, validity, contamination resistance, with the world
+      around it held fixed. This work reframes the question from “is this metric
+      well-calibrated?” to “what does the ecosystem do with this benchmark once it exists?” Our
+      simulation models that ecosystem as six stylized actors (providers, evaluators, consumers,
+      regulators, funders, and media) linked by feedback loops through development, the market,
+      and regulation.
     </p>
   </div>
+
+  <!-- The finding comes second, once the reader knows what kind of question
+       the site asks. Motivation, then one concrete question, then the map.
+       Same heading scale as every other section; the cards below carry the
+       links, so this block is prose only. -->
+  <section class="question">
+    <p>
+      The most common response to benchmark gaming today is to stop showing the test: hold
+      items back, keep the evaluation set private, publish scores less often. That is a decision
+      about the ecosystem, so it is the one we start with.
+    </p>
+    <h2>Does making benchmark content private close the gap between what scores say and
+      what users get?</h2>
+    <p>
+      In the simulation, it helps unevenly. A hidden benchmark is harder to aim at, but what
+      benchmarks reward and what users need still differ, so the gap narrows for some consumer
+      groups and widens for others rather than shrinking overall. This form of holdout design
+      changes where the gap sits more than whether there is one; the
+      <a href="simulation.html#holdouts">explainer's case study</a> walks through the mechanism.
+    </p>
+    <p>
+      This finding holds under the stylized simulation model presented here, in settings where
+      benchmark and leaderboard results steer what providers build and what buyers, coverage,
+      and capital reward, and where consumer needs are heterogeneous. The simulation generates
+      hypotheses for empirical work to test; the explainer's
+      <a href="simulation.html#limits">claims and limitations</a> section states the full
+      boundary, grades each structural assumption by the evidence behind it, and lists what is
+      left out on purpose.
+    </p>
+  </section>
 
   <div id="entry">
     <a href="#fig-card" class="e-here">
@@ -362,16 +410,22 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     <a href="simulation.html">
       <div class="en">Explainer</div>
       <div class="et">How the simulation works</div>
-      <div class="ed">The one mechanism that drives the result, the capability space, a round end to end, and who can see what.</div>
+      <div class="ed">The one mechanism that drives the result, the capability space, a round end to end, who can see what, and where the claims stop.</div>
       <div class="eg">Read the walkthrough →</div>
     </a>
-    <a href="explorer.html">
+    <a href="compare.html?mode=across&amp;conditions=public_only%7Cbaseline%7Cprivate_only&amp;model=__heuristic__&amp;agg=1">
       <div class="en">Results</div>
-      <div class="et">Run Explorer</div>
-      <div class="ed">Every run, condition by condition and seed by seed. Play one back, or compare conditions side by side.</div>
-      <div class="eg">Browse the runs →</div>
+      <div class="et">The runs</div>
+      <div class="ed">The holdout comparison above, then every run condition by condition and seed by seed, each one playable.</div>
+      <div class="eg">See the comparison →</div>
     </a>
   </div>
+
+  <p class="fine figure-note">
+    The six actors are a simplification. The grey boxes on the ring are real actor types the
+    model leaves out: colored means modeled, grey means outside the modeled core. Click any box
+    to see who's inside.
+  </p>
 
   <div id="fig-card">
     <div id="fig-body">
@@ -421,17 +475,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
       state and holds its own private state (shown when you click its box), while ground truth,
       meaning true capabilities, true consumer satisfaction, and the benchmarks' true weights, is
       held by the simulation and hidden from every actor. The gap between what scores say and
-      what users experience is measured against that hidden tier. As a case study, the paper
-      applies the simulation to benchmark holdout design and finds that private holdout
-      benchmarks redistribute, rather than close, the gap between benchmark scores and user
-      experience.
-    </p>
-    <p>
-      The simulation generates hypotheses; it is not evidence that these dynamics occur in
-      deployed systems. Its results are claimed only for settings where public benchmarks and
-      leaderboards drive decisions and consumers need different things. The explainer's
-      <a href="simulation.html#limits">final section</a> states that boundary, grades each
-      structural assumption by the evidence behind it, and lists what is left out on purpose.
+      what users experience is measured against that hidden tier.
     </p>
   </section>
 

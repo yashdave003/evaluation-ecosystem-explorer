@@ -368,6 +368,26 @@ img { max-width: 100%; }
   text-transform: uppercase; line-height: 1.35; opacity: .6;
 }
 
+/* ---- Boundary line ------------------------------------------------------
+   The claims-and-limitations statement. One string, in js/boundary.js,
+   mounted on every results surface. Compare and viewer links get forwarded
+   on their own, and a curve without its boundary next to it reads as a claim
+   about real markets. */
+.rd-boundary {
+  display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline;
+  padding: 16px clamp(16px, 3vw, 32px) 28px; border-top: 1px solid var(--line);
+  font-size: .78rem; font-weight: 300; line-height: 1.5; color: var(--ink-3);
+}
+.rd-boundary a {
+  color: var(--accent); text-decoration: none; font-weight: 500; white-space: nowrap;
+}
+.rd-boundary a:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* Fixed-viewport pages (the viewer) carry it as one compact line inside their
+   own footer instead of a page footer. */
+.rd-boundary.rd-boundary-compact {
+  padding: 0; border-top: 0; font-size: .7rem; line-height: 1.3; gap: 2px 12px;
+}
+
 /* ---- Motion -------------------------------------------------------------
    Scroll reveal with an 80ms stagger. Part of the AIMS identity; without it
    the pages read flatter than the ones linking to them. Opt-in per element

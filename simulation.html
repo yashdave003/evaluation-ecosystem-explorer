@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:slnt,wght@-10,300..700;0,300..700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aims.css?v=1">
+<link rel="stylesheet" href="css/aims.css?v=2">
 <script src="js/sim_data.js?v=1"></script>
 <style>
 /* Reset and body base now live in css/aims.css. */
@@ -319,6 +319,13 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
+/* ---- Wide screens ----
+   Column and type scale together so lines keep ~68 characters; see index.html. */
+@media (min-width: 1200px) {
+  main { max-width: 860px; }
+  .hero .lede, section p { font-size: 1.125rem; }
+  section p.small { font-size: 1rem; }
+}
 </style>
 </head>
 <body>
@@ -617,7 +624,7 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
         Moving from public benchmarks to private holdouts redistributes, rather than closes, the
         gap between benchmark scores and user experience. Aiming gets harder, but what benchmarks
         reward and what users need still differ, so the gap reappears elsewhere in the roster.
-        Holdout design changes where the gap sits, not whether there is one.
+        This form of holdout design changes where the gap sits, not whether there is one.
       </p>
     </div>
     <p class="small">
@@ -649,8 +656,9 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
     <div class="callout">
       <div class="ct">The boundary</div>
       <p>
-        The results apply to settings where public benchmarks and leaderboards drive decisions and
-        consumers need different things. To judge whether they carry to a new setting, say a
+        The results apply to settings where benchmark and leaderboard results steer what
+        providers build and what buyers, coverage, and capital reward, and where consumer needs
+        are heterogeneous. To judge whether they carry to a new setting, say a
         domain evaluated entirely through internal test suites, ask which of the four conditions
         below it weakens.
       </p>

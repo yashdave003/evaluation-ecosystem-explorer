@@ -9,8 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:slnt,wght@-10,300..700;0,300..700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aims.css?v=1">
+<link rel="stylesheet" href="css/aims.css?v=2">
 <script src="js/loader.js?v=1"></script>
+<script src="js/boundary.js?v=4"></script>
 <style>
 /* Reset and body base now live in css/aims.css. */
 
@@ -238,7 +239,7 @@ heuristic runs follow fixed decision rules.</div>
   <div class="qs-cards">
     <div class="qs-card">
       <div class="qs-q">Do private benchmark holdouts close the gap between scores and user experience?</div>
-      <div class="qs-a">No. They redistribute it across consumer groups.</div>
+      <div class="qs-a">In the simulation, unevenly: the gap moves between consumer groups rather than shrinking overall.</div>
       <a class="qs-link" href="compare.html?mode=across&amp;conditions=public_only%7Cbaseline%7Cprivate_only&amp;model=__heuristic__&amp;agg=1">See the comparison &rarr;</a>
     </div>
     <div class="qs-card">
@@ -247,8 +248,8 @@ heuristic runs follow fixed decision rules.</div>
       <a class="qs-link" href="explorer.html?bucket=core_evaluator_capture">Browse the runs &rarr;</a>
     </div>
     <div class="qs-card">
-      <div class="qs-q">Can the simulation absorb a real-world shock?</div>
-      <div class="qs-a">An external low-cost-entrant shock is replayed against the simulated market as a validation exercise.</div>
+      <div class="qs-q">What happens when a DeepSeek-style shock is replayed into the market?</div>
+      <div class="qs-a">A shock replay. It checks that an injected news narrative reaches provider reasoning and changes what they build; the check would have failed had the narrative stayed in the prompt. Comparing the result with what real labs did is a separate, empirical claim.</div>
       <a class="qs-link" href="viewer.html?run=exogenous_validation%2Fllm%2Fclaude-sonnet-4-6%2Fev1_deepseek_shock%2Fseed_42">Watch a run &rarr;</a>
     </div>
   </div>
@@ -265,6 +266,7 @@ heuristic runs follow fixed decision rules.</div>
 <div id="error-banner" class="hidden"></div>
 <div id="grid"></div>
 <div id="empty" class="hidden">No runs match the current filters.</div>
+<div data-boundary></div>
 
 <script>
 /* ---- Constants ---- */
@@ -272,7 +274,10 @@ const BUCKET_META = {
   core_privacy:           { label: "Privacy Ladder"       },
   structural_ablations:   { label: "Structural Ablations" },
   core_evaluator_capture: { label: "Evaluator Capture"    },
-  exogenous_validation:   { label: "Exogenous Validation" },
+  /* Display label only. The data path keeps its original exogenous_validation
+     name because it is baked into the published dataset layout; the run is a
+     propagation check, and the label says so. */
+  exogenous_validation:   { label: "Shock Replay" },
 };
 
 const CONDITION_COLORS = {
@@ -316,7 +321,7 @@ const CONDITION_META = {
   initial_uniform_capability: "Every provider starts with identical capabilities.",
   public_only__initial_uniform_capability: "Combined condition: fully public benchmarks and every provider starts with identical capabilities.",
   private_only__initial_uniform_capability: "Combined condition: fully private benchmarks and every provider starts with identical capabilities.",
-  ev1_deepseek_shock: "Replays an external shock (a low-cost entrant) against the simulated market.",
+  ev1_deepseek_shock: "Shock replay, single seed: a DeepSeek-style low-cost entrant is injected at round 25 as a capability jump plus a news narrative. It checks that the narrative reaches provider reasoning and changes R&D allocation; the check would have failed had the narrative stayed in the prompt. Comparing the result with real 2025 data is a separate empirical claim. The data path keeps its original exogenous_validation name.",
   s5_aligned_public_only: "Robustness check: a benchmark schedule whose weights start aligned with population needs, run at the fully public rung.",
   s5_aligned_private_only: "Robustness check: a benchmark schedule whose weights start aligned with population needs, run at the fully private rung.",
   s8_agentic_public_only: "Robustness check: an agentic-revolution benchmark schedule (tool-use benchmark from round 0, web navigation and issue resolution arriving late) run at the fully public rung.",
