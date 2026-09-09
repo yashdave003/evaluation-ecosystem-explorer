@@ -5,9 +5,12 @@
    benchmark-caliper. Values are lifted from the AIMS bundles as measured
    2026-09-03; see docs/aims_theme_audit.md for provenance on every number.
 
-   Load order in each page is: font links, then this file, then the page's own
+   Load order in each page is: fonts.css, then this file, then the page's own
    <style>. Page rules therefore win at equal specificity, which is what lets
    the retheme land page by page instead of all at once.
+
+   The faces named in --rd-grotesk and --rd-mono below are self-hosted; see
+   css/fonts.css. Nothing on this site requests fonts.googleapis.com any more.
 
    Phase A only. Component classes (.rd-btn, .rd-paper-card, .rd-chip) arrive
    in Phase B; the figure keeps its own palette object until Phase C.

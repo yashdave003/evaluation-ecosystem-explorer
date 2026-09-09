@@ -4,13 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Compare · AI Evaluation Ecosystem Explorer</title>
+<title>Compare · AI Evaluation Ecosystem</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<script src="js/vendor/d3.v7.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:slnt,wght@-10,300..700;0,300..700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aims.css?v=2">
+<script defer src="js/vendor/d3.v7.min.js"></script>
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/aims.css?v=3">
 <script src="js/loader.js?v=1"></script>
 <script src="js/boundary.js?v=4"></script>
 <style>
@@ -127,7 +125,7 @@
 <body>
 
 <div id="hdr">
-  <a id="hdr-back" href="explorer.html">← Explorer</a>
+  <a id="hdr-back" href="explorer.html">← Runs</a>
   <div id="hdr-title">Compare</div>
   <div id="hdr-sub"></div>
   <a class="hdr-context" href="index.html">Ecosystem</a>
@@ -162,7 +160,7 @@
 function fatal(msg) {
   const el = document.getElementById("loading-msg");
   el.classList.remove("hidden");
-  el.innerHTML = msg + ' <a href="explorer.html">&#8592; Back to explorer</a>';
+  el.innerHTML = msg + ' <a href="explorer.html">&#8592; Back to runs</a>';
 }
 if (typeof d3 === "undefined") {
   fatal("This page could not start. Please refresh the page.");
@@ -390,7 +388,7 @@ function rebuildCharts(series) {
     svg.append("text").attr("class","src-lbl")
       .attr("x", MARGIN.left + cx).attr("y", PANEL_H - 3).attr("text-anchor","end")
       .attr("font-size", 8).attr("fill", "#0000007a")
-      .text(`${short} · ${modelLabel(state.model)} planners · ${seedsDesc}`);
+      .text(`${short} · ${modelLabel(state.model)} ${state.model === "__heuristic__" ? "mode" : "actors"} · ${seedsDesc}`);
 
     svg.on("click", function(event) {
       const [mx] = d3.pointer(event);

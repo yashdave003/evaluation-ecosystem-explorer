@@ -161,7 +161,7 @@ window.ECOSYSTEM = {
     { id: "oversight",   name: "Independent Oversight",              ang: 30,
       role: "audit & public pressure",
       neighbors: ["evaluator", "media", "regulator"],
-      why: "investigates incidents and audits conduct: the half of an evaluator's role the model leaves out" },
+      why: "investigates incidents and audits conduct: the half of an evaluator's role the simulation leaves out" },
     { id: "appdev",      name: "Application Developers",             ang: 150, dy: 10,
       role: "consume models; serve them onward",
       neighbors: ["providers", "consumers"],
@@ -279,7 +279,7 @@ window.ECOSYSTEM = {
       ] },
 
     oversight: {
-      note: "investigates incidents and audits conduct: the half of an evaluator's role the model leaves out",
+      note: "investigates incidents and audits conduct: the half of an evaluator's role the simulation leaves out",
       flavors: [
         { label: "researchers & auditors",
           orgs: ["university labs", "EvalEval Coalition", "STAIR", "CITP", { t: "EleutherAI", k: "eleutherai" }] },
@@ -555,7 +555,7 @@ window.ECOSYSTEM = {
       // battle data, lifting ArenaHard win-rates from 23.5% to 49.9%.
       extraEdges: [
         { from: "evaluator", to: "providers", label: "preferential testing and data access", q: "Access to Chatbot Arena data has an outsized impact on performance.", ql: "Sec 1, findings item 3", qk: "M", bow: 50, lt: 0.49, ldx: 2, ldy: -6 },
-        { from: "consumers", to: "evaluator", label: "crowd votes are the instrument", q: "the main beneficiaries of this free human feedback appear to be commercial entities who are frequently preferred for private testing", ql: "Sec 4.1", qk: "M", lt: 0.4, ldx: 0, ldy: 0 }
+        { from: "consumers", to: "evaluator", label: "crowd votes are the score", q: "the main beneficiaries of this free human feedback appear to be commercial entities who are frequently preferred for private testing", ql: "Sec 4.1", qk: "M", lt: 0.4, ldx: 0, ldy: 0 }
       ] },
 
     { id: "raji2019", kind: "paper", fit: "strong", featured: 5,

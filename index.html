@@ -6,11 +6,9 @@
 <meta name="robots" content="noindex, nofollow">
 <title>The AI Evaluation Ecosystem</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:slnt,wght@-10,300..700;0,300..700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aims.css?v=2">
-<script src="js/ecosystem_data_v2.js?v=52"></script>
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/aims.css?v=3">
+<script src="js/ecosystem_data_v2.js?v=54"></script>
 <style>
 /* Reset and body base now live in css/aims.css. */
 
@@ -61,10 +59,22 @@ main { max-width: 752px; margin: 0 auto; padding: 36px 24px 64px; }
 /* Motivation first, then the finding as a question and its answer with the
    boundary in the same breath. The question uses the same heading scale as
    every other section; one type scale, and the cards carry the links. */
-section.question { margin-top: 36px; }
-section.question h2 { max-width: 34ch; }
-/* The bridge paragraph precedes the question; give the heading room to land. */
-section.question p + h2 { margin-top: 26px; }
+section.questions { margin-top: 30px; }
+section.questions .eyebrow { margin-bottom: 4px; }
+/* Question rows: body-size text with a mono status tag in the gutter. Two
+   tags only, run and open; the tag is the whole point of the list. */
+.q-list { margin-top: 6px; border-top: 1px solid var(--line); }
+.q-row { display: flex; gap: 16px; align-items: baseline; padding: 13px 0;
+  border-bottom: 1px solid var(--line-soft); font-size: 1rem; font-weight: 300;
+  line-height: 1.6; color: var(--ink-2); }
+.q-row > div { max-width: 68ch; }
+.q-row b { font-weight: 500; color: var(--ink); }
+.q-row a { color: inherit; text-decoration: underline #8c151559; text-underline-offset: 3px; }
+.q-row a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.q-s { flex: 0 0 3.2rem; font-family: var(--rd-mono); font-size: .62rem; letter-spacing: .12em;
+  text-transform: uppercase; }
+.q-s.run { color: var(--accent); }
+.q-s.open { color: var(--ink-3); }
 /* The grey-box note sits right above the figure it describes. */
 p.figure-note { font-size: .9rem; font-weight: 300; line-height: 1.5; color: var(--ink-3);
   max-width: 64ch; margin: 28px 0 14px; }
@@ -335,7 +345,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
    break out to the figure's width instead. */
 @media (min-width: 1200px) {
   main { max-width: 860px; }
-  .hero p, section p { font-size: 1.125rem; }
+  .hero p, section p, .q-row { font-size: 1.125rem; }
   p.figure-note, .pathline { font-size: 1rem; }
   #entry { width: 1000px; margin-left: calc((100% - 1000px) / 2); }
 }
@@ -350,7 +360,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
   <nav class="site-nav">
     <a href="index.html" class="here">Ecosystem</a>
     <a href="simulation.html">Simulation</a>
-    <a href="explorer.html">Explorer</a>
+    <a href="explorer.html">Runs</a>
   </nav>
 </div>
 
@@ -361,69 +371,75 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
       Once one gains traction, its influence runs in both directions: the same scores that
       signal progress also reshape how providers allocate research effort, where funders direct
       capital, and which failure modes regulators attend to. Yet a benchmark is usually judged
-      as a one-shot instrument: calibration, validity, contamination resistance, with the world
-      around it held fixed. This work reframes the question from “is this metric
-      well-calibrated?” to “what does the ecosystem do with this benchmark once it exists?” Our
-      simulation models that ecosystem as six stylized actors (providers, evaluators, consumers,
-      regulators, funders, and media) linked by feedback loops through development, the market,
-      and regulation.
+      on its own, as a one-shot measurement, with the world around it held fixed. This work
+      reframes the question from “is this metric well-calibrated?” to “what does the ecosystem
+      do with this benchmark once it exists?”
     </p>
   </div>
 
-  <!-- The finding comes second, once the reader knows what kind of question
-       the site asks. Motivation, then one concrete question, then the map.
-       Same heading scale as every other section; the cards below carry the
-       links, so this block is prose only. -->
-  <section class="question">
-    <p>
-      The most common response to benchmark gaming today is to stop showing the test: hold
-      items back, keep the evaluation set private, publish scores less often. That is a decision
-      about the ecosystem, so it is the one we start with.
-    </p>
-    <h2>Does making benchmark content private close the gap between what scores say and
-      what users get?</h2>
-    <p>
-      In the simulation, it helps unevenly. A hidden benchmark is harder to aim at, but what
-      benchmarks reward and what users need still differ, so the gap narrows for some consumer
-      groups and widens for others rather than shrinking overall. This form of holdout design
-      changes where the gap sits more than whether there is one; the
-      <a href="simulation.html#holdouts">explainer's case study</a> walks through the mechanism.
-    </p>
-    <p>
-      This finding holds under the stylized simulation model presented here, in settings where
-      benchmark and leaderboard results steer what providers build and what buyers, coverage,
-      and capital reward, and where consumer needs are heterogeneous. The simulation generates
-      hypotheses for empirical work to test; the explainer's
-      <a href="simulation.html#limits">claims and limitations</a> section states the full
-      boundary, grades each structural assumption by the evidence behind it, and lists what is
-      left out on purpose.
-    </p>
-  </section>
-
+  <!-- The navigation pane. Three layers, labeled by kind of claim in the
+       eyebrow and by the specific thing in the title: proposition, instrument, runs. -->
   <div id="entry">
     <a href="#fig-card" class="e-here">
-      <div class="en">You are here</div>
-      <div class="et">The ecosystem</div>
-      <div class="ed">The actor map, who sits outside the modeled core, and the literature on each interaction.</div>
-      <div class="eg">Below on this page</div>
+      <div class="en">Proposition</div>
+      <div class="et">The ecosystem frame</div>
+      <div class="ed">Evaluation is coupled to its ecosystem: it shapes, and is shaped by, feedback loops among actors that differ in what they want, what they see, and what they can do.</div>
+      <div class="eg">See the map and the literature behind it, below</div>
     </a>
     <a href="simulation.html">
-      <div class="en">Explainer</div>
-      <div class="et">How the simulation works</div>
-      <div class="ed">The one mechanism that drives the result, the capability space, a round end to end, who can see what, and where the claims stop.</div>
+      <div class="en">Instrument</div>
+      <div class="et">A generative agent-based model</div>
+      <div class="ed">Providers, the regulator, and funders reason with an LLM inside a rule-based market, so one design choice can change while everything else holds fixed. The paper studies one design choice in detail through it: benchmark holdout design.</div>
       <div class="eg">Read the walkthrough →</div>
     </a>
-    <a href="compare.html?mode=across&amp;conditions=public_only%7Cbaseline%7Cprivate_only&amp;model=__heuristic__&amp;agg=1">
-      <div class="en">Results</div>
-      <div class="et">The runs</div>
-      <div class="ed">The holdout comparison above, then every run condition by condition and seed by seed, each one playable.</div>
-      <div class="eg">See the comparison →</div>
+    <a href="explorer.html">
+      <div class="en">Runs</div>
+      <div class="et">Every run the simulation has produced</div>
+      <div class="ed">All simulation runs across conditions and seeds, with the ability to filter by condition, mode, or model, and compare conditions side by side.</div>
+      <div class="eg">Browse the runs →</div>
     </a>
   </div>
+
+  <!-- Expands the Runs card: what we ask with the simulation. One question
+       studied in detail in the paper; the rest open. -->
+  <section class="questions" id="questions">
+    <div class="eyebrow">Questions we ask with the simulation</div>
+    <div class="q-list">
+      <div class="q-row">
+        <span class="q-s run">run</span>
+        <div>
+          <b>Does making benchmark content private close the gap between what scores say and
+          what simulated users get?</b> In the simulation, the gap generally decreases, but
+          not uniformly.
+          <a href="simulation.html#holdouts">Read here for more details</a>.
+        </div>
+      </div>
+      <div class="q-row">
+        <span class="q-s open">open</span>
+        <div>What changes when the evaluator runs as a company, charging fees and selling early
+          access? Runs exist; no finding is claimed from them yet.</div>
+      </div>
+      <div class="q-row">
+        <span class="q-s open">open</span>
+        <div>Do EU-style precautionary and US-style light-touch regulatory regimes push safety
+          investment and market structure in different directions?</div>
+      </div>
+      <div class="q-row">
+        <span class="q-s open">open</span>
+        <div>What does a mandate to disclose safety investment, in the style of California
+          SB 53, change for consumers, funders, and media?</div>
+      </div>
+      <div class="q-row">
+        <span class="q-s open">open</span>
+        <div>What happens when informal media signals, rather than formal benchmarks, become
+          the primary channel consumers listen to?</div>
+      </div>
+    </div>
+  </section>
 
   <p class="fine figure-note">
     The six actors are a simplification. The grey boxes on the ring are real actor types the
-    model leaves out: colored means modeled, grey means outside the modeled core. Click any box
+    simulation leaves out: colored means modeled, grey means outside the modeled core. Click any box
     to see who's inside.
   </p>
 
@@ -459,7 +475,8 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     <div class="lit-group">Events</div>
     <div id="event-rows"></div>
     <p class="litnote">* approximate mapping; hover the asterisk for the caveat. Dotted edges
-      drawn during a highlight are that row's claims, not our model's. Events carry a
+      drawn during a highlight are that row's claims, distinct from the simulation's own channels.
+      Events carry a
       settled-or-contested tag because what happened in an episode can be disputed in a way a
       paper's claims are not. During a highlight, hover any lit edge to read the source's own
       words for it.</p>
@@ -469,7 +486,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     <h2>About the simulation</h2>
     <p>
       The simulation combines rule-based market dynamics with LLM-driven strategic actors, a form
-      of generative agent-based modeling. Benchmarks, consumer needs, and provider capabilities
+      of agent-based modeling. Benchmarks, consumer needs, and provider capabilities
       are all described by weights over six capability dimensions (reasoning, coding, knowledge,
       safety, communication, agentic). Information is split into tiers: every actor sees public
       state and holds its own private state (shown when you click its box), while ground truth,
@@ -506,7 +523,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
   <div class="footer-links">
     <a href="simulation.html">How the simulation works</a>
-    <a href="explorer.html">Run Explorer</a>
+    <a href="explorer.html">Runs</a>
     <span>This page accompanies our research paper (under review).</span>
   </div>
 </main>
@@ -1518,7 +1535,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     row.appendChild(title);
     const meta = document.createElement("span");
     meta.className = "lit-meta";
-    meta.textContent = s.kind === "self" ? "the model above · default view"
+    meta.textContent = s.kind === "self" ? "the simulation above · default view"
       : s.kind === "event" ? s.date
       : cite(s);
     row.appendChild(meta);

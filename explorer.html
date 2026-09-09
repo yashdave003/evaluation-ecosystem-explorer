@@ -4,12 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>AI Evaluation Ecosystem Explorer</title>
+<title>Runs · AI Evaluation Ecosystem</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:slnt,wght@-10,300..700;0,300..700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aims.css?v=2">
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/aims.css?v=3">
 <script src="js/loader.js?v=1"></script>
 <script src="js/boundary.js?v=4"></script>
 <style>
@@ -113,8 +111,11 @@
 /* Serif, the way AIMS titles a paper card. */
 .card-condition { font-family: var(--rd-serif); font-size: 1.25rem; font-weight: 400;
   line-height: 1.18; margin-bottom: 5px; }
+/* Three lines, then clipped: the descriptions carry the caveats that keep the
+   runs layer honest, and one line cut most of them off. */
 .card-desc { font-size: .75rem; font-weight: 300; color: var(--ink-3); line-height: 1.4;
-  margin-bottom: 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  margin-bottom: 7px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; }
 .card-pie { flex-shrink: 0; display: block; }
 .card-stats { display: flex; flex-direction: column; gap: 3px; }
 .card-leader { font-size: .88rem; font-weight: 500; }
@@ -202,7 +203,7 @@
   <nav class="site-nav">
     <a href="index.html">Ecosystem</a>
     <a href="simulation.html">Simulation</a>
-    <a href="explorer.html" class="here">Explorer</a>
+    <a href="explorer.html" class="here">Runs</a>
   </nav>
   <button id="compare-toggle">Compare</button>
 </div>
@@ -238,9 +239,9 @@ heuristic runs follow fixed decision rules.</div>
   <div class="qs-label">Start with a question</div>
   <div class="qs-cards">
     <div class="qs-card">
-      <div class="qs-q">Do private benchmark holdouts close the gap between scores and user experience?</div>
-      <div class="qs-a">In the simulation, unevenly: the gap moves between consumer groups rather than shrinking overall.</div>
-      <a class="qs-link" href="compare.html?mode=across&amp;conditions=public_only%7Cbaseline%7Cprivate_only&amp;model=__heuristic__&amp;agg=1">See the comparison &rarr;</a>
+      <div class="qs-q">Does making benchmark content private close the gap between what scores say and what simulated users get?</div>
+      <div class="qs-a">In the simulation, the gap generally decreases, but not uniformly.</div>
+      <a class="qs-link" href="simulation.html#fig4">See the figure &rarr;</a>
     </div>
     <div class="qs-card">
       <div class="qs-q">What changes when the evaluator runs as a company?</div>
@@ -309,7 +310,7 @@ const CONDITION_META = {
   public_only: "All benchmarks fully public: providers see exactly what is measured.",
   partial_only: "Benchmarks hold back 30 percent of their items, with hidden weights close to the public ones.",
   private_only: "Fully private benchmarks: hidden items, hidden weights roughly twice as far from public, scores published every 3 rounds.",
-  private_dominant: "The benchmark mix is tilted toward private benchmarks, with only a few public ones remaining.",
+  private_dominant: "Every benchmark is partial: 30 percent of items held out, with hidden weights about 0.95 similar to the public ones.",
   iid_holdout: "Ablation: items are hidden but hidden weights equal the public ones, isolating the reporting mechanism.",
   evaluator_capture: "The evaluator runs as a company: charges fees, sells early access, and can be captured by provider revenue.",
   no_incidents: "Structural ablation: removes safety incidents from the world.",
@@ -321,7 +322,7 @@ const CONDITION_META = {
   initial_uniform_capability: "Every provider starts with identical capabilities.",
   public_only__initial_uniform_capability: "Combined condition: fully public benchmarks and every provider starts with identical capabilities.",
   private_only__initial_uniform_capability: "Combined condition: fully private benchmarks and every provider starts with identical capabilities.",
-  ev1_deepseek_shock: "Shock replay, single seed: a DeepSeek-style low-cost entrant is injected at round 25 as a capability jump plus a news narrative. It checks that the narrative reaches provider reasoning and changes R&D allocation; the check would have failed had the narrative stayed in the prompt. Comparing the result with real 2025 data is a separate empirical claim. The data path keeps its original exogenous_validation name.",
+  ev1_deepseek_shock: "Shock replay, single seed: a DeepSeek-style low-cost entrant is injected at round 25 as a capability jump plus a news narrative. It checks that the narrative reaches provider reasoning and changes R&D allocation; a narrative that sat in the prompt without moving any decision would fail the check. Comparing the result with real 2025 data is a separate empirical claim.",
   s5_aligned_public_only: "Robustness check: a benchmark schedule whose weights start aligned with population needs, run at the fully public rung.",
   s5_aligned_private_only: "Robustness check: a benchmark schedule whose weights start aligned with population needs, run at the fully private rung.",
   s8_agentic_public_only: "Robustness check: an agentic-revolution benchmark schedule (tool-use benchmark from round 0, web navigation and issue resolution arriving late) run at the fully public rung.",

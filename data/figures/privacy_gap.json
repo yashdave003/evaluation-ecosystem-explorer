@@ -1,0 +1,1392 @@
+{
+ "source": "scripts/plots/paper/privacy_gap_export.py (same pipeline as privacy_gap_main.py)",
+ "conditions": [
+  {
+   "id": "public_only",
+   "label": "public (13/0/0)",
+   "color": "#2c7fb8"
+  },
+  {
+   "id": "baseline",
+   "label": "baseline (8/3/2 mix)",
+   "color": "#fec44f"
+  },
+  {
+   "id": "private_dominant",
+   "label": "private-dominant (cos=0.95)",
+   "color": "#fd8d3c"
+  },
+  {
+   "id": "private_only",
+   "label": "private (cos=0.85)",
+   "color": "#b10026"
+  },
+  {
+   "id": "iid_holdout",
+   "label": "iid-holdout null (cos=1.0)",
+   "color": "#7f7f7f"
+  }
+ ],
+ "dims": [
+  {
+   "id": "reasoning",
+   "color": "#1f77b4"
+  },
+  {
+   "id": "coding",
+   "color": "#2ca02c"
+  },
+  {
+   "id": "knowledge",
+   "color": "#9467bd"
+  },
+  {
+   "id": "safety",
+   "color": "#d62728"
+  },
+  {
+   "id": "communication",
+   "color": "#ff7f0e"
+  },
+  {
+   "id": "agentic",
+   "color": "#8c564b"
+  }
+ ],
+ "modes": {
+  "llm": "LLM Sonnet",
+  "heur": "Heuristic"
+ },
+ "n": {
+  "llm_public_seeds": 10,
+  "heur_public_seeds": 50
+ },
+ "excluded_benchmarks": [
+  "Agentic Tasks",
+  "Function Calling"
+ ],
+ "panel_a": {
+  "order_rep": [
+   "Advanced Math",
+   "Safety Evaluation",
+   "Coding Evaluation",
+   "Clinical Reasoning",
+   "Instruction Following"
+  ],
+  "order_full": [
+   "Advanced Math",
+   "Scientific Reasoning",
+   "Adversarial Robustness",
+   "Safety Evaluation",
+   "General Capability",
+   "Hard Coding",
+   "Coding Evaluation",
+   "Legal Reasoning",
+   "Clinical Reasoning",
+   "Instruction Following",
+   "Long Context",
+   "Function Calling",
+   "Agentic Tasks"
+  ],
+  "delta_g_llm": {
+   "Advanced Math": -0.03140722353876169,
+   "Adversarial Robustness": -0.010211408575001912,
+   "Agentic Tasks": 0.07959786745059703,
+   "Clinical Reasoning": 0.019933795848436596,
+   "Coding Evaluation": -0.015057152316519024,
+   "Function Calling": 0.1264353876039931,
+   "General Capability": -0.01657318474489317,
+   "Hard Coding": -0.008343906428719614,
+   "Instruction Following": 0.030977225285610144,
+   "Legal Reasoning": 0.008801589575460388,
+   "Long Context": 0.009854944381824693,
+   "Safety Evaluation": -0.0226553306203944,
+   "Scientific Reasoning": -0.018699016985021612
+  },
+  "rows": [
+   {
+    "mode": "llm",
+    "benchmark": "Advanced Math",
+    "condition": "baseline",
+    "mean": 0.029885191528252107,
+    "ci": 0.0013852915745696589,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Advanced Math",
+    "condition": "iid_holdout",
+    "mean": 0.0604404048879393,
+    "ci": 0.0020430732180684997,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Advanced Math",
+    "condition": "private_dominant",
+    "mean": 0.0464345174285606,
+    "ci": 0.0016086898568824282,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Advanced Math",
+    "condition": "private_only",
+    "mean": 0.029986558829195736,
+    "ci": 0.00158561822761785,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Advanced Math",
+    "condition": "public_only",
+    "mean": 0.06139378236795743,
+    "ci": 0.0022680334429075345,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Adversarial Robustness",
+    "condition": "baseline",
+    "mean": 0.039116900093871775,
+    "ci": 0.0011036152463986479,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Adversarial Robustness",
+    "condition": "iid_holdout",
+    "mean": 0.051433154237143654,
+    "ci": 0.0015790526164841986,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Adversarial Robustness",
+    "condition": "private_dominant",
+    "mean": 0.04377648265503502,
+    "ci": 0.0016518982584432206,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Adversarial Robustness",
+    "condition": "private_only",
+    "mean": 0.04039497089542141,
+    "ci": 0.0012892704140370565,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Adversarial Robustness",
+    "condition": "public_only",
+    "mean": 0.050606379470423325,
+    "ci": 0.0018776875211723126,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Agentic Tasks",
+    "condition": "baseline",
+    "mean": -0.1362234884409386,
+    "ci": 0.001116820159806805,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Agentic Tasks",
+    "condition": "iid_holdout",
+    "mean": -0.1366752123515076,
+    "ci": 0.0010637559434611879,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Agentic Tasks",
+    "condition": "private_dominant",
+    "mean": -0.09762235131810264,
+    "ci": 0.0013090910665130792,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Agentic Tasks",
+    "condition": "private_only",
+    "mean": -0.057349340740957114,
+    "ci": 0.0014297949274311972,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Agentic Tasks",
+    "condition": "public_only",
+    "mean": -0.13694720819155415,
+    "ci": 0.0012752107650219728,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Clinical Reasoning",
+    "condition": "baseline",
+    "mean": 0.01333533912164809,
+    "ci": 0.0008817584738537829,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Clinical Reasoning",
+    "condition": "iid_holdout",
+    "mean": 0.012362284209427133,
+    "ci": 0.0008719139714126646,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Clinical Reasoning",
+    "condition": "private_dominant",
+    "mean": 0.02337977699687649,
+    "ci": 0.0014981309146288727,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Clinical Reasoning",
+    "condition": "private_only",
+    "mean": 0.03270695859493895,
+    "ci": 0.001063585824857478,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Clinical Reasoning",
+    "condition": "public_only",
+    "mean": 0.01277316274650235,
+    "ci": 0.0012073581912316023,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Coding Evaluation",
+    "condition": "baseline",
+    "mean": 0.015781863560817858,
+    "ci": 0.0015973535195046465,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Coding Evaluation",
+    "condition": "iid_holdout",
+    "mean": 0.01646504289143329,
+    "ci": 0.0012900282576242227,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Coding Evaluation",
+    "condition": "private_dominant",
+    "mean": 0.008017577088171034,
+    "ci": 0.001509620869314413,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Coding Evaluation",
+    "condition": "private_only",
+    "mean": 0.0005015430688269124,
+    "ci": 0.0010521424087644735,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Coding Evaluation",
+    "condition": "public_only",
+    "mean": 0.015558695385345937,
+    "ci": 0.0009706698712911837,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Function Calling",
+    "condition": "baseline",
+    "mean": -0.11337836178050764,
+    "ci": 0.0008873695798196574,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Function Calling",
+    "condition": "iid_holdout",
+    "mean": -0.11400086539714331,
+    "ci": 0.000857423551350576,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Function Calling",
+    "condition": "private_dominant",
+    "mean": -0.05124762816583297,
+    "ci": 0.0012825395698034274,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Function Calling",
+    "condition": "private_only",
+    "mean": 0.012901303976237339,
+    "ci": 0.0011331277076309563,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Function Calling",
+    "condition": "public_only",
+    "mean": -0.11353408362775574,
+    "ci": 0.000884810452193655,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "General Capability",
+    "condition": "baseline",
+    "mean": 0.020009893124132767,
+    "ci": 0.0010800224865648365,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "General Capability",
+    "condition": "iid_holdout",
+    "mean": 0.019063658599939703,
+    "ci": 0.00091755910320097,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "General Capability",
+    "condition": "private_dominant",
+    "mean": 0.011705986238339301,
+    "ci": 0.001106213062659166,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "General Capability",
+    "condition": "private_only",
+    "mean": 0.0029479094514245695,
+    "ci": 0.0008448777307295068,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "General Capability",
+    "condition": "public_only",
+    "mean": 0.01952109419631774,
+    "ci": 0.000984416904774148,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Hard Coding",
+    "condition": "baseline",
+    "mean": 0.01308307512277676,
+    "ci": 0.0014109172603902604,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Hard Coding",
+    "condition": "iid_holdout",
+    "mean": 0.01781985835889286,
+    "ci": 0.001588650856458247,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Hard Coding",
+    "condition": "private_dominant",
+    "mean": 0.012902502843610195,
+    "ci": 0.0015920255302370513,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Hard Coding",
+    "condition": "private_only",
+    "mean": 0.00889452172758148,
+    "ci": 0.0008731115577849949,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Hard Coding",
+    "condition": "public_only",
+    "mean": 0.017238428156301094,
+    "ci": 0.00111938031717255,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Instruction Following",
+    "condition": "baseline",
+    "mean": -0.007794166438257114,
+    "ci": 0.0012121412825417766,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Instruction Following",
+    "condition": "iid_holdout",
+    "mean": -0.009216359936506217,
+    "ci": 0.0008729788029447859,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Instruction Following",
+    "condition": "private_dominant",
+    "mean": 0.008442104007856298,
+    "ci": 0.0014821841822199714,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Instruction Following",
+    "condition": "private_only",
+    "mean": 0.023094409920135527,
+    "ci": 0.0009142805475309695,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Instruction Following",
+    "condition": "public_only",
+    "mean": -0.007882815365474617,
+    "ci": 0.0012406938163102151,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Legal Reasoning",
+    "condition": "baseline",
+    "mean": 0.014767962221385832,
+    "ci": 0.0010138319323027836,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Legal Reasoning",
+    "condition": "iid_holdout",
+    "mean": 0.014270224341287288,
+    "ci": 0.0007550680983805,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Legal Reasoning",
+    "condition": "private_dominant",
+    "mean": 0.01954254811629369,
+    "ci": 0.0012719318431915181,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Legal Reasoning",
+    "condition": "private_only",
+    "mean": 0.022923212453826638,
+    "ci": 0.0014045387903997677,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Legal Reasoning",
+    "condition": "public_only",
+    "mean": 0.01412162287836625,
+    "ci": 0.0006423731737522983,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Long Context",
+    "condition": "baseline",
+    "mean": -0.011116236164324203,
+    "ci": 0.0010964809870882,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Long Context",
+    "condition": "iid_holdout",
+    "mean": -0.011748300909042027,
+    "ci": 0.0007031693512956938,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Long Context",
+    "condition": "private_dominant",
+    "mean": -0.005861505226004561,
+    "ci": 0.0007202612265949825,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Long Context",
+    "condition": "private_only",
+    "mean": -0.0014729597647765138,
+    "ci": 0.0013693301140201672,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Long Context",
+    "condition": "public_only",
+    "mean": -0.011327904146601207,
+    "ci": 0.0009884074774274157,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Safety Evaluation",
+    "condition": "baseline",
+    "mean": 0.0380553316548536,
+    "ci": 0.0016292680040132356,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Safety Evaluation",
+    "condition": "iid_holdout",
+    "mean": 0.05115992644251356,
+    "ci": 0.0010474982941208184,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Safety Evaluation",
+    "condition": "private_dominant",
+    "mean": 0.037495273376639625,
+    "ci": 0.0017885711273217275,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Safety Evaluation",
+    "condition": "private_only",
+    "mean": 0.02787796469451038,
+    "ci": 0.0008496417784264414,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Safety Evaluation",
+    "condition": "public_only",
+    "mean": 0.05053329531490478,
+    "ci": 0.0017651487264511065,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Scientific Reasoning",
+    "condition": "baseline",
+    "mean": 0.046036709917759135,
+    "ci": 0.0020529810810488566,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Scientific Reasoning",
+    "condition": "iid_holdout",
+    "mean": 0.05364409418867263,
+    "ci": 0.0019706470395252397,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Scientific Reasoning",
+    "condition": "private_dominant",
+    "mean": 0.04496704983305231,
+    "ci": 0.0013696246220903621,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Scientific Reasoning",
+    "condition": "private_only",
+    "mean": 0.035802980658654705,
+    "ci": 0.0019691861153583947,
+    "n": 10
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Scientific Reasoning",
+    "condition": "public_only",
+    "mean": 0.05450199764367632,
+    "ci": 0.0015916909424153664,
+    "n": 10
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Advanced Math",
+    "condition": "baseline",
+    "mean": 0.04033946252678759,
+    "ci": 0.00138844369346796,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Advanced Math",
+    "condition": "iid_holdout",
+    "mean": 0.07629968362912072,
+    "ci": 0.0020289543384356488,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Advanced Math",
+    "condition": "private_dominant",
+    "mean": 0.059434158533077576,
+    "ci": 0.0014391023541069367,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Advanced Math",
+    "condition": "private_only",
+    "mean": 0.040540832938572385,
+    "ci": 0.0012385963890213915,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Advanced Math",
+    "condition": "public_only",
+    "mean": 0.07552493732320893,
+    "ci": 0.002223298944664628,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Adversarial Robustness",
+    "condition": "baseline",
+    "mean": 0.034939264673133186,
+    "ci": 0.0008654700513969108,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Adversarial Robustness",
+    "condition": "iid_holdout",
+    "mean": 0.030259223615341745,
+    "ci": 0.00274644987296288,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Adversarial Robustness",
+    "condition": "private_dominant",
+    "mean": 0.032257723165948306,
+    "ci": 0.0016533888228035766,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Adversarial Robustness",
+    "condition": "private_only",
+    "mean": 0.035500349353795105,
+    "ci": 0.0007440677766756458,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Adversarial Robustness",
+    "condition": "public_only",
+    "mean": 0.030785819671125862,
+    "ci": 0.0030001135250732978,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Agentic Tasks",
+    "condition": "baseline",
+    "mean": -0.13287247876005068,
+    "ci": 0.0008840672823116855,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Agentic Tasks",
+    "condition": "iid_holdout",
+    "mean": -0.13404599782416315,
+    "ci": 0.0008591621646428999,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Agentic Tasks",
+    "condition": "private_dominant",
+    "mean": -0.09251100578264886,
+    "ci": 0.0009018457727871047,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Agentic Tasks",
+    "condition": "private_only",
+    "mean": -0.05137954961944999,
+    "ci": 0.0009742302216338959,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Agentic Tasks",
+    "condition": "public_only",
+    "mean": -0.13380136061951609,
+    "ci": 0.0007564341553200758,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Clinical Reasoning",
+    "condition": "baseline",
+    "mean": 0.024398219176498176,
+    "ci": 0.0012342347885242817,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Clinical Reasoning",
+    "condition": "iid_holdout",
+    "mean": 0.024018455448146403,
+    "ci": 0.0011100218542725874,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Clinical Reasoning",
+    "condition": "private_dominant",
+    "mean": 0.0327935839837118,
+    "ci": 0.0009338668960255363,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Clinical Reasoning",
+    "condition": "private_only",
+    "mean": 0.040278822465675414,
+    "ci": 0.0007368993748618435,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Clinical Reasoning",
+    "condition": "public_only",
+    "mean": 0.023947568125716075,
+    "ci": 0.0011169504403354766,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Coding Evaluation",
+    "condition": "baseline",
+    "mean": 0.018157300719332484,
+    "ci": 0.0008731063431804214,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Coding Evaluation",
+    "condition": "iid_holdout",
+    "mean": 0.017772511537877785,
+    "ci": 0.000894420709794867,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Coding Evaluation",
+    "condition": "private_dominant",
+    "mean": 0.011813539164763767,
+    "ci": 0.0008643624855990139,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Coding Evaluation",
+    "condition": "private_only",
+    "mean": 0.00520687894000614,
+    "ci": 0.0008060080958635744,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Coding Evaluation",
+    "condition": "public_only",
+    "mean": 0.01798888263292412,
+    "ci": 0.0008883947197978143,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Function Calling",
+    "condition": "baseline",
+    "mean": -0.11195744325926495,
+    "ci": 0.0007375237272371228,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Function Calling",
+    "condition": "iid_holdout",
+    "mean": -0.11258821900728452,
+    "ci": 0.0007362070350896421,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Function Calling",
+    "condition": "private_dominant",
+    "mean": -0.04692128581995786,
+    "ci": 0.0008295204801122189,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Function Calling",
+    "condition": "private_only",
+    "mean": 0.019082075217056783,
+    "ci": 0.0009084848959053659,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Function Calling",
+    "condition": "public_only",
+    "mean": -0.11232872878369961,
+    "ci": 0.0006419799872009459,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "General Capability",
+    "condition": "baseline",
+    "mean": 0.029813346166697112,
+    "ci": 0.0011824122126209502,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "General Capability",
+    "condition": "iid_holdout",
+    "mean": 0.028645562876573254,
+    "ci": 0.0010545991054061506,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "General Capability",
+    "condition": "private_dominant",
+    "mean": 0.02007121932011581,
+    "ci": 0.0009254398377152582,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "General Capability",
+    "condition": "private_only",
+    "mean": 0.009327839522671535,
+    "ci": 0.0008973226960726839,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "General Capability",
+    "condition": "public_only",
+    "mean": 0.028595819053672637,
+    "ci": 0.0011314628373121924,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Hard Coding",
+    "condition": "baseline",
+    "mean": 0.016291487794402898,
+    "ci": 0.0008180161300731256,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Hard Coding",
+    "condition": "iid_holdout",
+    "mean": 0.018895595451866778,
+    "ci": 0.0008763340944225112,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Hard Coding",
+    "condition": "private_dominant",
+    "mean": 0.01584626299715702,
+    "ci": 0.0007188763340436947,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Hard Coding",
+    "condition": "private_only",
+    "mean": 0.013318444581222843,
+    "ci": 0.0007779017026653411,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Hard Coding",
+    "condition": "public_only",
+    "mean": 0.019016592530003266,
+    "ci": 0.0008172492948996572,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Instruction Following",
+    "condition": "baseline",
+    "mean": -0.006961360485528959,
+    "ci": 0.0007715815213063962,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Instruction Following",
+    "condition": "iid_holdout",
+    "mean": -0.008251345837005576,
+    "ci": 0.0007252963322046666,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Instruction Following",
+    "condition": "private_dominant",
+    "mean": 0.008075266311077123,
+    "ci": 0.000507996254197091,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Instruction Following",
+    "condition": "private_only",
+    "mean": 0.023770879230818283,
+    "ci": 0.0003664526899562761,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Instruction Following",
+    "condition": "public_only",
+    "mean": -0.007068756192009491,
+    "ci": 0.000676799074377546,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Legal Reasoning",
+    "condition": "baseline",
+    "mean": 0.026796699272959353,
+    "ci": 0.0013470193057230973,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Legal Reasoning",
+    "condition": "iid_holdout",
+    "mean": 0.026399087705173893,
+    "ci": 0.0012141790792995074,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Legal Reasoning",
+    "condition": "private_dominant",
+    "mean": 0.030857437656305695,
+    "ci": 0.0011733753034882822,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Legal Reasoning",
+    "condition": "private_only",
+    "mean": 0.034525984522744725,
+    "ci": 0.0013506477726721914,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Legal Reasoning",
+    "condition": "public_only",
+    "mean": 0.026388962163724564,
+    "ci": 0.0012727297817479277,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Long Context",
+    "condition": "baseline",
+    "mean": -0.006484534800548607,
+    "ci": 0.0009673210188425982,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Long Context",
+    "condition": "iid_holdout",
+    "mean": -0.007549229890142448,
+    "ci": 0.0008565118304560826,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Long Context",
+    "condition": "private_dominant",
+    "mean": 0.0001432880837466573,
+    "ci": 0.0009063104562540287,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Long Context",
+    "condition": "private_only",
+    "mean": 0.006598920577282784,
+    "ci": 0.001010928268520814,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Long Context",
+    "condition": "public_only",
+    "mean": -0.006651545945975823,
+    "ci": 0.0008489315199129714,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Safety Evaluation",
+    "condition": "baseline",
+    "mean": 0.025603974596975037,
+    "ci": 0.001905933078515346,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Safety Evaluation",
+    "condition": "iid_holdout",
+    "mean": 0.03186689610603343,
+    "ci": 0.0026574667213053846,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Safety Evaluation",
+    "condition": "private_dominant",
+    "mean": 0.025847254670647836,
+    "ci": 0.0016333549090744711,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Safety Evaluation",
+    "condition": "private_only",
+    "mean": 0.02132876078657961,
+    "ci": 0.0009559603333156326,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Safety Evaluation",
+    "condition": "public_only",
+    "mean": 0.03237820330443155,
+    "ci": 0.00280488857993386,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Scientific Reasoning",
+    "condition": "baseline",
+    "mean": 0.060919836413558984,
+    "ci": 0.0018585991991323522,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Scientific Reasoning",
+    "condition": "iid_holdout",
+    "mean": 0.06987043182699906,
+    "ci": 0.002001298589970778,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Scientific Reasoning",
+    "condition": "private_dominant",
+    "mean": 0.06121541731027541,
+    "ci": 0.001661842858087436,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Scientific Reasoning",
+    "condition": "private_only",
+    "mean": 0.05032241899645423,
+    "ci": 0.0016459862256971518,
+    "n": 50
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Scientific Reasoning",
+    "condition": "public_only",
+    "mean": 0.06881323598693913,
+    "ci": 0.0021200675371434627,
+    "n": 50
+   }
+  ]
+ },
+ "panel_b": {
+  "primary_dim": {
+   "Advanced Math": "reasoning",
+   "Scientific Reasoning": "reasoning",
+   "Adversarial Robustness": "safety",
+   "Safety Evaluation": "safety",
+   "General Capability": "reasoning",
+   "Hard Coding": "coding",
+   "Coding Evaluation": "coding",
+   "Legal Reasoning": "knowledge",
+   "Clinical Reasoning": "knowledge",
+   "Instruction Following": "communication",
+   "Long Context": "communication",
+   "Function Calling": "agentic",
+   "Agentic Tasks": "agentic"
+  },
+  "points": [
+   {
+    "mode": "llm",
+    "benchmark": "General Capability",
+    "primary_dim": "reasoning",
+    "surplus": 0.09660431250000007,
+    "dgap": -0.01657318474489317
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Coding Evaluation",
+    "primary_dim": "coding",
+    "surplus": 0.0374456041666667,
+    "dgap": -0.015057152316519024
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Safety Evaluation",
+    "primary_dim": "safety",
+    "surplus": 0.07728860416666677,
+    "dgap": -0.0226553306203944
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Instruction Following",
+    "primary_dim": "communication",
+    "surplus": 0.026959437500000016,
+    "dgap": 0.030977225285610144
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Scientific Reasoning",
+    "primary_dim": "reasoning",
+    "surplus": 0.09660431250000007,
+    "dgap": -0.018699016985021612
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Clinical Reasoning",
+    "primary_dim": "knowledge",
+    "surplus": 0.058828479166666725,
+    "dgap": 0.019933795848436596
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Adversarial Robustness",
+    "primary_dim": "safety",
+    "surplus": 0.07728860416666677,
+    "dgap": -0.010211408575001912
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Hard Coding",
+    "primary_dim": "coding",
+    "surplus": 0.0374456041666667,
+    "dgap": -0.008343906428719614
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Agentic Tasks",
+    "primary_dim": "agentic",
+    "surplus": -0.29712643749999995,
+    "dgap": 0.07959786745059703
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Advanced Math",
+    "primary_dim": "reasoning",
+    "surplus": 0.09660431250000007,
+    "dgap": -0.03140722353876169
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Function Calling",
+    "primary_dim": "agentic",
+    "surplus": -0.29712643749999995,
+    "dgap": 0.1264353876039931
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Long Context",
+    "primary_dim": "communication",
+    "surplus": 0.026959437500000016,
+    "dgap": 0.009854944381824693
+   },
+   {
+    "mode": "llm",
+    "benchmark": "Legal Reasoning",
+    "primary_dim": "knowledge",
+    "surplus": 0.058828479166666725,
+    "dgap": 0.008801589575460388
+   },
+   {
+    "mode": "heur",
+    "benchmark": "General Capability",
+    "primary_dim": "reasoning",
+    "surplus": 0.1070362402777777,
+    "dgap": -0.019267979531001102
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Coding Evaluation",
+    "primary_dim": "coding",
+    "surplus": 0.04004068194444432,
+    "dgap": -0.01278200369291798
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Safety Evaluation",
+    "primary_dim": "safety",
+    "surplus": 0.05677240694444441,
+    "dgap": -0.011049442517851941
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Instruction Following",
+    "primary_dim": "communication",
+    "surplus": 0.02820927361111103,
+    "dgap": 0.030839635422827773
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Scientific Reasoning",
+    "primary_dim": "reasoning",
+    "surplus": 0.1070362402777777,
+    "dgap": -0.018490816990484896
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Clinical Reasoning",
+    "primary_dim": "knowledge",
+    "surplus": 0.0662047569444445,
+    "dgap": 0.01633125433995934
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Adversarial Robustness",
+    "primary_dim": "safety",
+    "surplus": 0.05677240694444441,
+    "dgap": 0.004714529682669243
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Hard Coding",
+    "primary_dim": "coding",
+    "surplus": 0.04004068194444432,
+    "dgap": -0.005698147948780423
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Agentic Tasks",
+    "primary_dim": "agentic",
+    "surplus": -0.2982633597222223,
+    "dgap": 0.0824218110000661
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Advanced Math",
+    "primary_dim": "reasoning",
+    "surplus": 0.1070362402777777,
+    "dgap": -0.03498410438463655
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Function Calling",
+    "primary_dim": "agentic",
+    "surplus": -0.2982633597222223,
+    "dgap": 0.1314108040007564
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Long Context",
+    "primary_dim": "communication",
+    "surplus": 0.02820927361111103,
+    "dgap": 0.013250466523258607
+   },
+   {
+    "mode": "heur",
+    "benchmark": "Legal Reasoning",
+    "primary_dim": "knowledge",
+    "surplus": 0.0662047569444445,
+    "dgap": 0.008137022359020162
+   }
+  ],
+  "regression": {
+   "bm11": {
+    "llm": {
+     "slope": -0.4802230739873156,
+     "intercept": 0.02530780855904565,
+     "r": -0.6853756663141989,
+     "p": 0.01992905366854525,
+     "n": 11
+    },
+    "heur": {
+     "slope": -0.4442415308043479,
+     "intercept": 0.025777481773299974,
+     "r": -0.711169465202787,
+     "p": 0.014137001508286673,
+     "n": 11
+    }
+   },
+   "bm13": {
+    "llm": {
+     "slope": -0.30584562866915466,
+     "intercept": 0.014015353355794201,
+     "r": -0.9292926290293857,
+     "p": 4.363465974543956e-06,
+     "n": 13
+    },
+    "heur": {
+     "slope": -0.3081924281423735,
+     "intercept": 0.016755445157947958,
+     "r": -0.9344873764625604,
+     "p": 2.8971723011750328e-06,
+     "n": 13
+    }
+   }
+  }
+ },
+ "labels": {
+  "panel_a_title_rep": "(a) Per-benchmark gap across privacy ladder",
+  "panel_a_title_full": "(a) Per-benchmark gap across privacy ladder (all 13 benchmarks)",
+  "panel_a_x": "Gap (g) = score \u2212 matched satisfaction",
+  "panel_b_title": "(b) Gap shift tracks capability surplus on dominant dimension",
+  "panel_b_x": "Provider over-investment on benchmark's primary skill",
+  "panel_b_y": "\u0394gap shift under privacy (gap @ private_only \u2212 gap @ public_only)"
+ }
+}

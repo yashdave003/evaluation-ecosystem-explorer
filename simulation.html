@@ -6,10 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>How the Simulation Works · AI Evaluation Ecosystem</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:slnt,wght@-10,300..700;0,300..700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aims.css?v=2">
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/aims.css?v=3">
 <script src="js/sim_data.js?v=1"></script>
 <style>
 /* Reset and body base now live in css/aims.css. */
@@ -131,7 +129,7 @@ input[type=range]::-moz-range-thumb { width: 17px; height: 17px; border-radius: 
   border-radius: 0 7px 7px 0; padding: 13px 16px; margin: 18px 0; }
 .callout .ct { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 5px; }
-.callout p { font-size: 13.5px; margin-bottom: 0; color: var(--ink-2); }
+.callout p { font-size: 13.5px; margin-bottom: 0; color: var(--ink-2); max-width: none; }
 .callout.warn { border-left-color: #b05f14; }
 .callout.warn .ct { color: #b05f14; }
 
@@ -174,16 +172,6 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
 .as.sti { color: #b05f14; }
 
 /* ---- Case-study question list (section 6 tail) ---- */
-.oq { margin-top: 22px; }
-.oq .oq-t { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
-  color: var(--ink-3); margin-bottom: 5px; }
-.oq .oq-row { display: flex; gap: 9px; align-items: baseline; font-size: 12px;
-  line-height: 1.55; margin-top: 6px; color: var(--ink-2); }
-.oq .oq-s { font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
-  white-space: nowrap; border: 1px solid var(--line-soft); border-radius: 9px; padding: 1px 7px;
-  background: var(--surface); flex-shrink: 0; }
-.oq .oq-s.impl { color: var(--accent); }
-.oq .oq-s.des  { color: #b05f14; }
 
 /* ---- Next-steps cards ---- */
 .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 22px; }
@@ -319,6 +307,18 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
+/* Figure 4, drawn from data/figures/privacy_gap.json. The two panels stack:
+   at this column width the paper's side-by-side layout would shrink panel (a)
+   below legibility. */
+#f4-panels { display: flex; flex-direction: column; gap: 6px; }
+#f4-panels svg { width: 100%; height: auto; display: block; font-family: inherit; }
+.f4-toggle { background: none; border: 1px solid var(--line); border-radius: 30px;
+  padding: .22rem .7rem; font-family: var(--rd-mono); font-size: .58rem;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); cursor: pointer;
+  white-space: nowrap; line-height: 1.6; transition: background-color .2s, border-color .2s, color .2s; }
+.f4-toggle:hover { border-color: var(--line-strong); color: var(--ink); }
+.f4-toggle.active { background: var(--rd-dark); border-color: var(--rd-dark); color: var(--white); }
+
 /* ---- Wide screens ----
    Column and type scale together so lines keep ~68 characters; see index.html. */
 @media (min-width: 1200px) {
@@ -337,7 +337,7 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
   <nav class="site-nav">
     <a href="index.html">Ecosystem</a>
     <a href="simulation.html" class="here">Simulation</a>
-    <a href="explorer.html">Explorer</a>
+    <a href="explorer.html">Runs</a>
   </nav>
 </div>
 
@@ -362,17 +362,16 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
       ecosystem cannot be rerun with one design choice changed. Game-theoretic models become
       intractable once actors differ from each other, see different information, and interact
       through many feedback channels. System-dynamics models keep the feedback loops but average
-      the actors away. A simulation gives up realism for control: it does not predict what real
-      evaluation markets will do, but it lets one lever change while everything else holds fixed.
+      the actors away. A simulation gives up realism for control: it lets one lever change while everything
+      else holds fixed.
       Ours is a generative agent-based model, a recent approach in which the strategic actors are
       LLMs that read the same kind of material real decision-makers do (incident reports,
       competitor moves, regulatory news) and act on it, while the market itself runs on explicit
       rules (<a class="cite" href="https://arxiv.org/abs/2304.03442" target="_blank" rel="noopener">Park et al. 2023</a>;
       <a class="cite" href="https://arxiv.org/abs/2312.03664" target="_blank" rel="noopener">Vezhnevets et al. 2023</a>).
       We treat the simulation as a complement to those other methods and as a source of
-      hypotheses for empirical work to test, not as evidence about deployed systems; the
-      <a href="#limits">final section</a> states the boundary of the results and grades every
-      structural assumption by the evidence behind it.
+      hypotheses for empirical work to test; the <a href="#limits">final section</a> states
+      where the results hold and grades every structural assumption by the evidence behind it.
     </p>
     <p class="lede">
       The simulation runs a stylized AI evaluation ecosystem for 40 monthly rounds. Six competing
@@ -586,9 +585,11 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
   <section id="holdouts">
     <h2>The case study: private holdouts redistribute the gap</h2>
     <p>
-      The obvious response to benchmark gaming is to stop showing the test. Hold items back, publish
-      less often, and the provider can no longer aim precisely. Making a benchmark private changes three
-      things at once, and they do not all push the same way.
+      In this model, a provider that directs research toward what a benchmark measures rather
+      than toward what its users need opens a gap between the benchmark's score and what
+      simulated users get. The obvious response is to stop showing the test: hold items back,
+      publish less often, and the provider can no longer aim precisely. Making a benchmark private
+      changes three things at once, and they do not all push the same way.
     </p>
 
     <div class="fig">
@@ -627,27 +628,58 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
         This form of holdout design changes where the gap sits, not whether there is one.
       </p>
     </div>
-    <p class="small">
-      Per-condition results, per-benchmark breakdowns, and the seed distributions behind that
-      sentence are all in the <a href="explorer.html">Run Explorer</a>.
+
+    <p style="margin-top:16px">
+      <b>Worked example: Clinical Reasoning.</b> Clinical Reasoning, one of the simulation's
+      thirteen benchmarks, puts most of its weight on the knowledge dimension (0.65). Providers
+      have no investment lever that raises their knowledge capability directly, so their
+      knowledge capability sits below their reasoning capability. When every benchmark is
+      private, the hidden weights used for scoring shift some of the benchmark's weight from
+      knowledge onto reasoning, where providers are strong; the score rises while what simulated
+      users get, which depends only on providers' unchanged capabilities, does not. A benchmark
+      nominally about medical reasoning ends up rewarding providers strong in reasoning: the
+      benchmark's weight has drifted toward a capability providers already have, and the score
+      inflates, so its gap widens (Δg = +0.020 in Figure 4).
     </p>
 
-    <div class="oq">
-      <div class="oq-t">Other questions the simulation can ask</div>
-      <p class="small" style="margin-bottom:0">Implemented means the condition exists and can be run; designed means it is specified but not yet built. None of these is a finding yet.</p>
-      <div class="oq-row"><span class="oq-s impl">implemented</span><span>What changes when the evaluator runs as a company, charging fees and selling early access?</span></div>
-      <div class="oq-row"><span class="oq-s impl">implemented</span><span>Do EU-style precautionary and US-style light-touch regulatory regimes push safety investment and market structure in different directions?</span></div>
-      <div class="oq-row"><span class="oq-s des">designed</span><span>What does a mandate to disclose safety investment, in the style of California SB 53, change for consumers, funders, and media?</span></div>
-      <div class="oq-row"><span class="oq-s des">designed</span><span>What happens when informal media signals, rather than formal benchmarks, become the primary channel consumers listen to?</span></div>
+    <div class="fig" id="fig4">
+      <div class="fig-head"><span class="ft">Figure 4 of the paper: where the gap moves</span>
+        <span class="fh-right">
+          <button type="button" class="f4-toggle active" data-view="rep">5 representative</button>
+          <button type="button" class="f4-toggle" data-view="full">All 13 benchmarks</button>
+        </span></div>
+      <div class="fig-body"><div id="f4-panels"><div id="f4-a"></div><div id="f4-b"></div></div></div>
+      <div class="fig-cap">
+        <b>(a)</b> Per-benchmark gap g (published score − matched consumer satisfaction, where
+        satisfaction is ground-truth capability weighted by population-average consumer
+        need-weights) across the five privacy conditions, for five representative benchmarks
+        (one per primary capability dimension; the toggle shows all 13). Foreground: LLM
+        Sonnet 4.6 (N = 10) with 95% CIs. Background: heuristic-mode endpoints (N = 50).
+        Δg per row = gap@private_only − gap@public_only. <b>(b)</b> Δg vs. population
+        capability surplus on each benchmark's primary dimension (capability on the
+        highest-weighted dimension minus the cross-dimension mean, computed from public_only
+        seeds). Drawn from the same aggregates as the paper's figure; hover a point for its
+        value.
+      </div>
     </div>
+    <p class="small">
+      Every run behind the figure, condition by condition and seed by seed, is on the
+      <a href="explorer.html">runs page</a>.
+    </p>
+
+    <p class="small">
+      This is one of five questions we ask with the simulation; the full list, with this
+      one marked as run and the rest open, is on the
+      <a href="index.html#questions">ecosystem page</a>.
+    </p>
   </section>
 
   <!-- ============================ 7. LIMITS ============================ -->
   <section id="limits">
     <h2>Claims and limitations</h2>
     <p>
-      The simulation generates hypotheses. It points at dynamics worth checking empirically; it
-      does not show that they occur in real systems. Its claims come in two kinds. The numbers,
+      The simulation generates hypotheses. It points at dynamics worth checking empirically; whether
+      they occur in real systems is an empirical question. Its claims come in two kinds. The numbers,
       such as how large a gap gets or how fast it grows, belong to this particular
       parameterization and should not be carried anywhere else. The mechanisms, meaning which
       direction a design change pushes outcomes and why, are the findings.
@@ -690,14 +722,14 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
         <tr><td>Six capability dimensions with asymmetric investment pathways</td><td><span class="as anc">anchored</span></td><td>The dimensions span the axes frontier models are currently differentiated on. The roster is anchored to real evaluations (<a class="cite" href="https://arxiv.org/abs/2009.03300" target="_blank" rel="noopener">MMLU</a>; <a class="cite" href="https://arxiv.org/abs/2107.03374" target="_blank" rel="noopener">HumanEval</a>; <a class="cite" href="https://arxiv.org/abs/2109.07958" target="_blank" rel="noopener">TruthfulQA</a>). The mechanism needs only that some dimensions are easier to invest in than others, not this exact six-way split.</td></tr>
         <tr><td>Scores are noisy linear projections of capability, reported as a running maximum</td><td><span class="as sti">stipulated</span></td><td>Linear scoring is standard in measurement models.</td></tr>
         <tr><td>Providers infer what a benchmark rewards from score prediction errors</td><td><span class="as sti">stipulated</span></td><td>A minimal learning rule, the same in both planner modes.</td></tr>
-        <tr><td>Capital responds to scores and sentiment</td><td><span class="as anc">anchored</span></td><td>Markets move on measures of a thing, not only on the thing (<a class="cite" href="https://arxiv.org/abs/2002.06673" target="_blank" rel="noopener">Perdomo et al. 2020</a>).</td></tr>
+        <tr><td>Capital responds to scores and sentiment</td><td><span class="as anc">anchored</span></td><td>Markets move on measures of a thing as well as on the thing itself (<a class="cite" href="https://arxiv.org/abs/2002.06673" target="_blank" rel="noopener">Perdomo et al. 2020</a>).</td></tr>
       </tbody>
     </table>
     <p class="small" style="margin-top:12px">
       The weakest link is the satisfaction function itself, which is stipulated: it has not been
       validated against what users report wanting, and every gap number inherits that uncertainty.
-      Measuring the gap against different consumer groups changes its size substantially but has
-      never changed the direction of a result.
+      Measuring the gap against different consumer segments changes its size substantially and
+      left the direction of every result we checked unchanged.
     </p>
 
     <p style="margin-top:18px">Some things are left out on purpose. The list is not exhaustive; it covers the omissions most likely to change how evaluation itself behaves.</p>
@@ -730,7 +762,7 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
         <div class="ng">See the map →</div>
       </a>
       <a href="explorer.html">
-        <div class="nt">Run Explorer</div>
+        <div class="nt">Runs</div>
         <div class="nd">Every run, condition by condition and seed by seed. Play a single run back, or compare conditions side by side.</div>
         <div class="ng">Browse runs →</div>
       </a>
@@ -1532,6 +1564,166 @@ function lerpV(a, b, t) {
 })();
 
 /* ================= 6. THREE CHANNELS ================= */
+(function figure4() {
+  // Figure 4 of the paper, drawn from the aggregates the paper's script
+  // exports (scripts/plots/paper/privacy_gap_export.py). Labels, colors,
+  // precision, and the 11-versus-13 benchmark convention follow the paper.
+  const A = document.getElementById("f4-a"), B = document.getElementById("f4-b");
+  if (!A || !B) return;
+  let DATA = null, view = "rep";
+
+  const signed = v => (v < 0 ? "-" : "+") + Math.abs(v).toFixed(3);
+  // Python's %.2g: two significant figures, exponent form below 1e-4.
+  function fmtP(p) {
+    if (p < 1e-4) {
+      const parts = p.toExponential(1).split("e");
+      const n = parseInt(parts[1], 10);
+      return parts[0] + "e" + (n < 0 ? "-" : "+") + String(Math.abs(n)).padStart(2, "0");
+    }
+    return String(Number(p.toPrecision(2)));
+  }
+  function ticks(lo, hi, n) {
+    const raw = (hi - lo) / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1, 2, 2.5, 5, 10].map(k => k * mag).find(st => st >= raw);
+    const out = [];
+    for (let t = Math.ceil(lo / step) * step; t <= hi + 1e-12; t += step) out.push(Math.round(t / step) * step);
+    return out;
+  }
+  function tip(node, s) { const t = el("title", {}, node); t.textContent = s; }
+  function errbar(g, x1, x2, y, color, w) {
+    el("line", { x1: x1, x2: x2, y1: y, y2: y, stroke: color, "stroke-width": w }, g);
+    el("line", { x1: x1, x2: x1, y1: y - 3, y2: y + 3, stroke: color, "stroke-width": w }, g);
+    el("line", { x1: x2, x2: x2, y1: y - 3, y2: y + 3, stroke: color, "stroke-width": w }, g);
+  }
+  function legend(g, items, x0, y0, width, cols) {
+    const cw = width / cols;
+    items.forEach((it, i) => {
+      const cx = x0 + (i % cols) * cw + 8, cy = y0 + Math.floor(i / cols) * 18;
+      el("circle", { cx: cx, cy: cy, r: 5, fill: it.color, stroke: "#000", "stroke-width": .6 }, g);
+      txt(g, cx + 11, cy, it.label, { "font-size": 10.5 });
+    });
+  }
+
+  function drawA() {
+    A.innerHTML = "";
+    const order = view === "rep" ? DATA.panel_a.order_rep : DATA.panel_a.order_full;
+    const conds = DATA.conditions, rows = DATA.panel_a.rows;
+    const get = (m, bm, c) => rows.find(r => r.mode === m && r.benchmark === bm && r.condition === c);
+    const W = 640, ML = 150, MR = 88, MT = 30, MB = 110, RH = view === "rep" ? 58 : 34;
+    const plotH = RH * order.length, H = MT + plotH + MB, axisY = MT + plotH;
+    const s = svg(A, "0 0 " + W + " " + H);
+    let lo = Infinity, hi = -Infinity;
+    order.forEach(bm => conds.forEach(c => ["heur", "llm"].forEach(m => {
+      const r = get(m, bm, c.id);
+      if (r) { lo = Math.min(lo, r.mean - r.ci); hi = Math.max(hi, r.mean + r.ci); }
+    })));
+    const pad = (hi - lo) * 0.05; lo -= pad; hi += pad;
+    const x = v => ML + (v - lo) / (hi - lo) * (W - ML - MR);
+    txt(s, 0, 12, view === "rep" ? DATA.labels.panel_a_title_rep : DATA.labels.panel_a_title_full,
+        { "font-size": 12.5, "font-weight": 600 });
+    order.forEach((bm, i) => {
+      if (i) el("line", { x1: ML, x2: W - MR, y1: MT + RH * i, y2: MT + RH * i, stroke: "#00000014" }, s);
+    });
+    el("line", { x1: x(0), x2: x(0), y1: MT, y2: axisY, stroke: "#000", "stroke-opacity": .7 }, s);
+    el("line", { x1: ML, x2: W - MR, y1: axisY, y2: axisY, stroke: "#0000004d" }, s);
+    ticks(lo, hi, 6).forEach(t => {
+      el("line", { x1: x(t), x2: x(t), y1: axisY, y2: axisY + 4, stroke: "#0000004d" }, s);
+      txt(s, x(t), axisY + 13, t.toFixed(2), { "text-anchor": "middle", "font-size": 10, fill: "#000000b3" });
+    });
+    txt(s, ML + (W - ML - MR) / 2, axisY + 32, DATA.labels.panel_a_x, { "text-anchor": "middle", "font-size": 11 });
+    const dodge = conds.map((_, j) => (j / (conds.length - 1) - 0.5) * 0.64 * RH);
+    order.forEach((bm, i) => {
+      const cy = MT + RH * (i + 0.5);
+      txt(s, ML - 10, cy, bm, { "text-anchor": "end", "font-size": 11 });
+      conds.forEach((c, j) => {
+        const yy = cy + dodge[j];
+        const rh = get("heur", bm, c.id), rl = get("llm", bm, c.id);
+        if (rh) {
+          errbar(s, x(rh.mean - rh.ci), x(rh.mean + rh.ci), yy, c.color, 1);
+          const o = el("circle", { cx: x(rh.mean), cy: yy, r: 5.2, fill: "#fff", stroke: c.color, "stroke-width": 1.5 }, s);
+          tip(o, bm + " · " + c.label + " · heuristic: g = " + rh.mean.toFixed(3) + " ± " + rh.ci.toFixed(3) + " (N = " + rh.n + ")");
+        }
+        if (rl) {
+          errbar(s, x(rl.mean - rl.ci), x(rl.mean + rl.ci), yy, c.color, 1.4);
+          const o = el("circle", { cx: x(rl.mean), cy: yy, r: 4.6, fill: c.color, stroke: "#000", "stroke-width": .6 }, s);
+          tip(o, bm + " · " + c.label + " · LLM Sonnet: g = " + rl.mean.toFixed(3) + " ± " + rl.ci.toFixed(3) + " (N = " + rl.n + ")");
+        }
+      });
+      const dg = DATA.panel_a.delta_g_llm[bm];
+      if (dg !== undefined) txt(s, W - MR + 8, cy, "Δg=" + signed(dg), { "font-size": 10.5, fill: "#333" });
+    });
+    legend(s, conds.map(c => ({ label: c.label, color: c.color })), ML - 40, H - 54, W - ML + 20, 3);
+    txt(s, ML - 32, H - 12, "counts = public / partial / private of 13 benchmarks; cos = similarity of hidden weights to public weights; filled = LLM, hollow = heuristic", { "font-size": 9, fill: "#000000b3" });
+  }
+
+  function drawB() {
+    B.innerHTML = "";
+    const excl = view === "rep" ? DATA.excluded_benchmarks : [];
+    const pts = DATA.panel_b.points.filter(p => !excl.includes(p.benchmark));
+    const reg = DATA.panel_b.regression[view === "rep" ? "bm11" : "bm13"];
+    const dimColor = {}; DATA.dims.forEach(d => dimColor[d.id] = d.color);
+    const W = 640, H = 470, ML = 78, MR = 26, MT = 30, MB = 108;
+    const s = svg(B, "0 0 " + W + " " + H);
+    const xs = pts.map(p => p.surplus), ys = pts.map(p => p.dgap);
+    const xlo = Math.min.apply(null, xs) - 0.005, xhi = Math.max.apply(null, xs) + 0.025;
+    const ymin = Math.min.apply(null, ys), ymax = Math.max.apply(null, ys), yspan = ymax - ymin;
+    const ylo = ymin - yspan * 0.08, yhi = ymax + yspan * 0.08;
+    const pw = W - ML - MR, ph = H - MT - MB;
+    const x = v => ML + (v - xlo) / (xhi - xlo) * pw;
+    const y = v => MT + ph - (v - ylo) / (yhi - ylo) * ph;
+    txt(s, 0, 12, DATA.labels.panel_b_title, { "font-size": 12.5, "font-weight": 600 });
+    el("line", { x1: ML, x2: W - MR, y1: MT + ph, y2: MT + ph, stroke: "#0000004d" }, s);
+    el("line", { x1: ML, x2: ML, y1: MT, y2: MT + ph, stroke: "#0000004d" }, s);
+    if (xlo < 0 && xhi > 0) el("line", { x1: x(0), x2: x(0), y1: MT, y2: MT + ph, stroke: "#808080", "stroke-opacity": .5, "stroke-width": .6 }, s);
+    if (ylo < 0 && yhi > 0) el("line", { x1: ML, x2: W - MR, y1: y(0), y2: y(0), stroke: "#808080", "stroke-opacity": .5, "stroke-width": .6 }, s);
+    ticks(xlo, xhi, 6).forEach(t => {
+      el("line", { x1: x(t), x2: x(t), y1: MT + ph, y2: MT + ph + 4, stroke: "#0000004d" }, s);
+      txt(s, x(t), MT + ph + 13, t.toFixed(2), { "text-anchor": "middle", "font-size": 10, fill: "#000000b3" });
+    });
+    ticks(ylo, yhi, 6).forEach(t => {
+      el("line", { x1: ML - 4, x2: ML, y1: y(t), y2: y(t), stroke: "#0000004d" }, s);
+      txt(s, ML - 7, y(t), t.toFixed(3), { "text-anchor": "end", "font-size": 10, fill: "#000000b3" });
+    });
+    txt(s, ML + pw / 2, MT + ph + 32, DATA.labels.panel_b_x, { "text-anchor": "middle", "font-size": 11 });
+    const yl = DATA.labels.panel_b_y.split(" (");
+    txt(s, 0, 0, yl[0], { "text-anchor": "middle", "font-size": 11, transform: "translate(14," + (MT + ph / 2) + ") rotate(-90)" });
+    if (yl[1]) txt(s, 0, 0, "(" + yl[1], { "text-anchor": "middle", "font-size": 9.5, fill: "#000000b3", transform: "translate(27," + (MT + ph / 2) + ") rotate(-90)" });
+    [["heur", "4 3", 1.2], ["llm", null, 1.7]].forEach(spec => {
+      const r = reg[spec[0]]; if (!r) return;
+      const a = { x1: x(xlo), y1: y(r.slope * xlo + r.intercept), x2: x(xhi), y2: y(r.slope * xhi + r.intercept),
+                  stroke: "#444", "stroke-width": spec[2], "stroke-opacity": .85 };
+      if (spec[1]) a["stroke-dasharray"] = spec[1];
+      el("line", a, s);
+    });
+    pts.filter(p => p.mode === "heur").forEach(p => {
+      const o = el("circle", { cx: x(p.surplus), cy: y(p.dgap), r: 6.2, fill: "#fff", stroke: dimColor[p.primary_dim], "stroke-width": 1.7, "fill-opacity": .85 }, s);
+      tip(o, p.benchmark + " · heuristic: surplus " + p.surplus.toFixed(3) + ", Δg " + signed(p.dgap));
+    });
+    pts.filter(p => p.mode === "llm").forEach(p => {
+      const o = el("circle", { cx: x(p.surplus), cy: y(p.dgap), r: 5.8, fill: dimColor[p.primary_dim], stroke: "#000", "stroke-width": .6 }, s);
+      tip(o, p.benchmark + " · LLM Sonnet: surplus " + p.surplus.toFixed(3) + ", Δg " + signed(p.dgap));
+      txt(s, x(p.surplus) + 7, y(p.dgap) - 5, p.benchmark, { "font-size": 9.5, fill: "#333" });
+    });
+    const lines = [];
+    if (reg.llm) lines.push("LLM Sonnet: r = " + reg.llm.r.toFixed(3) + ", p = " + fmtP(reg.llm.p));
+    if (reg.heur) lines.push("Heuristic : r = " + reg.heur.r.toFixed(3) + ", p = " + fmtP(reg.heur.p));
+    lines.push("N = " + pts.filter(p => p.mode === "llm").length + " benchmarks");
+    const bx = ML + 10, by = MT + ph - 14 - 14 * lines.length;
+    el("rect", { x: bx - 6, y: by - 10, width: 196, height: 14 * lines.length + 10, rx: 4, fill: "#fff", stroke: "#888", "fill-opacity": .95 }, s);
+    lines.forEach((l, i) => txt(s, bx, by + i * 14, l, { "font-size": 10 }));
+    legend(s, DATA.dims.map(d => ({ label: d.id, color: d.color })), ML - 40, H - 34, W - ML + 20, 3);
+  }
+
+  function draw() { drawA(); drawB(); }
+  document.querySelectorAll(".f4-toggle").forEach(b => b.addEventListener("click", () => {
+    view = b.dataset.view;
+    document.querySelectorAll(".f4-toggle").forEach(o => o.classList.toggle("active", o === b));
+    draw();
+  }));
+  fetch("data/figures/privacy_gap.json?v=1").then(r => r.json()).then(d => { DATA = d; draw(); })
+    .catch(() => { A.textContent = "The figure data could not be loaded."; });
+})();
+
 (function channels() {
   // Plain HTML cards. This was SVG with a hand-rolled word-wrapper that
   // estimated glyph widths from a character count; the browser does that job
@@ -1547,7 +1739,7 @@ function lerpV(a, b, t) {
       b: "The holdout measures a slightly different slice of the same capability space, so effort aimed at the visible weights lands off-target.",
       n: "Set per condition alongside h: partial benchmarks keep their hand-tuned holdout weights (about 0.95 similarity to the public weights), private benchmarks double the distance (about 0.85), and the iid ablation makes holdout and public weights identical." },
     { t: "2 · Reporting lag", c: "#5c3a78",
-      b: "Scores publish every K = 3 rounds. Between publications the provider, and the market, are working from stale numbers.",
+      b: "Held-out scores publish every K = 3 rounds; public scores publish every round. Between publications the provider, and the market, are working from stale numbers.",
       n: 'Anchored to release cadence across 24 benchmarks and 8 frontier labs, 2023 to 2026 (<a class="cite" href="https://epoch.ai/benchmarks" target="_blank" rel="noopener">Epoch AI</a>).' },
     { t: "3 · Observation noise", c: "#b05f14",
       b: "The score is computed only on the held-out share h of items, so a smaller holdout gives a noisier score.",

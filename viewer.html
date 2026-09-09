@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Run Viewer · AI Evaluation Ecosystem Explorer</title>
+<title>Run Viewer · AI Evaluation Ecosystem</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Playfair Display stays: the newspaper masthead is a deliberate pastiche,
-     not site chrome, so it keeps its own register inside the AIMS theme. -->
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:slnt,wght@-10,300..700;0,300..700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aims.css?v=2">
-<script src="js/vendor/d3.v7.min.js"></script>
+     not site chrome, so it keeps its own register inside the AIMS theme. It is
+     declared in css/fonts.css alongside the others; browsers only download a
+     face that rendered text actually uses, so the other four pages do not
+     fetch it. -->
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/aims.css?v=3">
+<script defer src="js/vendor/d3.v7.min.js"></script>
 <script src="js/loader.js?v=1"></script>
 <script src="js/boundary.js?v=4"></script>
 <style>
@@ -211,7 +212,7 @@ body{height:100vh;display:flex;flex-direction:column;overflow:hidden;user-select
 
 <div id="hdr">
   <a id="hdr-title" href="index.html">The AI Evaluation Ecosystem</a>
-  <a id="hdr-back" href="explorer.html">← Explorer</a><div id="hdr-run"></div>
+  <a id="hdr-back" href="explorer.html">← Runs</a><div id="hdr-run"></div>
   <a class="hdr-context" href="index.html">Ecosystem</a>
   <a class="hdr-context" href="simulation.html">Simulation</a>
   <div id="hdr-round">Round <span id="rnum">0</span><span id="rtot"></span></div>
@@ -302,7 +303,7 @@ const _p   = new URLSearchParams(location.search);
 const _run = _p.get('run') || '';
 if (!_run) {
   document.getElementById('viewer-loading').innerHTML =
-    'No run was selected. <a href="explorer.html">Choose one in the explorer</a>.';
+    'No run was selected. <a href="explorer.html">Choose one on the runs page</a>.';
   throw new Error('no run param');
 }
 /* Path is <bucket>/llm/<model>/<cond>/seed_N or <bucket>/heuristic/<cond>/seed_N */
@@ -328,7 +329,7 @@ try {
 } catch (e) {
   // visitor copy only; the run path and status code stay in the console
   document.getElementById('viewer-loading').innerHTML =
-    'This run could not be loaded. Please try again, or <a href="explorer.html">go back to the explorer</a>.';
+    'This run could not be loaded. Please try again, or <a href="explorer.html">go back to the runs page</a>.';
   console.error('run load failed:', _run, e);
   throw e;
 }
