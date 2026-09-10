@@ -583,7 +583,7 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
 
   <!-- ============================ 6. HOLDOUTS ============================ -->
   <section id="holdouts">
-    <h2>The case study: private holdouts redistribute the gap</h2>
+    <h2>The case study: private holdouts shrink the gap, unevenly</h2>
     <p>
       In this model, a provider that directs research toward what a benchmark measures rather
       than toward what its users need opens a gap between the benchmark's score and what
@@ -622,10 +622,12 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
     <div class="callout">
       <div class="ct">The finding</div>
       <p>
-        Moving from public benchmarks to private holdouts redistributes, rather than closes, the
-        gap between benchmark scores and user experience. Aiming gets harder, but what benchmarks
-        reward and what users need still differ, so the gap reappears elsewhere in the roster.
-        This form of holdout design changes where the gap sits, not whether there is one.
+        Moving from public benchmarks to private holdouts shrinks the gap between benchmark
+        scores and simulated user satisfaction on most benchmarks and widens it on a few: ten of
+        thirteen shrink with LLM actors, nine with rule-based ones, and the mean gap roughly
+        halves. Aiming gets harder, but what benchmarks reward and what users need still differ,
+        so the gap that remains sits on different benchmarks than before, and on some it grows.
+        This form of holdout design changes the gap unevenly across the roster.
       </p>
     </div>
 

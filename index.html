@@ -409,9 +409,8 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
         <span class="q-s run">run</span>
         <div>
           <b>Does making benchmark content private close the gap between what scores say and
-          what simulated users get?</b> In the simulation, the gap generally decreases, but
-          not uniformly.
-          <a href="simulation.html#holdouts">Read here for more details</a>.
+          what simulated users get?</b>
+          <a href="simulation.html#holdouts">Read here for the full case study</a>.
         </div>
       </div>
       <div class="q-row">
@@ -486,13 +485,22 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     <h2>About the simulation</h2>
     <p>
       The simulation combines rule-based market dynamics with LLM-driven strategic actors, a form
-      of agent-based modeling. Benchmarks, consumer needs, and provider capabilities
+      of generative agent-based modeling. Benchmarks, consumer needs, and provider capabilities
       are all described by weights over six capability dimensions (reasoning, coding, knowledge,
       safety, communication, agentic). Information is split into tiers: every actor sees public
       state and holds its own private state (shown when you click its box), while ground truth,
       meaning true capabilities, true consumer satisfaction, and the benchmarks' true weights, is
       held by the simulation and hidden from every actor. The gap between what scores say and
       what users experience is measured against that hidden tier.
+    </p>
+    <p>
+      The simulation generates hypotheses for empirical work to test. Its findings hold under
+      the stylized simulation model presented here, in settings where benchmark and leaderboard
+      results steer what providers build and what buyers, coverage, and capital reward, and
+      where consumer needs are heterogeneous. The explainer's
+      <a href="simulation.html#limits">claims and limitations</a> section states the full
+      boundary, grades each structural assumption by the evidence behind it, and lists what is
+      left out on purpose.
     </p>
   </section>
 
