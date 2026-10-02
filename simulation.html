@@ -36,7 +36,7 @@
 /* Narrowed 880 -> 752 to match index: 704px of content, which is exactly the
    68ch prose measure, so prose, figures, tables and callouts all end on the
    same line. Costs the inline diagrams about 15% of their width; that was the
-   accepted trade for real alignment (YD, 2026-09-03). */
+   accepted trade for real alignment (2026-09-03). */
 main { max-width: 752px; margin: 0 auto; padding: 40px 24px 80px; }
 /* AIMS type scale; see index.html for the same treatment. */
 .hero h1 { font-size: clamp(2.25rem, 4.8vw, 4.15rem); font-weight: 300;
@@ -455,7 +455,7 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
       <div class="fig-head">
         <span class="ft">Structural misalignment</span>
         <span class="fh-right"><span class="key">
-          <span><i style="background:#8a5a2f"></i>benchmark roster average</span>
+          <span><i style="background:#8a5a2f"></i>benchmark suite average</span>
           <span><i style="background:#3f7a47"></i>population need average</span>
         </span></span>
       </div>
@@ -627,7 +627,7 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
         thirteen shrink with LLM actors, nine with rule-based ones, and the mean gap roughly
         halves. Aiming gets harder, but what benchmarks reward and what users need still differ,
         so the gap that remains sits on different benchmarks than before, and on some it grows.
-        This form of holdout design changes the gap unevenly across the roster.
+        This form of holdout design changes the gap unevenly across the suite.
       </p>
     </div>
 
@@ -691,8 +691,8 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
       <div class="ct">The boundary</div>
       <p>
         The results apply to settings where benchmark and leaderboard results steer what
-        providers build and what buyers, coverage, and capital reward, and where consumer needs
-        are heterogeneous. To judge whether they carry to a new setting, say a
+        providers build and what buyers, coverage, and capital reward, and where gaps are measured
+        against a mixed consumer population. To judge whether they carry to a new setting, say a
         domain evaluated entirely through internal test suites, ask which of the four conditions
         below it weakens.
       </p>
@@ -720,8 +720,8 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
       <tbody>
         <tr><td>Six actor types cover the ecosystem, with heterogeneity inside each type</td><td><span class="as sti">stipulated</span></td><td>A tractability choice.</td></tr>
         <tr><td>Consumers mix the leaderboard signal with their own experience, in ratios that vary by archetype</td><td><span class="as anc">anchored</span></td><td>Trust levels follow qualitative adoption studies (<a class="cite" href="https://arxiv.org/abs/2412.05520" target="_blank" rel="noopener">Hardy et al. 2024</a>; <a class="cite" href="https://doi.org/10.1145/3173574.3174230" target="_blank" rel="noopener">Woodruff et al. 2018</a>); the exact mixture weights are stipulated defaults. </td></tr>
-        <tr><td>Different consumers need different things</td><td><span class="as cal">calibrated</span></td><td>Need weights fit to occupation-level adoption data (<a class="cite" href="https://www.nber.org/papers/w32966" target="_blank" rel="noopener">Bick et al. 2024</a>; <a class="cite" href="https://aiindex.stanford.edu/report/" target="_blank" rel="noopener">Stanford AI Index 2024</a>; <a class="cite" href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2024" target="_blank" rel="noopener">McKinsey 2024</a>). If needs were uniform there would be no gap to redistribute, so the finding depends on needs differing.</td></tr>
-        <tr><td>Six capability dimensions with asymmetric investment pathways</td><td><span class="as anc">anchored</span></td><td>The dimensions span the axes frontier models are currently differentiated on. The roster is anchored to real evaluations (<a class="cite" href="https://arxiv.org/abs/2009.03300" target="_blank" rel="noopener">MMLU</a>; <a class="cite" href="https://arxiv.org/abs/2107.03374" target="_blank" rel="noopener">HumanEval</a>; <a class="cite" href="https://arxiv.org/abs/2109.07958" target="_blank" rel="noopener">TruthfulQA</a>). The mechanism needs only that some dimensions are easier to invest in than others, not this exact six-way split.</td></tr>
+        <tr><td>Different consumers need different things</td><td><span class="as cal">calibrated</span></td><td>Need weights fit to occupation-level adoption data (<a class="cite" href="https://www.nber.org/papers/w32966" target="_blank" rel="noopener">Bick et al. 2024</a>; <a class="cite" href="https://aiindex.stanford.edu/report/" target="_blank" rel="noopener">Stanford AI Index 2024</a>; <a class="cite" href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2024" target="_blank" rel="noopener">McKinsey 2024</a>). Need weights do not enter a benchmark's shift under private holdouts; they set the starting gap, whose sign decides whether the shift widens or shrinks it.</td></tr>
+        <tr><td>Six capability dimensions with asymmetric investment pathways</td><td><span class="as anc">anchored</span></td><td>The dimensions span the axes frontier models are currently differentiated on. The suite is anchored to real evaluations (<a class="cite" href="https://arxiv.org/abs/2009.03300" target="_blank" rel="noopener">MMLU</a>; <a class="cite" href="https://arxiv.org/abs/2107.03374" target="_blank" rel="noopener">HumanEval</a>; <a class="cite" href="https://arxiv.org/abs/2109.07958" target="_blank" rel="noopener">TruthfulQA</a>). The mechanism needs only that some dimensions are easier to invest in than others, not this exact six-way split.</td></tr>
         <tr><td>Scores are noisy linear projections of capability, reported as a running maximum</td><td><span class="as sti">stipulated</span></td><td>Linear scoring is standard in measurement models.</td></tr>
         <tr><td>Providers infer what a benchmark rewards from score prediction errors</td><td><span class="as sti">stipulated</span></td><td>A minimal learning rule, the same in both planner modes.</td></tr>
         <tr><td>Capital responds to scores and sentiment</td><td><span class="as anc">anchored</span></td><td>Markets move on measures of a thing as well as on the thing itself (<a class="cite" href="https://arxiv.org/abs/2002.06673" target="_blank" rel="noopener">Perdomo et al. 2020</a>).</td></tr>
@@ -737,7 +737,7 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
     <p style="margin-top:18px">Some things are left out on purpose. The list is not exhaustive; it covers the omissions most likely to change how evaluation itself behaves.</p>
     <table class="t">
       <tbody>
-        <tr><td><b>Competing evaluators</b></td><td>A single evaluator defines the roster and every benchmark's weights. There is no second leaderboard weighting the same axis differently, and no standards body reconciling the two, so a provider never chooses which measurement to answer to.</td></tr>
+        <tr><td><b>Competing evaluators</b></td><td>A single evaluator defines the suite and every benchmark's weights. There is no second leaderboard weighting the same axis differently, and no standards body reconciling the two, so a provider never chooses which measurement to answer to.</td></tr>
         <tr><td><b>Price</b></td><td>Cost is a fixed per-provider constant weighted by a fixed consumer sensitivity. No provider cuts price, and nobody trades capability against cost per token, so the leaderboard carries competitive weight that price and latency absorb in practice.</td></tr>
         <tr><td><b>Internal evaluation suites</b></td><td>Providers are measured only by the public evaluator. No internal test suite gates a release and no live-traffic result feeds back into what gets built, so the leaderboard is the only measurement pressure on R&amp;D.</td></tr>
         <tr><td><b>Multi-model users</b></td><td>Adoption is a share of a segment, and each switching decision is made from the position of one incumbent. Real usage is closer to a continuous split of traffic across several models at once, routed by task, with a second kept as a fallback.</td></tr>
@@ -772,7 +772,7 @@ table.t td.mono { font-family: ui-monospace, Menlo, monospace; font-variant-nume
   </section>
 
   <div class="footer-links">
-    <span>This page accompanies our research paper (under review).</span>
+    <span>This page accompanies our research paper.</span>
   </div>
 </main>
 
@@ -1052,12 +1052,12 @@ function lerpV(a, b, t) {
     .sort(function (a, b) { return D.misalignPool[a] - D.misalignPool[b]; });
   document.getElementById("s-mis-cap").textContent =
     "Average weight per dimension across the " + D.counts.poolSize + "-benchmark pool, against the " +
-    "adoption-weighted average of what consumers need. The roster over-weights " +
+    "adoption-weighted average of what consumers need. The suite over-weights " +
     over.map(function (d) { return D.dimLabel[d].toLowerCase(); }).join(" and ") +
     ", and under-weights " +
     under.map(function (d) { return D.dimLabel[d].toLowerCase(); }).join(" and ") +
     " most. That standing mismatch is the main source of the gap in baseline conditions, " +
-    "and the roster is calibrated to the real benchmark landscape as of 2023.";
+    "and the suite is calibrated to the real benchmark landscape as of 2023.";
 })();
 
 /* ================= 2B. WHO NEEDS WHAT ================= */

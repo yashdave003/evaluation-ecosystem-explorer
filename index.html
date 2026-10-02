@@ -148,7 +148,7 @@ p.figure-note { font-size: .9rem; font-weight: 300; line-height: 1.5; color: var
 .pane-strip { margin: 8px 14px 0; font-size: 10.5px; font-style: italic; color: var(--ink-3); line-height: 1.6; }
 
 /* ---- Spotlight pane: the quote layer, readable at rest.
-   Deliberately quiet (YD 2026-08-09): no badges, no per-kind color coding;
+   Deliberately quiet (2026-08-09): no badges, no per-kind color coding;
    argued claims are marked in plain language inside the quote itself. ---- */
 .qe-why { padding: 8px 14px 0; font-size: 11.5px; line-height: 1.55; color: var(--ink-2); }
 .pane-quotes { padding: 10px 14px 0; }
@@ -167,7 +167,7 @@ svg g.glow { filter: drop-shadow(0 0 5px rgba(140,21,21,.6)); }
 svg g.glow .box-main { stroke-width: 3; }
 
 /* actor hover card strip */
-/* YD-reported click flash (2026-08-09): with a long event title, the nowrap
+/* Click flash (2026-08-09): with a long event title, the nowrap
    spotlight chip transiently ate the whole strip mid-transition, crushing the
    detail text into a tall 0-width column. Three guards make every intermediate
    layout state presentable: the strip wraps, the chip label ellipsizes, and
@@ -196,7 +196,7 @@ svg .x-edge rect, svg .edge-group[data-hasquote] { cursor: help; }
 svg :is(.node-g, .station-g, .leg-item):focus { outline: none; }
 svg :is(.node-g, .station-g, .leg-item):focus-visible { outline: 2px solid var(--digital-blue); outline-offset: 3px; }
 
-/* Pinned state (kept by YD 2026-08-15): the actor whose detail pane is open
+/* Pinned state (2026-08-15): the actor whose detail pane is open
    gets a deliberate selected state on the map itself. */
 svg g.pinned .box-main { stroke-width: 3; }
 svg g.pinned { filter: drop-shadow(0 0 5px rgba(140,21,21,.55)); }
@@ -497,7 +497,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
       The simulation generates hypotheses for empirical work to test. Its findings hold under
       the stylized simulation model presented here, in settings where benchmark and leaderboard
       results steer what providers build and what buyers, coverage, and capital reward, and
-      where consumer needs are heterogeneous. The explainer's
+      where gaps are measured against a mixed consumer population. The explainer's
       <a href="simulation.html#limits">claims and limitations</a> section states the full
       boundary, grades each structural assumption by the evidence behind it, and lists what is
       left out on purpose.
@@ -532,7 +532,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
   <div class="footer-links">
     <a href="simulation.html">How the simulation works</a>
     <a href="explorer.html">Runs</a>
-    <span>This page accompanies our research paper (under review).</span>
+    <span>This page accompanies our research paper.</span>
   </div>
 </main>
 
@@ -600,7 +600,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
   // the chip, the hover card and the pane header agree.
   //
   // In mono caps a six-name list ran wider than the title beside it and forced
-  // the title to ellipsis, which is what prompted this (YD, 2026-09-04).
+  // the title to ellipsis, which is what prompted this (2026-09-04).
   function citeAuthors(a) {
     if (!a) return "";
     let s = String(a).trim();
@@ -1155,7 +1155,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
     // ---- edges: uniform weight (salience left to the reader) ----
     const edgeTop = el("g", {}, svg);   // chevrons + labels render above arcs
-    // Provenance edges are SPLIT across two layers (YD, 2026-08-09): the
+    // Provenance edges are SPLIT across two layers (2026-08-09): the
     // dotted paths sit UNDER the boxes (a claim edge must never draw across
     // an actor box), while their label boxes render topmost so no canonical
     // label box crosses them. One logical x-edge = one group in each layer.
@@ -1177,7 +1177,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
       const fs = 8, lh = 10.5;
       const maxLen = Math.max(...lines.map(l => l.length));
       // 8, not 12: the 0.52 char-width estimate already overshoots real glyph
-      // widths, so 6 units per side read as slack inside the box (YD, screenshot
+      // widths, so 6 units per side read as slack inside the box (screenshot
       // 2026-08-17). 4 per side still clears the widest strings in the set.
       const w = maxLen * fs * 0.52 + 8, h = lines.length * lh + 3;
       el("rect", { x: e.lx - w / 2, y: e.ly - h / 2, width: w, height: h, rx: 3,
@@ -1232,7 +1232,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
       const lines = wrapWords(s.name, 22);
       // Long role lines wrap instead of shrinking: autofit floors at 8px and
       // "human expertise, datasets, and RL environments" needs ~40% shrink,
-      // so it overflowed the box (YD-reported 2026-08-09).
+      // so it overflowed the box (reported 2026-08-09).
       const roleLines = s.role ? wrapWords(s.role, 32) : [];
       const bandH = lines.length * 12 + 8,
         bodyH = roleLines.length ? roleLines.length * 11 + 7 : 17,
@@ -1364,7 +1364,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
         const a2 = anchorRect(B.x, B.y, hB.hw + 3, hB.hh + 3, A.x, A.y);
         const mx = (a1.x + a2.x) / 2, my = (a1.y + a2.y) / 2;
         const dxx = a2.x - a1.x, dyy = a2.y - a1.y, elen = Math.hypot(dxx, dyy) || 1;
-        // Curvature harmonized with computeEdge (YD 2026-08-09): provenance
+        // Curvature harmonized with computeEdge (2026-08-09): provenance
         // edges use the same shape family as canonical arcs instead of ad-hoc
         // midpoint bows. Reciprocal x-pairs form a lens via the perpendicular
         // rule; singles bow ring-outward at clamp(K*len); sharing a corridor
@@ -1378,7 +1378,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
         let px, py;
         if (hasRecip) { px = (dyy / elen) * G.CURVE_SIGN; py = (-dxx / elen) * G.CURVE_SIGN; }
         else { const ox = mx - G.CX, oy = my - G.CY, od = Math.hypot(ox, oy) || 1; px = ox / od; py = oy / od; }
-        // Two ways arcs used to resolve to ONE curve (YD-reported 2026-08-19):
+        // Two ways arcs used to resolve to ONE curve (reported 2026-08-19):
         //  (a) reciprocal pair: the perpendicular already reverses with edge
         //      direction, so side:"in" flipped it a second time and cancelled
         //      the lens. Six pairs drew as a single line carrying two heads.
@@ -1426,17 +1426,17 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     // provenance layer then goes above THEM: x-edges exist only during a
     // spotlight, where they are the foreground content, and their opaque
     // label boxes must not be crossed by ghosted canonical label boxes
-    // (YD-reported z-order defect, 2026-08-09).
+    // (z-order defect, 2026-08-09).
     // Layer order among box groups: rail zones first (their dashed dock
     // connectors start at actor-box edges and must paint UNDER them), then
-    // grey stations, then the six actors on top (YD-reported 2026-08-09:
+    // grey stations, then the six actors on top (reported 2026-08-09:
     // a dock curve painted over the Funders corner).
     const layerOf = k => (railById[k] ? 0 : stationById[k] ? 1 : 2);
     svg.appendChild(xLayer);   // x-edge paths: above arcs, below every box
     // Opaque page-colored backers under every actor/station box. Ghosted
     // boxes fade to 0.3 group opacity, which makes them TRANSLUCENT, so the
-    // guide ellipse and edge arcs below showed through the box body (YD
-    // screenshots, 2026-08-09: the "dashed line over Funders" was the ring
+    // guide ellipse and edge arcs below showed through the box body (screenshots,
+    // 2026-08-09: the "dashed line over Funders" was the ring
     // showing through, not a draw-order bug). The backers never fade, so
     // nothing below a box is ever visible through it.
     const boxBackers = el("g", {}, svg);
@@ -1460,7 +1460,7 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     // click on empty canvas (background, guide ellipse, edges) closes the pane
     svg.addEventListener("click", unpin);
     // Mouse clicks must not move focus to figure elements: the browser's
-    // default focus ring on a clicked box read as an unwanted highlight (YD).
+    // default focus ring on a clicked box read as an unwanted highlight.
     // Keyboard focus (Tab) is unaffected.
     svg.addEventListener("mousedown", e => {
       const f = e.target.closest && e.target.closest("g[tabindex]");

@@ -16,8 +16,8 @@
   var TEXT =
     "These findings hold under the stylized simulation model presented here, " +
     "in settings where benchmark and leaderboard results steer what providers " +
-    "build and what buyers, coverage, and capital reward, and where consumer " +
-    "needs are heterogeneous. The direction and mechanism of an effect are the claim; " +
+    "build and what buyers, coverage, and capital reward, and where gaps are " +
+    "measured against a mixed consumer population. The direction and mechanism of an effect are the claim; " +
     "the numbers belong to this parameterization.";
   var SHORT = "Stylized simulation model";
   var LINK = { href: "simulation.html#limits", label: "See Claims and limitations for details →" };

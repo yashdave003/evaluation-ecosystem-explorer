@@ -34,7 +34,7 @@ window.ECOSYSTEM = {
       media:     { name: "Media",     color: "#005A8B", ang: 60,  sub: "tech press · social platforms",        role: "cover & amplify" },
       consumers: { name: "Consumers", color: "#1A6B3A", ang: 120, sub: "individuals · enterprises",            role: "adopt & switch" },
       providers: { name: "Model Providers", color: "#1A2F5A", ang: 180, sub: "open-source · big-tech · frontier", role: "build capability; invest in R&D, safety" },
-      // name deliberately diverges from the JSX ("Evaluator"): YD ruled plural
+      // name deliberately diverges from the JSX ("Evaluator"): plural chosen
       // 2026-08-04 — keep "Evaluators" when re-porting until the JSX catches up
       evaluator: { name: "Evaluators", color: "#8B1A1A", ang: 240, sub: "benchmarks · audits",                 role: "measure & rank" },
       funders:   { name: "Funders",   color: "#8B4A00", ang: 300, sub: "VC · corporate · philanthropic",       role: "allocate capital" }
@@ -55,7 +55,7 @@ window.ECOSYSTEM = {
       // the opposite posture from most of what the channel carries.
       { from: "providers", to: "regulator", fam: "events",  label: "disclosure, reporting\n& lobbying",   lx: 577, ly: 302, dim: true },
       { from: "providers", to: "media",     fam: "events",  label: "marketing",                           lx: 789, ly: 331, dim: true },
-      // "quality/cost" since 2026-08-09 (YD): switching runs on satisfaction,
+      // "quality/cost" since 2026-08-09: switching runs on satisfaction,
       // which includes the cost bonus (consumer.py cost_sensitivity x
       // cost_advantage), so quality alone undersold the implemented channel.
       { from: "consumers", to: "providers", fam: "scores",  label: "switch on\nquality/cost",             lx: 782, ly: 502 },
@@ -76,7 +76,7 @@ window.ECOSYSTEM = {
       // model_provider.py:671 — providers read coverage and sentiment when
       // planning; previously no media->providers edge existed.
       { from: "media",     to: "providers", fam: "events",  label: "coverage informs\nroadmaps",          lx: 766, ly: 418, dim: true },
-      // Relabeled 2026-08-17 (YD): "sanctions chill funding" hardcoded one sign
+      // Relabeled 2026-08-17: "sanctions chill funding" hardcoded one sign
       // on a channel that carries both. TWO mechanisms sit behind this edge:
       // (1) simulation.py:1998-2008 — an active sanction multiplies the target's
       //     funder allocation by 0.90 for four rounds. Negative, sanction-only.
@@ -90,7 +90,7 @@ window.ECOSYSTEM = {
       // family already carries incident propagation. (2) regulator->consumers
       // deployer-liability guidance (simulation.py:1509-1511, raises adoption
       // friction for open-source providers) — implemented, but DEMOTED from
-      // the figure 2026-08-09 on YD review: the mechanic is sim-internal
+      // the figure 2026-08-09 on review: the mechanic is sim-internal
       // detail without an obvious real-world analog at figure altitude, and
       // its label read as convoluted next to the other channels. Implemented
       // != figure-worthy. (3) funders->evaluator is live only under
@@ -157,7 +157,7 @@ window.ECOSYSTEM = {
     // names METR and "domain-specific auditors" as evaluation providers, and
     // models only the measurement half of what they do. Hence the same
     // organizations appear here and in the Evaluators roster, and hence a row
-    // places one by the capacity it acted in (YD, 2026-08-31 / 2026-09-03).
+    // places one by the capacity it acted in (2026-08-31 / 2026-09-03).
     { id: "oversight",   name: "Independent Oversight",              ang: 30,
       role: "audit & public pressure",
       neighbors: ["evaluator", "media", "regulator"],
@@ -413,7 +413,7 @@ window.ECOSYSTEM = {
       // missing because this row predates the canonical edge; the paper's core
       // subject is that edge, and its measured answer (signal-but-not-decisive)
       // makes the edge honestly contested against atom2026's usage series.
-      // (2) evaluator->providers added after a YD-prompted context check:
+      // (2) evaluator->providers added after a context check:
       // I-17 is an AI Team Lead in the RESEARCH sector (the pool spans
       // academic AND industry researchers, i.e. publishing labs), and Sec 5.1
       // states the mechanism for model developers directly. Safety-gap
@@ -783,10 +783,9 @@ window.ECOSYSTEM = {
     // moments when the ecosystem's wiring became publicly visible. INCLUSION
     // BAR: same verification standard as papers (primary artifacts read), plus
     // a visible `status` field because events are contested in a way papers
-    // are not. Full registry with the verification queue:
-    // docs/events/registry.md (per-event dossiers and collected sources live
-    // beside it under docs/events/). Do NOT add entries that have not cleared
-    // that queue.
+    // are not. Events are tracked in a separate registry with per-event
+    // dossiers and sources. Do NOT add entries whose primary artifacts have
+    // not been read.
 
     // `status` describes the standing of THIS ROW's claims, not of everything
     // disputed about the episode. `statusNote` names what is open, so the badge
@@ -801,9 +800,8 @@ window.ECOSYSTEM = {
       relatedStudy: "raji2022",
       // Artifact-read 2026-08-31 (OpenAI 51pp technical report re-read for the
       // monitoring claims; both HF disclosures; METR/Redwood + LW crosspost;
-      // JFrog; Black Hat captions). Full dossier: docs/events/
-      // openai_huggingface_2026/dossier.md. Two corrections baked in from the
-      // start, both YD-caught in the research pass: (1) this is a
+      // JFrog; Black Hat captions). Two corrections baked in from the
+      // start, both caught in the research pass: (1) this is a
       // provider-internal containment and monitoring failure, NOT an
       // evaluator-caused harm; the unsolvable-task statistic (93% of board
       // discussion from 198 never-solved tasks) explains why agents went
@@ -817,7 +815,7 @@ window.ECOSYSTEM = {
       // the precision the station lacks. Agents went to HF seeking benchmark
       // answers, which brushes evaluator-infrastructure territory, but HF was
       // harmed as a platform, not as an evaluator; comment only, no arrow.
-      // METR/Redwood sit at OVERSIGHT here, not evaluator (YD, 2026-08-31):
+      // METR/Redwood sit at OVERSIGHT here, not evaluator (2026-08-31):
       // capacity over institution. They were engaged to investigate an
       // incident, which is the oversight station's role line (audit), not to
       // score capability, which is why the evaluator matrix placement of METR
