@@ -337,6 +337,14 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
      widths; the row itself is tappable and the active state restyles it. */
   .lit-state { display: none; }
   .lit-row { flex-wrap: wrap; }
+  /* Two lines per row on a phone: the title owns the first line, the citation
+     and chips sit under it on the second. The title's desktop basis is zero
+     (flex: 1), so beside a nowrap citation it collapsed to one character per
+     line. The dots are fixed at their six-dot width so the title's basis is
+     exact. */
+  .lit-dots { flex: 0 0 69px; }
+  .lit-title { flex: 1 0 calc(100% - 81px); }
+  .lit-meta { margin-left: 81px; }
 }
 /* ---- Wide screens ----
    Prose readability is set by characters per line, so the column and the

@@ -22,6 +22,9 @@ body{height:100vh;display:flex;flex-direction:column;overflow:hidden;user-select
 #trace-panel, #tp-text { user-select: text; }
 :is(a, button, select, input, [tabindex]):focus-visible { outline: 2px solid var(--digital-blue); outline-offset: 2px; }
 @media (max-height: 560px) { body { min-height: 100vh; height: auto; overflow: auto; } }
+/* A phone cannot hold the dashboard in one screen; the panels stack and the
+   page scrolls, as it already does for short windows. */
+@media (max-width: 720px) { body { min-height: 100vh; height: auto; overflow: auto; } }
 @media (max-width: 720px) { .chip { min-height: 24px; padding-top: 5px; padding-bottom: 5px; } }
 
 /* HEADER */
@@ -1024,7 +1027,9 @@ document.getElementById("guide-btn").addEventListener("click", showSpotlight);
     shareCtx = buildShareChart(document.getElementById("share-wrap"), incidentData);
     gapCtx   = buildGapChart(document.getElementById("gap-wrap"));
     render(0);
-    if (!sessionStorage.getItem("tour_done")) showSpotlight();
+    // The tour's callouts are placed for the desktop grid; on a phone they
+    // overlap each other and the panels, so the tour is skipped there.
+    if (!sessionStorage.getItem("tour_done") && window.innerWidth > 720) showSpotlight();
     else if (!REDUCED_MOTION) startPlay();
   });
 }
