@@ -184,6 +184,9 @@ svg g.glow .box-main { stroke-width: 3; }
 #spot-chip-label { display: inline-block; max-width: min(46vw, 420px); overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
 #actor-card .hint { color: var(--ink-3); font-style: italic; }
+/* Two wordings of the hint: the pointer one by default, the touch one where
+   the phone rules below turn the figure into a pannable strip. */
+.hint-touch { display: none; }
 
 svg .edge-group { transition: opacity .18s; }
 svg .node-g, svg .station-g { transition: opacity .18s; }
@@ -345,6 +348,16 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
   .lit-dots { flex: 0 0 69px; }
   .lit-title { flex: 1 0 calc(100% - 81px); }
   .lit-meta { margin-left: 81px; }
+  /* Figure: scaled to a phone the labels are 3 to 4px, so the drawing keeps a
+     readable width and the card pans. The hint says so, since nothing else
+     signals that the strip scrolls. */
+  #fig-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #fig-wrap svg { min-width: 900px; }
+  .hint-pointer { display: none; }
+  .hint-touch { display: inline; }
+  /* The spotlight chip shares the strip with nothing else on a phone, so its
+     label can take most of the width instead of ellipsing at 46vw. */
+  #spot-chip-label { max-width: min(70vw, 420px); }
 }
 /* ---- Wide screens ----
    Prose readability is set by characters per line, so the column and the
@@ -457,8 +470,9 @@ section a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     </div>
     <div id="actor-card">
       <span id="spot-chip" hidden><span id="spot-chip-label"></span><button id="spot-chip-x" title="Show everything">×</button></span>
-      <span class="hint" id="card-hint">Hover an actor for its channels · click any box for its
-        roster · a legend pathway isolates that loop · grey = beyond the modeled core.</span>
+      <span class="hint" id="card-hint"><span class="hint-pointer">Hover an actor for its channels · click any box for its
+        roster · a legend pathway isolates that loop · grey = beyond the modeled core.</span><span class="hint-touch">Swipe
+        to pan the map · tap any box for its roster · a legend chip isolates that loop · grey = beyond the modeled core.</span></span>
       <span class="dot" id="card-dot" style="display:none"></span>
       <span class="name" id="card-name"></span>
       <span class="priv" id="card-priv"></span>
