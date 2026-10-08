@@ -310,15 +310,22 @@ let chartContexts = [];
 let annoRows      = [];
 let bandData      = null;
 
+let currentSeries = null;
+
 function rebuildCharts(series) {
+  currentSeries = series;
   chartContexts = [];
   METRICS.forEach((metric, mi) => {
     const svgEl = document.getElementById("svg-"+metric.id);
     svgEl.innerHTML = "";
-    const W  = svgEl.parentElement.clientWidth || 900;
+    // The panel is measured while visible (refresh unhides it first); the 900
+    // cap keeps the desktop drawing at the width it has always had. On a phone
+    // the end-of-line labels get a narrower gutter so the plot keeps some room.
+    const W  = Math.min(svgEl.parentElement.clientWidth || 900, 900);
+    const right = W < 600 ? 84 : MARGIN.right;
     svgEl.setAttribute("width",  W);
     svgEl.setAttribute("height", PANEL_H);
-    const cx = W - MARGIN.left - MARGIN.right;
+    const cx = W - MARGIN.left - right;
     const cy = PANEL_H - MARGIN.top - MARGIN.bottom;
 
     let yMin = Infinity, yMax = -Infinity;
@@ -633,11 +640,13 @@ async function refresh() {
 
   syncURL();
   updateHeader();
+  // Unhide before drawing: a hidden panel measures 0 wide and the charts fell
+  // back to a fixed 900px, which clipped on phones.
+  document.getElementById("loading-msg").classList.add("hidden");
+  document.getElementById("charts-wrap").classList.remove("hidden");
   rebuildCharts(series);
   rebuildAnnoBar(series);
 
-  document.getElementById("loading-msg").classList.add("hidden");
-  document.getElementById("charts-wrap").classList.remove("hidden");
   document.getElementById("agg-caption").classList.toggle("hidden", !bandData);
   document.getElementById("scrubber-wrap").classList.remove("hidden");
   document.getElementById("anno-bar").classList.remove("hidden");
@@ -687,6 +696,17 @@ document.addEventListener("keydown", e => {
   if (/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
   if (e.key==="ArrowLeft")  update(Math.max(0, currentRound-1));
   if (e.key==="ArrowRight") update(Math.min(nRounds-1, currentRound+1));
+});
+// Redraw at the new width when the window changes (phone rotation, resized
+// desktop window); the scrubber position is kept.
+let resizeTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (!currentSeries || document.getElementById("charts-wrap").classList.contains("hidden")) return;
+    rebuildCharts(currentSeries);
+    update(currentRound);
+  }, 150);
 });
 
 try {
